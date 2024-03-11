@@ -64,13 +64,12 @@
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-7">
                         <div class="card-body">
-                          <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
-                          <p class="mb-4">
-                            You have done <span class="fw-medium">72%</span> more sales today. Check your new badge in
-                            your profile.
-                          </p>
-
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
+                          <h5 class="card-title text-primary">Scan and Save Documents</h5>
+                          <p class="mb-4"> Document Type</p>
+                          <p class="mb-4"> Scan -> Save to Database</p>
+                          <p class="mb-4"> Scanned Documents appear in picture</p>
+                          <p class="mb-4"> Scanned Documents appear in text</p>
+                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">Save</a>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
@@ -86,7 +85,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4 col-md-4 order-1">
+                {{-- <div class="col-lg-4 col-md-4 order-1">
                   <div class="row">
                     <div class="col-lg-6 col-md-12 col-6 mb-4">
                       <div class="card">
@@ -574,7 +573,7 @@
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> --}}
                 <!--/ Transactions -->
               </div>
             </div>

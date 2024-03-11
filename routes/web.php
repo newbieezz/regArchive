@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('login');
 });
-Route::get('dashboard', function () {
-    return view('dashboard');
-});
+
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\IndexController::class, 'login'])->name('login');
-
+Route::namespace('App\Http\Controllers\Front')->group(function(){
+    Route::match(['get','post'],'ulogin','UserController@login');
+     //protected routes/ needs to login first before user can open
+    Route::group(['middleware'=>['auth']],function(){
+    Route::match(['get','post'],'dashboard', 'UserController@dashboard');
+    });
+});

@@ -83,5 +83,37 @@
         
     });
 
+     //jquery function for login form validation
+     $("#loginForm").submit(function(){
+        var formdata = $(this).serialize();//get the complete data from the form
+        $.ajax({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"/ulogin",
+            type:"post",
+            data:formdata,
+            success:function(resp){
+                if(resp.type=="error"){ //validation fails
+                    //display all the errors in array used eachloop
+                    $.each(resp.errors,function(i,error){ //loop the error in an array
+                        $(".login-"+i).attr('style','color:red');
+                        $(".login-"+i).html(error);
+                    setTimeout(function(){ //jquery function to set the time to disappear after 3 secs
+                        $(".login-"+i).css({'display':'none'});
+                    },3000);
+                 });
+                } else if(resp.type=="success"){ //if success in validation move/redirerct to guard page
+                    window.location.href = resp.url;
+                } else if(resp.type=="incorrect"){ 
+                    $("#login-error").attr('style','color:red');
+                    $("#login-error").html(resp.message);
+                } 
+            }, error:function(){
+                alert("Error");
+            }
+        })
+        
+    });
 
 })(jQuery);
