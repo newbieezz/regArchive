@@ -34,6 +34,11 @@
               <div data-i18n="Analytics">Course Catalog</div>
             </a>
           </li>
+          <li class="menu-item">
+            <a href="index.html" class="menu-link">
+              <div data-i18n="Analytics">Graduation Records</div>
+            </a>
+          </li>
         </ul>
       </li>
 
@@ -41,13 +46,13 @@
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Layouts</div>
+          <div data-i18n="Layouts">Enrollment Records</div>
         </a>
 
         <ul class="menu-sub">
           <li class="menu-item">
             <a href="layouts-without-menu.html" class="menu-link">
-              <div data-i18n="Without menu">Without menu</div>
+              <div data-i18n="Without menu">Form 137</div>
             </a>
           </li>
         </ul>

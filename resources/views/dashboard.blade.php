@@ -69,7 +69,8 @@
                           <p class="mb-4"> Scan -> Save to Database</p>
                           <p class="mb-4"> Scanned Documents appear in picture</p>
                           <p class="mb-4"> Scanned Documents appear in text</p>
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">Save</a>
+                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">Save</a> </br></br></br></br>
+                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">Add Document</a>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">

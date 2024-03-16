@@ -11,12 +11,28 @@ id="layout-navbar">
   <!-- Search -->
   <div class="navbar-nav align-items-center">
     <div class="nav-item d-flex align-items-center">
-      <i class="bx bx-search fs-4 lh-0"></i>
-      <input
+
+        <button type="button" class="btn btn-outline-primary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Document Type
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
+          <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
+          <li><a class="dropdown-item disabled" href="javascript:void(0);">Something else here</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="javascript:void(0);">Separated link</a></li>
+        </ul>
+       &nbsp;
+        <input
         type="text"
         class="form-control border-0 shadow-none ps-1 ps-sm-2"
-        placeholder="Search..."
+        placeholder="Enter ID Number..."
         aria-label="Search..." />
+        {{-- <i class="bx bx-search fs-4 lh-0"></i> --}}
+        <a href="javascript:;" class="btn rounded-pill btn-primary">Search</a>
+
     </div>
   </div>
   <!-- /Search -->

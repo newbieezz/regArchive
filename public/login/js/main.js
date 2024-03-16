@@ -106,8 +106,8 @@
                 } else if(resp.type=="success"){ //if success in validation move/redirerct to guard page
                     window.location.href = resp.url;
                 } else if(resp.type=="incorrect"){ 
-                    $("#login-error").attr('style','color:red');
-                    $("#login-error").html(resp.message);
+                    $(".login-error").attr('style','color:red');
+                    $(".login-error").html(resp.message);
                 } 
             }, error:function(){
                 alert("Error");
