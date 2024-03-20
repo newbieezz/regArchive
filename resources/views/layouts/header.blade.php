@@ -8,7 +8,7 @@ id="layout-navbar">
 </div>
 
 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-  <!-- Search -->
+  <!-- Search -->   
   <div class="navbar-nav align-items-center">
     <div class="nav-item d-flex align-items-center">
 
@@ -90,7 +90,7 @@ id="layout-navbar">
           <div class="dropdown-divider"></div>
         </li>
         <li>
-          <a class="dropdown-item" href="javascript:void(0);">
+          <a class="dropdown-item" href="{{ url('logout') }}">
             <i class="bx bx-power-off me-2"></i>
             <span class="align-middle">Log Out</span>
           </a>

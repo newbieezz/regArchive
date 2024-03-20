@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::match(['get','post'],'ulogin','UserController@login');
+    Route::get('logout','UserController@logout');
      //protected routes/ needs to login first before user can open
     Route::group(['middleware'=>['auth']],function(){
     Route::match(['get','post'],'dashboard', 'UserController@dashboard');
