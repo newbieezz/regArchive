@@ -11,88 +11,64 @@
     </div>
 
     <div class="menu-inner-shadow"></div>
-
+    <li class="menu-header medium text-uppercase">
+      <i class="menu-icon tf-icons bx bx-home-circle"></i>
+      <span class="menu-header-text">Registrar Files</span>
+    </li>
     <ul class="menu-inner py-1">
-      <!-- Dashboards -->
-      <li class="menu-item active open">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Dashboards">Registrar Files</div>
-          <div class="badge bg-danger rounded-pill ms-auto">5</div>
-        </a>
-        <ul class="menu-sub">
           <li class="menu-item">
-            <a
-              href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/dashboards-crm.html"
-              target="_blank"
-              class="menu-link">
+            <a href="{{ url('studRecords') }}"class="menu-link">
               <div data-i18n="CRM">Students Records</div>
+              <div class="badge bg-danger rounded-pill ms-auto">5</div>
             </a>
           </li>
-          <li class="menu-item active">
-            <a href="index.html" class="menu-link">
-              <div data-i18n="Analytics">Course Catalog</div>
+          <li class="menu-item ">
+            <a href="" class="menu-link menu-toggle">
+              <div data-i18n="Analytics">College Department</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="{{ url('collegeDept') }}" class="menu-link">
+                  <div data-i18n="Without menu">College of Education</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="menu-item">
+            <a href="{{ url('enrollmentRec') }}" class="menu-link">
+              <div data-i18n="Analytics">Enrollment Records</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="index.html" class="menu-link">
-              <div data-i18n="Analytics">Graduation Records</div>
+            <a href="{{ url('gradApplicants') }}" class="menu-link">
+              <div data-i18n="Analytics">Graduating Applicants</div>
             </a>
           </li>
-        </ul>
-      </li>
-
-      <!-- Layouts -->
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Enrollment Records</div>
-        </a>
-
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="layouts-without-menu.html" class="menu-link">
-              <div data-i18n="Without menu">Form 137</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <!-- Front Pages -->
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-store"></i>
-          <div data-i18n="Front Pages">Front Pages</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a
-              href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/landing-page.html"
-              class="menu-link"
-              target="_blank">
-              <div data-i18n="Landing">Landing</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <li class="menu-header small text-uppercase">
+    </ul>
+    <div class="menu-inner-shadow"></div>
+    @if (Auth::guard('web')->user()->role=="SuperAdmin")
+      <li class="menu-header medium text-uppercase">
+        <i class="menu-icon tf-icons bx bx-dock-top"></i>
         <span class="menu-header-text">Settings</span>
       </li>
-      <!-- Apps -->
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-file"></i>
-          <div data-i18n="Front Pages">Accounts</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a class="menu-link" target="_blank">
-              <div data-i18n="Landing">Users</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+      <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="{{ url('users') }}"class="menu-link">
+                <div data-i18n="CRM">Users / Staff</div>
+                <div class="badge bg-danger rounded-pill ms-auto">5</div>
+              </a>
+            </li>
+            <li class="menu-item ">
+              <a href="{{ url('categories') }}" class="menu-link">
+                <div data-i18n="Analytics">Categories/Requirements</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{ url('trash') }}" class="menu-link">
+                <div data-i18n="Analytics">Trash</div>
+              </a>
+            </li>
+      </ul>
+    @endif
 
-    </ul>
   </aside>

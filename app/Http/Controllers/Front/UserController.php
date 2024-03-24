@@ -7,31 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use App\Models\User;
 class UserController extends Controller
 {
 
-    public function login(Request $request){
-        // if($request->ajax()){
-        //     $data = $request->all();
+    public function ulogin(Request $request){
 
-        //      //requires validation
-        //      $validator = Validator::make($request->all(),[  
-        //         'email' => 'required|email|max:150|exists:users',
-        //         'password' => 'required|min:6',
-        //     ]);
-
-        //     if($validator->passes()){
-        //         if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-        //             // return redirect('dashboard');
-        //             $redirectTo = url('dashboard'); //sending to cart page
-        //             return response()->json(['type'=>'success','url'=>$redirectTo]);
-        //         } else { //if auth is incorrect
-        //             return redirect()->back()->with('error_message','Invalid Email or Password');
-        //         }
-        //     } else {
-        //         return response()->json(['type'=>'error','errors'=>$validator->messages()]);
-        //     }
-        // }
         if($request->isMethod('post')){
             $data = $request->all();
 
@@ -69,4 +50,14 @@ class UserController extends Controller
         Session::flush();
         return redirect('/');
     }
+
+    public function users(Request $request){
+        $users = User::get()->all();
+        return view('settings.accounts')->with(compact( 'users'));
+    }
+    public function addAccount(Request $request){
+        return view('account.add_account');
+
+    }
+
 }
