@@ -6,7 +6,7 @@
 <!-- Small table -->
 
 <div class="card">
-  <h5 class="card-header">Enrolment Records</h5>
+  <h5 class="card-header">Enrollment Records</h5>
   <div class="table-responsive text-nowrap">
     <table class="table table-sm">
       <thead>

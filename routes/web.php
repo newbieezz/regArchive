@@ -13,12 +13,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
-
 Auth::routes();
 Route::namespace('App\Http\Controllers\Front')->group(function(){
+    Route::get('/','UserController@login');
     Route::match(['get','post'],'ulogin','UserController@ulogin');
      //protected routes/ needs to login first before user can open
     Route::group(['middleware' => ['auth']], function() {

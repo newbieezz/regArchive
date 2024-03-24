@@ -1,7 +1,7 @@
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="javascript:void(0);" class="app-brand-link">
+      <a href="{{url('dashboard')}}" class="app-brand-link">
         <span class="demo menu-text fw-bold ms-2"><h4>Registrar-Archive</h4></span>
       </a>
 
