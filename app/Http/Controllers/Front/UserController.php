@@ -58,7 +58,29 @@ class UserController extends Controller
         return view('settings.accounts')->with(compact( 'users'));
     }
     public function addAccount(Request $request){
-        return view('account.add_account');
+        if($request->ajax()){
+            $data=$request->all();
+            // dd($data);
+             //requires validation
+             $validator = Validator::make($request->all(), [  
+                'name' => 'required|string|max:100',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|string|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+                ]
+            );
+            if($validator->passes()){
+                $user = new User; 
+                $user->name= $data['name'];
+                $user ->email= $data['email'];
+                $user->role = 'Staff';
+                $user->password= bcrypt($data['password']);
+                $user->save();
+                return response()->json(['type'=>'success','message'=>'Account Created Successfully! ']);
+            }else {    
+                return response()->json(['type'=>'error','errors'=>$validator->messages()]);
+            }
+        }
+        return view('settings.add_account');
 
     }
 

@@ -116,3 +116,31 @@ let menu, animate;
   // Auto update menu collapsed/expanded based on the themeConfig
   window.Helpers.setCollapsed(true, false);
 })();
+//jquery function for user register form validation
+$("#addAccForm").submit(function(){
+  var formdata = $(this).serialize();//get the complete data from the form
+  // $(".loader").show(); //show the loader 
+  $.ajax({
+      headers:{
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url:"/add",
+      type:"POST",
+      data:formdata,
+      success:function(resp){
+          if(resp.type=="error"){ //validation fails
+                  //display all the errors in array used eachloop
+                  $.each(resp.errors,function(i,error){ //loop the error in an array
+                      $("#add-"+i).attr('style','color:red');
+                      $("#add-"+i).html(error);
+              });
+          } else if(resp.type=="success"){ //if success in validation
+              $("#add-success").attr('style','color:green');
+              $("#add-success").html(resp.message);
+          } 
+      }, error:function(){
+          alert("Error");
+      }
+  })
+  
+});

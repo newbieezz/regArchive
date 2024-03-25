@@ -8,21 +8,19 @@
             <thead class="table-light">
             <tr>
                 <th>Name</th>
+                <th>Role</th>
                 <th>Email</th>
                 <th>Date Created</th>
-                <th>Status</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody >
             @foreach($users as $user)
                 <tr>
-                    <td>
-                    <span class="fw-medium">{{ $user['name'] }}</span>
-                    </td>
+                    <td><span class="fw-medium">{{ $user['name'] }}</span> </td>
+                    <td><span class="fw-medium">{{ $user['role'] }}</span> </td>
                     <td>{{ $user['email'] }}</td>
                     <td>{{ $user['created_at'] }}</td>
-                    <td><span class="badge bg-label-primary me-1">Active</span></td>
                     <td>
                     <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -43,8 +41,8 @@
             </tbody>
             <tfoot class="table-border-bottom-0">
                 <tr>
-                  <th class="rounded-start-bottom"><button type="submit" class="btn btn-primary">Click to Add</button></th>
-
+                  <th class="rounded-start-bottom"><button class="btn btn-primary">
+                    <a href="{{url('add')}}" style="color: white">Click to Add</a></button></th>
                 </tr>
               </tfoot>
         </table>
