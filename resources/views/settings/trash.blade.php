@@ -7,51 +7,35 @@
 <div class="card">
   <h5 class="card-header">Recently Deleted Files/Documents</h5>
   <div class="table-responsive text-nowrap">
-    <table class="table table-sm">
+    <table class="table table-light">
       <thead>
         <tr>
-          <th>Student ID</th>
-          <th>Last Name</th>
-          <th>First Name</th>
-          <th>Middle Name</th>
-          <th>Program</th>
-          <th>Student Status</th>
+          <th>Document ID</th>
+          <th>File Name</th>
+          <th>Date Deleted</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody class="table-border-bottom-0">
         <tr>
           <td>1180802  </td>
-          <td>Lugo  </td>
-          <td>Mj  </td>
-          <td> Lopez </td>
-          <td> BSIT </td>
-          <td><span class="badge bg-label-primary me-1">Continuing </span></td>
-          
-        </tr>
-        <tr>
-          <td>1142122  </td>
-          <td>Veloso  </td>
-          <td>Cherry Ann  </td>
-          <td> Imortal </td>
-          <td> BSIT </td>
-          <td><span class="badge bg-label-primary me-1">Returnee </span></td>
-         
-          
-        </tr>
-        <tr>
-          <td>1187541 </td>
-          <td>Gonzalez  </td>
-          <td>Kim  </td>
-          <td> Kimberlat </td>
-          <td> BSIT </td>
-          <td><span class="badge bg-label-primary me-1">Shiftee </span></td>
-          
-        </tr>
-       
+          <td>PSA  </td>
+          <td>00 00 00 00   </td>
+          <td><div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Restore</a>
+                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                  </div>
+              </div> 
+            </td>
+        </tr>  
       </tbody>
     </table>
   </div>
-</div>
+</div></div>
             <div class="content-backdrop fade"></div>
 
       <div class="layout-overlay layout-menu-toggle"></div>

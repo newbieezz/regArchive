@@ -16,13 +16,8 @@ id="layout-navbar">
           Document Type
         </button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
-          <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
-          <li><a class="dropdown-item disabled" href="javascript:void(0);">Something else here</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="javascript:void(0);">Separated link</a></li>
+          <li><a class="dropdown-item" href="javascript:void(0);">Form 137</a></li>
+          <li><a class="dropdown-item" href="javascript:void(0);">Diploma</a></li>
         </ul>
        &nbsp;
         <input

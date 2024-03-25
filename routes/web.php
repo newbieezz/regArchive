@@ -29,6 +29,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('enrollmentRec','EnrollmentRecordController@view');
     Route::get('categories','CategoryController@view');
     Route::get('trash','TrashController@view');
+    Route::match(['get','post'],'addCategory','UserController@addCategory');
     
     });
 });

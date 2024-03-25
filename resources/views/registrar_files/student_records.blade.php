@@ -5,9 +5,34 @@
               <!-- Small table -->
 
 <div class="card">
+  <div class="card mb-4">
+    <h5 class="card-header">Import csv file or Scan Documents</h5>
+    <div class="card-body demo-vertical-spacing demo-only-element">
+      <div class="input-group">
+        <input
+          type="file"
+          class="form-control"
+          id="inputGroupFile04"
+          aria-describedby="inputGroupFileAddon04"
+          aria-label="Upload" />
+        <button class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04">Upload</button> &nbsp;
+      </div>
+      <div class="input-group">
+        <select
+          class="form-select"
+          id="inputGroupSelect04"
+          aria-label="Example select with button addon">
+          <option selected>Choose Document Type to Scan</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <button class="btn btn-outline-primary" type="button">Scan</button>
+      </div>
+    </div>
   <h5 class="card-header">Enrollment Records</h5>
   <div class="table-responsive text-nowrap">
-    <table class="table table-sm">
+    <table class="table">
       <thead>
         <tr>
           <th>Student ID</th>
@@ -51,7 +76,7 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> </div> </div> 
             <div class="content-backdrop fade"></div>
 
       <div class="layout-overlay layout-menu-toggle"></div>

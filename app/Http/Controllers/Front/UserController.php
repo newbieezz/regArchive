@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use Laravel\Ui\Presets\React;
+
 class UserController extends Controller
 {
 
@@ -82,6 +84,10 @@ class UserController extends Controller
         }
         return view('settings.add_account');
 
+    }
+
+    public function addCategory(Request $request){
+        return view('settings.add_category');
     }
 
 }
