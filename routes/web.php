@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Main\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,23 +15,43 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes();
-Route::namespace('App\Http\Controllers\Front')->group(function(){
-    Route::get('/','UserController@login');
-    Route::match(['get','post'],'ulogin','UserController@ulogin');
-     //protected routes/ needs to login first before user can open
-    Route::group(['middleware' => ['auth']], function() {
-    Route::match(['get','post'],'dashboard', 'UserController@dashboard');
-    Route::match(['get','post'],'add','UserController@addAccount');
-    Route::get('users','UserController@users');
-    Route::get('logout','UserController@logout');
-    Route::get('studRecords','StudentsRecordController@view');
-    Route::get('collegeDept','CollegeDeptController@view');
-    Route::get('gradApplicants','GraduationRecordController@view');
-    Route::get('enrollmentRec','EnrollmentRecordController@view');
-    Route::get('categories','CategoryController@view');
-    Route::get('trash','TrashController@view');
-    Route::match(['get','post'],'addCategory','UserController@addCategory');
-    
+Route::prefix('user')->group(function () {
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::get('/logout', [LoginController::class, 'logout']);
+});
+
+Route::get('/', [UserController::class, 'index']);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::namespace('App\Http\Controllers\Main')->group(function(){
+        Route::get('dashboard', 'HomeController@index');
+        Route::get('student/records', 'StudentRecordsController@index');
+        Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
+    });
+    Route::namespace('App\Http\Controllers\Settings')->group(function(){
+        Route::prefix('settings')->group(function () {
+            // Account routes
+            Route::prefix('user')->group(function () {
+                Route::get('/', 'AccountController@index');
+                Route::get('/create', 'AccountController@create');
+                Route::get('/update', 'AccountController@edit');
+            });
+            // Department routes
+            Route::prefix('department')->group(function () {
+                Route::get('/', 'DepartmentController@index');
+            });
+            // Course routes
+            Route::prefix('course')->group(function () {
+                Route::get('/', 'CourseController@index');
+            });
+            //Requirements category routes
+            Route::prefix('requirement')->group(function () {
+                Route::get('/', 'RequirementController@index');
+            });
+            //Requirements category routes
+            Route::prefix('trash')->group(function () {
+                Route::get('/', 'TrashController@index');
+            });
+        });
     });
 });

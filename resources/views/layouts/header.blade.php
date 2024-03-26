@@ -8,32 +8,7 @@ id="layout-navbar">
 </div>
 
 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-  <!-- Search -->   
-  <div class="navbar-nav align-items-center">
-    <div class="nav-item d-flex align-items-center">
-
-        <button type="button" class="btn btn-outline-primary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          Document Type
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="javascript:void(0);">Form 137</a></li>
-          <li><a class="dropdown-item" href="javascript:void(0);">Diploma</a></li>
-        </ul>
-       &nbsp;
-        <input
-        type="text"
-        class="form-control border-0 shadow-none ps-1 ps-sm-2"
-        placeholder="Enter ID Number..."
-        aria-label="Search..." />
-        {{-- <i class="bx bx-search fs-4 lh-0"></i> --}}
-        <a href="javascript:;" class="btn rounded-pill btn-primary">Search</a>
-
-    </div>
-  </div>
-  <!-- /Search -->
-
   <ul class="navbar-nav flex-row align-items-center ms-auto">
-
     <!-- User Pic & Setting (logout)-->
     <li class="nav-item navbar-dropdown dropdown-user dropdown">
       <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -85,7 +60,7 @@ id="layout-navbar">
           <div class="dropdown-divider"></div>
         </li>
         <li>
-          <a class="dropdown-item" href="{{ url('logout') }}">
+          <a class="dropdown-item" href="{{ url('user/logout') }}">
             <i class="bx bx-power-off me-2"></i>
             <span class="align-middle">Log Out</span>
           </a>
