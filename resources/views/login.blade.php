@@ -55,7 +55,7 @@
 					 </button>
 				 </div>
 			   @endif	
-				<form class="login100-form validate-form p-b-33 p-t-5"  action="{{ url('/user/login') }}" method="post"> @csrf
+				<form class="login100-form validate-form p-b-33 p-t-5"  action="{{ url('ulogin') }}" method="post"> @csrf
 					<div class="wrap-input100 validate-input" data-validate = "Enter email">
 						<input class="input100" type="email" id="email" name="email" placeholder="Email">
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>

@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->after('name');//user/admin or Super Admin
-            
+        Schema::table('admins', function (Blueprint $table) {
+            $table->string('type')->after('name');//user/admin or Super Admin
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+        Schema::table('admins', function (Blueprint $table) {
+            $table->dropColumn('type');
         });
     }
 };

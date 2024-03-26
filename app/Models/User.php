@@ -42,15 +42,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    /**
-     * Retrieves the Status of the User
-     *
-     * @return App\Models\UserStatus
-     */
-    public function status()
-    {
-        return $this->belongsTo(UserStatus::class, 'user_status_id');
-    }
-
 }
