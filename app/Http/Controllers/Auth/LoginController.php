@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -25,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = 'dashboard';
 
     /**
      * Create a new controller instance.
@@ -35,5 +38,34 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Authenticate users.
+     */
+    public function login(LoginRequest $request){
+        try {
+            $request->validated();
+
+            if(Auth::attempt(['email'=>$request->getEmail(),'password'=>$request->getPassword()]))
+            {
+                return redirect('dashboard');
+
+            }else{
+                return redirect()->back()->with('error_message','Invalid Email or Password');
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+
+        } 
+    }
+
+    /**
+     * Logout users.
+     */
+    public function logout(){
+        Auth::logout();
+        Session::flush();
+        return redirect('/');
     }
 }
