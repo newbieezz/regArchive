@@ -21,6 +21,11 @@
               <div data-i18n="CRM">Students Records</div>
             </a>
           </li>
+          <li class="menu-item">
+            <a href="{{ url('student/records') }}"class="menu-link">
+              <div data-i18n="CRM">Students Enrollment Records</div>
+            </a>
+          </li>
           <li class="menu-item ">
             <a href="" class="menu-link menu-toggle">
               <div data-i18n="Analytics">Graduating Applicants</div>
@@ -42,6 +47,11 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="menu-item">
+            <a href="{{ url('student/records') }}"class="menu-link">
+              <div data-i18n="CRM">Document Records</div>
+            </a>
           </li>
     </ul>
     <div class="menu-inner-shadow"></div>
