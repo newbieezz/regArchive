@@ -1,11 +1,19 @@
 @extends('layouts.layout')
 @section('content')
+    <!-- CSS for Forms-->
+    <link rel="stylesheet" href="settings/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="settings/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="settings/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="settings/assets/css/demo.css" />
+    <link rel="stylesheet" href="settings/assets/css/custom.css" />
+    <link rel="stylesheet" href="settings/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="settings/assets/vendor/libs/apex-charts/apex-charts.css" />
 <!-- Content wrapper -->
 <div class="content-wrapper">
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Add Category / <a href="{{url('categories')}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Add Category / <a href="{{url('requirement/')}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">

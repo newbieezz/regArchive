@@ -72,11 +72,22 @@
               </a>
             </li>
           @endif
+          {{-- <li class="menu-item">
+            <a href="{{ url('settings/requirements/') }}" class="menu-link">
+              <div data-i18n="Analytics">Requirement/Category</div>
+            </a>
+          </li>
+            <li class="menu-item">
+              <a href="{{ url('settings/department/') }}" class="menu-link">
+                <div data-i18n="Analytics">Departments</div>
+              </a>
+            </li> --}}
             <li class="menu-item">
               <a href="{{ url('settings/trash') }}" class="menu-link">
                 <div data-i18n="Analytics">Trash</div>
               </a>
             </li>
+            
       </ul>
    
 

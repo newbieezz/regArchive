@@ -21,9 +21,9 @@
                                                 Select Enrollment Period
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                                <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">2019</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">2nd Semester S.Y.2020-2021</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">1st Semester S.Y.2020-22021</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Summer of 2020</a>
                                             </div>
                                         </div>
                                     </div>
@@ -38,7 +38,7 @@
                                                     class="bx bx-user text-primary"></i></span>
                                         </div>
                                         <div class="d-flex flex-column">
-                                            <small>2022</small>
+                                            <small>2nd Semester S.Y.2020-2021</small>
                                             <h6 class="mb-0">2305</h6>
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                                                     class="bx bx-user text-info"></i></span>
                                         </div>
                                         <div class="d-flex flex-column">
-                                            <small>2021</small>
+                                            <small>1st Semester S.Y.2020-22021</small>
                                             <h6 class="mb-0">4484</h6>
                                         </div>
                                     </div>

@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function() {
             //Requirements category routes
             Route::prefix('requirement')->group(function () {
                 Route::get('/', 'RequirementController@index');
+                Route::get('/show', 'RequirementController@addForm');
             });
             //Requirements category routes
             Route::prefix('trash')->group(function () {
