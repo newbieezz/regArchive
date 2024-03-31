@@ -20,7 +20,6 @@ class RequirementController extends Controller
      */
     public function create()
     {
-        return view('settings.requirements.add_category');
     }
 
     /**
@@ -36,7 +35,7 @@ class RequirementController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -61,5 +60,9 @@ class RequirementController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function addForm(){
+        return view('settings.requirements.add_category');
+
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use Hash;
+
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\UserStatus;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\Hash;
 class UsersTableSeeder extends Seeder
 {
     /**

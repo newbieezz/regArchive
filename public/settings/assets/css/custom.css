@@ -1,0 +1,18 @@
+.action-column {
+    position: absolute;
+    right: 0;
+    background-color: white;
+    z-index: 1;
+}
+.action-btns {
+    white-space: nowrap; /* Prevents action buttons from wrapping */
+}
+.table-container {
+    overflow-x: auto;
+    position: relative;
+    max-width: 100%;
+}
+.menu-vertical .menu-inner {
+    height: fit-content !important;
+    flex: unset !important;
+}
