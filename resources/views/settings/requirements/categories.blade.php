@@ -8,7 +8,7 @@
             <h5 class="card-title">Categories/Requirements for Enrollment</h5>
           </div>
           <div class="col-6 d-flex justify-content-end">
-            <a href="{{url('settings/requirement/create')}}" style="color: white">
+            <a href="{{url('settings/requirement/show')}}" style="color: white">
               <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-plus mx-2"></i> Add New</button>
             </a>
           </div>
