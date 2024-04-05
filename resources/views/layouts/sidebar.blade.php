@@ -22,8 +22,8 @@
             </a>
           </li>
           <li class="menu-item">
-            <a href="{{ url('student/records') }}"class="menu-link">
-              <div data-i18n="CRM">Students Enrollment Records</div>
+            <a href="{{ url('student/enrollment') }}"class="menu-link">
+              <div data-i18n="CRM">Enrollment Records</div>
             </a>
           </li>
           <li class="menu-item ">
@@ -49,7 +49,7 @@
             </ul>
           </li>
           <li class="menu-item">
-            <a href="{{ url('student/records') }}"class="menu-link">
+            <a href="{{ url('documents/records') }}"class="menu-link">
               <div data-i18n="CRM">Document Records</div>
             </a>
           </li>

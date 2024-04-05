@@ -8,7 +8,7 @@
     <div class="card-body">
       <div class="row mb-2">
         <div class="col-6">
-          <h5 class="card-title">Student Enrollment Records</h5>
+          <h5 class="card-title">Document Records</h5>
         </div>
         <div class="col-6 d-flex justify-content-end">
           <button type="button" class="btn btn-outline-secondary btn-sm btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>

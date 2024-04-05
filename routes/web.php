@@ -26,7 +26,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::namespace('App\Http\Controllers\Main')->group(function(){
         Route::get('dashboard', 'HomeController@index');
         Route::get('student/records', 'StudentRecordsController@index');
+        Route::get('student/enrollment', 'EnrollmentRecordsController@index');
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
+        Route::get('documents/records', 'DocumentsController@index');
     });
     Route::namespace('App\Http\Controllers\Settings')->group(function(){
         Route::prefix('settings')->group(function () {
