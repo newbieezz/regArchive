@@ -1,39 +1,94 @@
 @extends('layouts.layout')
 @section('content')
-  <body>
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="row">
-                <div class="col-lg-8 mb-4 order-0">
-                  <div class="card">
-                    <div class="d-flex align-items-end row">
-                      <div class="col-sm-7">
-                        <div class="card-body">
-                          <h5 class="card-title text-primary">Scan and Save Documents</h5>
-                          <p class="mb-4"> Document Type</p>
-                          <p class="mb-4"> Scan -> Save to Database</p>
-                          <p class="mb-4"> Scanned Documents appear in picture</p>
-                          <p class="mb-4"> Scanned Documents appear in text</p>
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">Save</a> </br></br></br></br>
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">Add Document</a>
-                        </div>
-                      </div>
-                      <div class="col-sm-5 text-center text-sm-left">
-                        <div class="card-body pb-0 px-0 px-md-4">
-                          <img
-                            src="../assets/img/illustrations/man-with-laptop-light.png"
-                            height="140"
-                            alt="View Badge User"
-                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                            data-app-light-img="illustrations/man-with-laptop-light.png" />
-                        </div>
-                      </div>
-                    </div>
+    <!-- CSS for Forms-->
+    <link rel="stylesheet" href="{{ url('settings/assets/vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ url('settings/assets/vendor/css/core.css') }}" class="template-customizer-core-css') }}" />
+    <link rel="stylesheet" href="{{ url('settings/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css') }}" />
+    <link rel="stylesheet" href="{{ url('settings/assets/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ url('settings/assets/css/custom.css') }}" />
+    <link rel="stylesheet" href="{{ url('settings/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ url('settings/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="py-3 mb-4">Update Account / <a href="{{url('settings/user/')}}">Back</a></h4>
+
+      <!-- Basic Layout -->
+      <div class="row">
+        <div class="col-xl">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              @if(Session::has('success_message'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>Success: </strong> {{ Session::get('success_message')}}
+                  <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              @endif
+              @if(Session::has('error_message'))
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      <strong>Error: </strong> {{ Session::get('error_message')}}
+                      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
+              @endif
+              @if($errors->any())
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      <strong>Error: </strong> <?php echo implode('', $errors->all('<div>:message</div>')); ?>
+                      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+              @endif
+            </div>
+
+            <div class="card-body">
+              <p id="register-success') }}"></p>
+              <form action="{{url('edit')}}" method="post" id="addAccForm"> @csrf
+                <div class="mb-3">
+                  <label class="form-label" for="basic-default-fullname">First Name</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Fisrt Name" 
+                    @if(!empty($user['first_name'])) value="{{ $user['first_name'] }}" 
+                    @else value="{{ old('first_name') }}" @endif/>
                 </div>
-            <div class="content-backdrop fade"></div>
-
-      <div class="layout-overlay layout-menu-toggle"></div>
-    <!-- / Layout wrapper -->
-
+                <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">Last Name</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Fisrt Name" 
+                    @if(!empty($user['last_name'])) value="{{ $user['last_name'] }}" 
+                    @else value="{{ old('last_name') }}" @endif/>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="basic-default-email">Email</label>
+                  <div class="input-group input-group-merge">
+                    <input type="text" id="email" name="email" class="form-control"
+                    @if(!empty($user['email'])) value="{{ $user['email'] }}" 
+                    @else value="{{ old('email') }}" @endif/>
+                  </div>
+                  <div class="form-text">You can use letters, numbers & periods</div>  
+                  <p id="add-email"></p>
+                </div>
+                <div class="mb-3 row">
+                    <label class="form-label" for="basic-default-password">Password</label>
+                    <div class="input-group input-group-merge">
+                      <input class="form-control" type="password" id="password" name="password"
+                        @if(!empty($user['password'])) value="{{ $user['password'] }}" 
+                        @else value="{{ old('password') }}" @endif/>/> </div>
+                    <div class="form-text">Must be atleast 8 characters with numbers & symbols.</div>  
+                  </div>
+                  <p id="add-password"></p>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+    <div class="content-backdrop fade"></div>
+</div>
+  <!-- Content wrapper -->
 @endsection
-</html>

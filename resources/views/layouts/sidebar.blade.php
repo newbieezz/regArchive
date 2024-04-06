@@ -67,14 +67,21 @@
               </a>
             </li>
             <li class="menu-item ">
-              <a href="{{ url('settings/department') }}" class="menu-link">
+              <a href="{{url('settings/department')}}" class="menu-link">
                 <div data-i18n="Analytics">College Departments</div>
               </a>
             </li>
             <li class="menu-item ">
-              <a href="{{ url('settings/course') }}" class="menu-link">
-                <div data-i18n="Analytics">Course</div>
+              <a href="" class="menu-link menu-toggle">
+                <div data-i18n="Analytics">Department Course</div>
               </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{{ url('settings/course/') }}" class="menu-link">
+                    <div data-i18n="Without menu">College of Education</div>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="menu-item ">
               <a href="{{ url('settings/requirement') }}" class="menu-link">

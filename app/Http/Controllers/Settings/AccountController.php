@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
 class AccountController extends Controller
 {
     /**
@@ -44,9 +44,16 @@ class AccountController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        return view('settings.accounts.edit_account');
+    public function edit(Request $request, $id=null)
+    {   if($id==""){
+
+        } else{
+            $users = User::find($id);
+            $user = User::get()->where('id',$id)->first();
+            // dd($id);
+            return view('settings.accounts.edit_account')->with(compact('user'));
+
+        }
     }
 
     /**

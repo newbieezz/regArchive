@@ -43,7 +43,7 @@ class RequirementController extends Controller
      */
     public function edit(string $id)
     {
-        //
+    
     }
 
     /**
@@ -51,7 +51,7 @@ class RequirementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**
@@ -65,4 +65,9 @@ class RequirementController extends Controller
         return view('settings.requirements.add_category');
 
     }
+    public function updateForm(){
+        return view('settings.requirements.edit_category');
+
+    }
+
 }

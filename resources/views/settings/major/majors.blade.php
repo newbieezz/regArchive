@@ -5,19 +5,19 @@
       <div class="card-body">
         <div class="row mb-2">
           <div class="col-6">
-            <h5 class="card-title">Departments</h5>
+            <h5 class="card-title">College of Technology List of Majors</h5>
           </div>
           <div class="col-6 d-flex justify-content-end">
-              <button type="button" class="btn btn-outline-secondary btn-sm mx-2"  data-bs-toggle="modal"data-bs-target="#newModal">
+              <button type="button" class="btn btn-outline-secondary btn-sm mx-2" data-bs-toggle="modal"data-bs-target="#newModal">
                 <i class="fas fa-plus mx-2"></i> Add New</button>
           </div>
         </div>
-         <!-- Add New Department Modal -->
-         <div class="modal fade" id="newModal" tabindex="-1" aria-hidden="true">
+        <!-- Add New Major Modal -->
+        <iv class="modal fade" id="newModal" tabindex="-1" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Add New Department</h5>
+                <h5 class="modal-title" id="exampleModalLabel3">Add New Major</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -27,14 +27,14 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col mb-3">
-                    <label for="nameLarge" class="form-label">Department Name</label>
-                    <input type="text" id="nameLarge" class="form-control" placeholder="Enter Department Name" />
+                    <label for="nameLarge" class="form-label">Name</label>
+                    <input type="text" id="nameLarge" class="form-control" placeholder="Enter Major Name" />
                   </div>
                 </div>
                 <div class="row g-2">
                   <div class="col mb-0">
-                    <label for="nameLarge" class="form-label">Department Code</label>
-                    <input type="name" id="nameLarge" class="form-control" placeholder="Enter Code" />
+                    <label for="nameLarge" class="form-label">Course Name</label>
+                    <input type="name" id="nameLarge" class="form-control" placeholder="Enter Course Code" />
                   </div>
                 </div>
               </div>
@@ -46,13 +46,13 @@
               </div>
             </div>
           </div>
-        </div>
-        <!-- Update Department Modal -->
+        </iv>
+        <!-- Update Major Modal -->
         <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Update Department</h5>
+                <h5 class="modal-title" id="exampleModalLabel3">Update Major</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -62,14 +62,14 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col mb-3">
-                    <label for="nameLarge" class="form-label">Department Name</label>
-                    <input type="text" id="nameLarge" class="form-control" placeholder="Department Name" />
+                    <label for="nameLarge" class="form-label">Name</label>
+                    <input type="text" id="nameLarge" class="form-control" placeholder="Enter Major Name" />
                   </div>
                 </div>
                 <div class="row g-2">
                   <div class="col mb-0">
-                    <label for="nameLarge" class="form-label">Department Code</label>
-                    <input type="name" id="nameLarge" class="form-control" placeholder="Department Code" />
+                    <label for="nameLarge" class="form-label">Course Name</label>
+                    <input type="name" id="nameLarge" class="form-control" placeholder="Enter Course Code" />
                   </div>
                 </div>
               </div>
@@ -86,8 +86,7 @@
           <table class="table">
             <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Code</th>
+                  <th>Course Name</th>
                   <th>Name</th>
                   <th>Date Created</th>
                   <th>Action</th>
@@ -95,9 +94,8 @@
             </thead>
             <tbody class="table-border-bottom-0">
             <tr>
-                <td>1</td>
-                <td>COT</td>
-                <td>College of Technology</td>
+                <td>Bachelor of Science in Information and Communication Technology</td>
+                <td>Computer Programming</td>
                 <td>2024-02-17 08:10</td>
                 <td>
                 <div class="dropdown">
@@ -106,23 +104,6 @@
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" data-bs-toggle="modal"data-bs-target="#updateModal"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);" ><i class="bx bx-trash me-1"></i> Delete</a>
-                    </div>
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>CoE</td>
-                <td>College of Engineering</td>
-                <td>2024-02-17 08:10</td>
-                <td>
-                <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item"  data-bs-toggle="modal"data-bs-target="#updateModal"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                         <a class="dropdown-item" href="javascript:void(0);" ><i class="bx bx-trash me-1"></i> Delete</a>
                     </div>
                 </div>

@@ -36,7 +36,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::prefix('user')->group(function () {
                 Route::get('/', 'AccountController@index');
                 Route::get('/create', 'AccountController@create');
-                Route::get('/update', 'AccountController@edit');
+                Route::get('/update/{id?}', 'AccountController@edit');
+                Route::get('/delete', 'AccountController@destroy');
             });
             // Department routes
             Route::prefix('department')->group(function () {
@@ -46,10 +47,13 @@ Route::group(['middleware' => ['auth']], function() {
             Route::prefix('course')->group(function () {
                 Route::get('/', 'CourseController@index');
             });
+            // Course MAjor routes
+            Route::prefix('major')->group(function () {
+                Route::get('/', 'CourseMajorController@index');
+            });
             //Requirements category routes
             Route::prefix('requirement')->group(function () {
                 Route::get('/', 'RequirementController@index');
-                Route::get('/show', 'RequirementController@addForm');
             });
             //Requirements category routes
             Route::prefix('trash')->group(function () {
