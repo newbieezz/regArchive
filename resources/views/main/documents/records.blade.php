@@ -17,7 +17,9 @@
         </div>
       </div>
   <div class="table-responsive text-nowrap">
-    <table class="table">
+    <h4>Undecided pa sa UI na ibutang ari na part if foler icons ba then ig click kay table with that particular document type </h4>
+    <h4>Or the usual table then sa filter gihapon if ever nay pangitaon na file niya another SCAN and Upload File etc.</h4></h4>
+    {{-- <table class="table">
       <thead>
         <tr>
           <th>Student ID</th>
@@ -76,7 +78,7 @@
         </tr>
        
       </tbody>
-    </table>
+    </table> --}}
   </div>
 </div>
             <div class="content-backdrop fade"></div>
