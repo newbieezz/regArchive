@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('role')->default(1)->after('password'); //1 admin, 2 staff
+            $table->unsignedBigInteger('department_id')->nullable();
+
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments')
+                ->onDelete('cascade');
         });
     }
 
@@ -22,8 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-            
+            $table->dropColumn('department_id');
         });
     }
 };
