@@ -111,7 +111,7 @@ class AccountController extends Controller
     {
         try {
             $user = $this->userService->setStatus($id, config('user.statuses.active'));
-            return redirect('/settings/user')->with('success_message', 'Account '.$user->email.' activated successfully.');
+            return redirect()->back()->with('success_message', 'Account '.$user->email.' activated successfully.');
         } catch (Exception $e) {
             return redirect()->back()->with('error_message', $e->getMessage());
         }
@@ -124,7 +124,7 @@ class AccountController extends Controller
     {
         try {
             $user =$this->userService->setStatus($id, config('user.statuses.inactive'));
-            return redirect('/settings/user')->with('success_message', 'Account '.$user->email.' deactivated successfully.');
+            return redirect()->back()->with('success_message', 'Account '.$user->email.' deactivated successfully.');
         } catch (Exception $e) {
             return redirect()->back()->with('error_message', $e->getMessage());
         }
