@@ -49,8 +49,11 @@ class LoginController extends Controller
 
             if(Auth::attempt(['email'=>$request->getEmail(),'password'=>$request->getPassword()]))
             {
-                return redirect('dashboard');
-
+                if(Auth::user()->status->name == config('user.statuses.active')){
+                    return redirect('dashboard');
+                }else{
+                    return redirect()->back()->with('error_message','Account Deactivated');
+                }
             }else{
                 return redirect()->back()->with('error_message','Invalid Email or Password');
             }

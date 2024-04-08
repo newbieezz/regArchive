@@ -18,7 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'department_id',
+        'user_status_id',
+        'role',
         'email',
         'password',
     ];
@@ -51,6 +55,16 @@ class User extends Authenticatable
     public function status()
     {
         return $this->belongsTo(UserStatus::class, 'user_status_id');
+    }
+
+    /**
+     * Retrieves the Department of the User
+     *
+     * @return App\Models\Department
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
 }

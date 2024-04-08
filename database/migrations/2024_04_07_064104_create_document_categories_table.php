@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('role')->default(1)->after('password'); //1 admin, 2 staff
+        Schema::create('document_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->string('description');
+            $table->timestamps();
         });
     }
 
@@ -21,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-            
-        });
+        Schema::dropIfExists('document_categories');
     }
 };

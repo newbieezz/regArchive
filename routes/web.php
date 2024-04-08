@@ -36,8 +36,11 @@ Route::group(['middleware' => ['auth']], function() {
             Route::prefix('user')->group(function () {
                 Route::get('/', 'AccountController@index');
                 Route::get('/create', 'AccountController@create');
-                Route::get('/update/{id?}', 'AccountController@edit');
-                Route::get('/delete', 'AccountController@destroy');
+                Route::post('/store', 'AccountController@store');
+                Route::get('/update/{id}', 'AccountController@edit');
+                Route::post('/update/{id}', 'AccountController@update');
+                Route::get('/activate/{id}', 'AccountController@activate');
+                Route::get('/deactivate/{id}', 'AccountController@deactivate');
             });
             // Department routes
             Route::prefix('department')->group(function () {

@@ -57,7 +57,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL'),
+    'asset_url' => env('ASSET_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -185,5 +185,7 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Users' =>  \App\Models\User::class,
     ])->toArray(),
+
+    'pages' => env('PAGE_LIMIT', 10),
 
 ];

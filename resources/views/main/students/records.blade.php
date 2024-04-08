@@ -97,7 +97,7 @@
           </table>
         </div>
       </div>
-      @include('components.pagination')
+      <!-- Pagination here -->
     </div> 
   </div> 
 @endsection

@@ -19,17 +19,15 @@ class UsersTableSeeder extends Seeder
         $status = UserStatus::where('name', config('user.statuses.active'))->first();
 
         // create the system admin
-        $this->_createSystemAdmin();
+        $this->_createSystemAdmin($status);
 
         // create the system staff
-        $this->_createSystemStaff();
+        $this->_createSystemStaff($status);
     }
 
-    private function _createSystemAdmin(): void
+    private function _createSystemAdmin($status): void
     {
-        // retrieve user status
-        $status = UserStatus::where('name', config('user.statuses.active'))->first();
-        
+
         // create the system admin
         User::create([
             'first_name' => 'Registrar',
@@ -42,11 +40,8 @@ class UsersTableSeeder extends Seeder
         ]);
     }
 
-    private function _createSystemStaff(): void
+    private function _createSystemStaff($status): void
     {
-        // retrieve user status
-        $status = UserStatus::where('name', config('user.statuses.active'))->first();
-        
         // create the system admin
         User::create([
             'first_name' => 'Registrar',
