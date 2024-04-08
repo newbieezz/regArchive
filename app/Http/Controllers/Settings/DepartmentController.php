@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\ValidationException;
+use Exception;
 class DepartmentController extends Controller
 {
     /**
@@ -22,7 +23,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        // $departments = Department::all();
+        return view('settings.department.create');
     }
 
     /**
@@ -30,7 +32,19 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'name' => 'required'
+        ]);
+
+        $department = new Department;
+
+        $department->name = $request->name;
+        $department->code = $request->code;
+        $department->save();
+
+     
+        return redirect('/settings/department')->with('success','Department has been created successfully.');
     }
 
     /**
@@ -46,7 +60,12 @@ class DepartmentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            $department = Department::findOrFail($id);
+            return view('settings.department.edit')->with(compact('department'));
+        } catch (Exception $e) {
+            return redirect('/settings/department');
+        }
     }
 
     /**
@@ -54,7 +73,19 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $request->validate([
+                'code' => 'required',
+                'name' => 'required',
+              ]);
+              $department = Department::find($id);
+              $department->update($request->all());
+            return redirect('/settings/department')->with('success_message', 'Department updated successfully.');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->errors())->withInput();
+        } catch (Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
     }
 
     /**
@@ -62,6 +93,9 @@ class DepartmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // $department->delete();
+    
+        return redirect()->route('companies.index')->with('success','Company has been deleted successfully');
+    
     }
 }

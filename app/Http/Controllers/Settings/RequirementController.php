@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\DocumentCategory;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\ValidationException;
+use Exception;
 class RequirementController extends Controller
 {
     /**
@@ -12,7 +14,8 @@ class RequirementController extends Controller
      */
     public function index()
     {
-        return view('settings.requirements.categories');
+        $categories = DocumentCategory::paginate(config('app.pages'));
+        return view('settings.requirements.index',compact('categories'));
     }
 
     /**
@@ -20,6 +23,8 @@ class RequirementController extends Controller
      */
     public function create()
     {
+        return view('settings.requirements.create');
+
     }
 
     /**
@@ -27,7 +32,19 @@ class RequirementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'type' => 'required',
+            'description' => 'required'
+        ]);
+
+        $category = new DocumentCategory;
+
+        $category->type = $request->type;
+        $category->description = $request->description;
+        $category->save();
+
+     
+        return redirect('/settings/requirement')->with('success','Document Category has been created successfully.');
     }
 
     /**
@@ -43,7 +60,12 @@ class RequirementController extends Controller
      */
     public function edit(string $id)
     {
-    
+        try {
+            $category = DocumentCategory::findOrFail($id);
+            return view('settings.requirements.edit')->with(compact('category'));
+        } catch (Exception $e) {
+            return redirect('/settings/requirement');
+        }
     }
 
     /**
@@ -51,7 +73,19 @@ class RequirementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        try {
+            $request->validate([
+                'type' => 'required',
+                'description' => 'required',
+              ]);
+              $category = DocumentCategory::find($id);
+              $category->update($request->all());
+            return redirect('/settings/requirement')->with('success_message', 'Document Category updated successfully.');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->errors())->withInput();
+        } catch (Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
     }
 
     /**
@@ -60,14 +94,6 @@ class RequirementController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-    public function addForm(){
-        return view('settings.requirements.add_category');
-
-    }
-    public function updateForm(){
-        return view('settings.requirements.edit_category');
-
     }
 
 }

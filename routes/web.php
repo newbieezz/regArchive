@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Main\UserController;
+use App\Models\Course;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +27,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::namespace('App\Http\Controllers\Main')->group(function(){
         Route::get('dashboard', 'HomeController@index');
         Route::get('student/records', 'StudentRecordsController@index');
+        // Enrollment routes
         Route::get('student/enrollment', 'EnrollmentRecordsController@index');
+        Route::get('student/create', 'EnrollmentRecordsController@create');
+        Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
+        Route::post('/update/{id}', 'EnrollmentRecordsController@update');
+        // Graduating Applicants routes
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
         Route::get('documents/records', 'DocumentsController@index');
     });
@@ -46,23 +52,35 @@ Route::group(['middleware' => ['auth']], function() {
             Route::prefix('department')->group(function () {
                 Route::get('/', 'DepartmentController@index');
                 Route::get('/create', 'DepartmentController@create');
-                Route::get('/store', 'DepartmentController@store');
+                Route::post('/store', 'DepartmentController@store');
                 Route::get('/update/{id}', 'DepartmentController@edit');
                 Route::post('/update/{id}', 'DepartmentController@update');
             });
             // Course routes
             Route::prefix('course')->group(function () {
                 Route::get('/', 'CourseController@index');
+                Route::get('/create', 'CourseController@create');
+                Route::post('/store', 'CourseController@store');
+                Route::get('/update/{id}', 'CourseController@edit');
+                Route::post('/update/{id}', 'CourseController@update');
             });
             // Course MAjor routes
             Route::prefix('major')->group(function () {
-                Route::get('/', 'CourseMajorController@index');
+                Route::get('/{id}', 'CourseMajorController@index');
+                Route::match(['get','post'],'/create/{id}', 'CourseMajorController@create');
+                Route::match(['get','post'],'/store/{id}', 'CourseMajorController@store');
+                Route::get('/update/{id}', 'CourseMajorController@edit');
+                Route::post('/update/{id}', 'CourseMajorController@update');
             });
             //Requirements category routes
             Route::prefix('requirement')->group(function () {
                 Route::get('/', 'RequirementController@index');
+                Route::get('/create', 'RequirementController@create');
+                Route::post('/store', 'RequirementController@store');
+                Route::get('/update/{id}', 'RequirementController@edit');
+                Route::post('/update/{id}', 'RequirementController@update');
             });
-            //Requirements category routes
+            //Trash routes
             Route::prefix('trash')->group(function () {
                 Route::get('/', 'TrashController@index');
             });

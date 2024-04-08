@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
-
+use App\Models\Department;
+use Exception;
 class EnrollmentRecordsController extends Controller
 {
      /**
@@ -12,7 +14,9 @@ class EnrollmentRecordsController extends Controller
      */
     public function index()
     {
-        return view('main.students.enrollment');
+        $students = Enrollment::paginate(config('app.pages'));
+        $departments = Department::get()->toArray();
+        return view('main.students.enrollment',compact('students'));
     }
 
     /**
@@ -20,7 +24,8 @@ class EnrollmentRecordsController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('main.students.create');
     }
 
     /**
@@ -44,7 +49,12 @@ class EnrollmentRecordsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try { 
+            $students = Enrollment::findOrFail($id);
+            return view('smain.students.edit')->with(compact('students'));
+        } catch (Exception $e) {
+            return redirect('student/enrollment');
+        }
     }
 
     /**
