@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -12,7 +13,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('settings.department.departments');
+        $departments = Department::paginate(config('app.pages'));
+        return view('settings.department.index',compact('departments'));
     }
 
     /**

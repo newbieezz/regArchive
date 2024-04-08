@@ -45,6 +45,10 @@ Route::group(['middleware' => ['auth']], function() {
             // Department routes
             Route::prefix('department')->group(function () {
                 Route::get('/', 'DepartmentController@index');
+                Route::get('/create', 'DepartmentController@create');
+                Route::get('/store', 'DepartmentController@store');
+                Route::get('/update/{id}', 'DepartmentController@edit');
+                Route::post('/update/{id}', 'DepartmentController@update');
             });
             // Course routes
             Route::prefix('course')->group(function () {

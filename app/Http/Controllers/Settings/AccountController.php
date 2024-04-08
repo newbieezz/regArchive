@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Services\UserService;
 use App\Http\Requests\Settings\Users\CreateUserRequest;
 use App\Http\Requests\Settings\Users\UpdateUserRequest;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 class AccountController extends Controller
