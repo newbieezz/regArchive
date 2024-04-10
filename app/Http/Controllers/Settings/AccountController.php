@@ -15,13 +15,13 @@ use Illuminate\Validation\ValidationException;
 class AccountController extends Controller
 {
 
-    /** @var App\Services\API\UserService */
+    /** @var App\Services\UserService */
     protected $userService;
 
     /**
      * UserController constructor.
      *
-     * @param App\Services\API\UserService $userService
+     * @param App\Services\UserService $userService
      */
     public function __construct(UserService $userService)
     {

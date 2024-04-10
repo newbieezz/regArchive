@@ -26,41 +26,40 @@
               <p id="register-success"></p>
               <form action="{{url('settings/course/update/'.$course->id)}}" method="post"> @csrf
                 <div class="row">
-                  <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-fullname">Code</label>
-                    <input type="text" class="form-control" id="code" name="code" placeholder="First Name" 
-                        @if(!empty($course['code'])) value="{{ $course['code'] }}" 
-                        @else value="{{ old('code') }}" @endif>
-                    @error('code')
+                    <div class="col-sm-6 mb-4">
+                        <label for="nameLarge" class="form-label">College Department</label> <br>
+                        <select name="department_id" id="department_id" class="form-select" style="color: black">
+                            <option value="">Select Department</option>
+                            @foreach($departments as $department)
+                            <option value="{{ $department['id'] }}" {{ (old('department_id', optional($course->department)->id) == $department->id) ? 'selected' : '' }}> {{ $department['name'] }} </option>
+                            @endforeach
+                        </select>
+                        @error('department')
                         <p class="text-danger m-0">{{ $message }}</p>
-                    @enderror
-                  </div>
-                  <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-fullname">Course Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name"
-                        @if(!empty($course['name'])) value="{{ $course['name'] }}" 
-                        @else value="{{ old('name') }}" @endif>
-                    @error('name')
-                        <p class="text-danger m-0">{{ $message }}</p>
-                    @enderror
-                  </div>
-                  <div class="col-sm-6 mb-4">
-                    <label for="nameLarge" class="form-label">Program / Course</label> <br>
-                    <select name="department_id" id="department_id" class="form-control" style="color: black">
-                        <option value="">Select</option>
-                        @foreach($getDepartment as $department)
-                        <option value="{{ $department['id'] }}"@if(!empty($course['department_id']) && $course['department_id']==$course['id'])
-                        selected="" @endif> {{ $department['name'] }} </option>
-                        @endforeach
-                    </select>
-                    @error('department')
-                        <p class="text-danger m-0">{{ $message }}</p>
-                    @enderror
-                  </div>
+                        @enderror
+                    </div>
                 </div>
-                <div class="col-12 d-flex justify-content-end">
-                  <a class="mx-2" href="{{url('settings/course/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
-                  <button type="submit" class="btn btn-primary">Save</button>
+                <div class="row">
+                    <div class="col-sm-6 mb-4">
+                        <label class="form-label" for="basic-default-fullname">Code</label>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="First Name" value="{{ old('code', $course->code) }}"/>
+                        @error('code')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-6 mb-4">
+                        <label class="form-label" for="basic-default-fullname">Course Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name"  value="{{ old('name', $course->name) }}"/>
+                        @error('name')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 d-flex justify-content-end">
+                    <a class="mx-2" href="{{ url('settings/course/') }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
                 </div>
               </form>
             </div>

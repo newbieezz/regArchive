@@ -7,18 +7,38 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\Settings\Course\CreateCourseRequest;
+use App\Http\Requests\Settings\Course\UpdateCourseRequest;
+use App\Services\CourseService;
 use Exception;
 class CourseController extends Controller
 {
+
+    /** @var App\Services\CourseService */
+    protected $courseService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param App\Services\CourseService $departmentService
+     */
+    public function __construct(CourseService $courseService)
+    {
+        $this->courseService = $courseService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $courses = Course::paginate(config('app.pages'));
-        $department = Department::get()->toArray();
-        // dd($getDepartment);
-        return view('settings.course.index', compact('courses','department'));
+        if (request()->filled('dept')) {
+            $dept = request('dept');
+            $courses = Course::byDepartment($dept)->paginate(config('app.pages'));
+        } else {
+            $courses = Course::paginate(config('app.pages'));
+        }
+        $departments = Department::all();
+        return view('settings.course.index', compact('courses','departments'));
     }
 
     /**
@@ -27,30 +47,17 @@ class CourseController extends Controller
     public function create()
     {
         $departments = Department::all();
-        // dd($departments);
         return view('settings.course.create', compact('departments'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCourseRequest $request)
     {
-        $request->validate([
-            'code' => 'required',
-            'name' => 'required'
-        ]);
-
-        $course = new Course;
-
-        $course->name = $request->name;
-        $course->code = $request->code;
-        $course->department_id = $request->department_id;
-        // dd($request);
-        $course->save();
-
-     
-        return redirect('settings/course/')->with('success','Course has been created successfully.');
+        $request->validated();
+        $department = $this->courseService->create($request->all());
+        return redirect($request->has('redirect') ? $request->input('redirect') : 'settings/course/')->with('success','Course has been created successfully.');
     }
 
     /**
@@ -64,29 +71,27 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        try { $getDepartment = Department::get()->toArray();
-            $course = Course::findOrFail($id);
-            return view('settings.course.edit')->with(compact('course','getDepartment'));
+        try {
+            $departments = Department::all();
+            $course = $this->courseService->findById($id);
+            return view('settings.course.edit')->with(compact('course','departments'));
         } catch (Exception $e) {
-            return redirect('/settings/course');
+            return redirect('/settings/department');
         }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCourseRequest $request, int $id)
     {   
+
         try {
-            $request->validate([
-                'code' => 'required',
-                'name' => 'required',
-                'department_id' => 'required',
-              ]);
-              $course = Course::find($id);
-              $course->update($request->all());
+            $request->merge(['id' => $id]);
+            $request->validated();
+            $this->courseService->update($request->all());
             return redirect('/settings/course')->with('success_message', 'Course updated successfully.');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->errors())->withInput();
@@ -98,8 +103,13 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        try {
+            $this->courseService->delete($id);
+            return redirect()->back()->with('success_message','Course has been deleted successfully');
+        }catch (Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
     }
 }

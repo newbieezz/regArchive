@@ -8,6 +8,7 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\UserStatus;
+use Illuminate\Database\Eloquent\ModelNotFoundException;  
 
 class UserService
 {
@@ -52,10 +53,10 @@ class UserService
     /**
      * Updates staff in the database
      */
-    public function updateStaff(array $params, int $id): User
+    public function updateStaff(array $params): User
     {
         // retrieve user information
-        $user = User::findOrFail($id);
+        $user = $this->findById($params['id']);
 
         if (array_key_exists('password', $params)) {
             // update user password if provided in request or retain the current password
@@ -76,10 +77,26 @@ class UserService
     public function setStatus(int $id, string $status): User
     {
         // retrieve user information
-        $user = User::findOrFail($id);
+        $user = $this->findById($id);
         $userStatus = UserStatus::where('name', $status)->firstOrFail();
         $user->user_status_id = $userStatus->id;
         $user->save();
+        return $user;
+    }
+
+    
+    /**
+     * Retrieves a user by id
+     */
+    public function findById(int $id): User
+    {
+        // retrieve the user
+        $user = $this->user->find($id);
+
+        if (!($user instanceof User)) {
+            throw new ModelNotFoundException('User with ID: '.$id.' not found!');
+        }
+
         return $user;
     }
 

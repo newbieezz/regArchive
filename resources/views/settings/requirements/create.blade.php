@@ -28,7 +28,7 @@
                 <div class="row">
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Document Type/Name</label>
-                    <input type="text" class="form-control" id="type" name="type" placeholder="First Name" value="{{ old('type') }}"/>
+                    <input type="text" class="form-control" id="type" name="type" placeholder="Type" value="{{ old('type') }}"/>
                     @error('type')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror

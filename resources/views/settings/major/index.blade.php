@@ -16,7 +16,7 @@
             </h5>
           </div>
           <div class="col-6 d-flex justify-content-end">
-            <a href="{{url('settings/major/create/'.$course_id)}}" style="color: white">
+            <a href="{{url('settings/major/create/'.$courseId)}}" style="color: white">
               <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-plus mx-2"></i> Add New</button>
             </a>
           </div>
@@ -26,8 +26,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Program/Course</th>
                     <th>Name</th>
+                    <th>Program/Course</th>
                     <th>Date Created</th>
                     <th>Actions</th>
                 </tr>
@@ -36,13 +36,8 @@
             @foreach($majors as $major)
                 <tr>
                     <td><span class="fw-medium">{{ $major['id'] }} </span> </td>
-                    <td> @foreach($courses as $course)
-                            @if($major['course_id'] == $course['id'])
-                              {{ $course['name'] }}
-                            @endif
-                        @endforeach
-                    </td>
                     <td>{{ $major['name'] }}</td>
+                    <td>{{ $major->course->code }}</td>
                     <td>{{ $major['created_at'] }}</td>
                     <td>
                     <div class="dropdown">
@@ -51,7 +46,7 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{url('settings/major/update/'.$major['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
-                            <a class="dropdown-item" href="{{url('settings/major/destroy/'.$major['id'])}}"><i class="fas fa-ban"></i> Delete</a>
+                            <a class="dropdown-item" href="{{url('settings/major/delete/'.$major['id'])}}"><i class="fas fa-ban"></i> Delete</a>
                         </div>
                     </div>
                     </td>

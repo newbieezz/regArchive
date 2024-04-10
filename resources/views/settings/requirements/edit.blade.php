@@ -28,18 +28,14 @@
                 <div class="row">
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Document Type/Name</label>
-                    <input type="text" class="form-control" id="type" name="type" placeholder="First Name" 
-                        @if(!empty($category['type'])) value="{{ $category['type'] }}" 
-                        @else value="{{ old('type') }}" @endif>
+                    <input type="text" class="form-control" id="type" name="type" placeholder="Type"  value="{{ old('type', $category->type) }}">
                     @error('type')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Document Description</label>
-                    <input type="text" class="form-control" id="description" name="description" placeholder="description"
-                        @if(!empty($category['description'])) value="{{ $category['description'] }}" 
-                        @else value="{{ old('description') }}" @endif>
+                    <input type="text" class="form-control" id="description" name="description" placeholder="description" value="{{ old('description', $category->description) }}">
                     @error('description')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror

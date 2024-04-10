@@ -28,18 +28,14 @@
                 <div class="row">
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Code</label>
-                    <input type="text" class="form-control" id="code" name="code" placeholder="First Name" 
-                        @if(!empty($department['code'])) value="{{ $department['code'] }}" 
-                        @else value="{{ old('code') }}" @endif>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="First Name"  value="{{ old('code', $department->code) }}">
                     @error('code')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Department Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name"
-                        @if(!empty($department['name'])) value="{{ $department['name'] }}" 
-                        @else value="{{ old('name') }}" @endif>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ old('name', $department->name) }}">
                     @error('name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror

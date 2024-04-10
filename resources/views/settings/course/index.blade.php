@@ -8,6 +8,25 @@
       <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('successMessage').style.display = 'none';"></button>
   </div>
 @endif
+<div class="card search-wrapper mb-2">
+  <div class="card-body">
+      <form action="{{ url('settings/course') }}" method="GET">
+          <div class="row mb-3">
+              <div class="col-sm-10 col-md-6 mb-3 mb-md-0 px-1">
+                  <select name="dept" class="form-select">
+                      <option value="">Select Department</option>
+                      @foreach($departments as $department)
+                      <option value="{{ $department['id'] }}" {{ request()->has('dept') && (request('dept') == $department->id) ? 'selected' : '' }}> {{ $department['name'] }} </option>
+                      @endforeach
+                  </select>
+              </div>
+              <div class="col-sm-2 col-md-2 px-1">
+                  <button type="submit" class="btn btn-primary w-100">Filter</button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
 <div class="card">
       <div class="card-body">
         <div class="row mb-2">
@@ -15,7 +34,7 @@
             <h5 class="card-title">List of Courses</h5>
           </div>
           <div class="col-6 d-flex justify-content-end">
-            <a href="{{url('settings/course/create/')}}" style="color: white">
+            <a href="{{request()->has('dept') ? url('settings/course/create?dept=' . request('dept')) : url('settings/course/create')}}" style="color: white">
               <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-plus mx-2"></i> Add New</button>
             </a>
           </div>
@@ -36,12 +55,7 @@
             @foreach($courses as $course)
                 <tr>
                     <td><span class="fw-medium">{{ $course['id'] }} </span> </td>
-                    <td> @foreach($department as $dept)
-                            @if($course['department_id'] == $dept['id'])
-                              {{ $dept['name'] }}
-                            @endif
-                        @endforeach
-                    </td>
+                    <td>{{ $course->department->name }}</td>
                     <td>{{ $course['code'] }}</td>
                     <td>{{ $course['name'] }}</td>
                     <td>{{ $course['created_at'] }}</td>
@@ -53,7 +67,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{url('settings/course/update/'.$course['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
                             <a class="dropdown-item" href="{{url('settings/major/'.$course['id'])}}"><i class="fas fa-file me-1"></i> View Majors</a>
-                            <a class="dropdown-item" href="{{url('settings/course/update/'.$course['id'])}}"><i class="fas fa-ban"></i> Delete</a>
+                            <a class="dropdown-item" href="{{url('settings/course/delete/'.$course['id'])}}"><i class="fas fa-ban"></i> Delete</a>
                         </div>
                     </div>
                     </td>

@@ -5,7 +5,7 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Add Course Major / <a href="{{url('settings/major/'.$course['id'])}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Add Course Major / <a href="{{url('settings/major/'.$courseId)}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">
@@ -23,21 +23,20 @@
             </div>
 
             <div class="card-body">
-              <p id="register-success"></p>
-              <form action="{{url('settings/major/store/'.$course['id'])}}" method="post"> @csrf
+              <form action="{{url('settings/major/store/'.$courseId)}}" method="post"> @csrf
+                <div class="row">
                   <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-fullname">Course Majors Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name"  value="{{ old('name') }}"/>
-                    @error('name')
-                        <p class="text-danger m-0">{{ $message }}</p>
-                    @enderror
+                      <label class="form-label" for="basic-default-fullname">Course Majors Name</label>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Name"  value="{{ old('name') }}"/>
+                      @error('name')
+                          <p class="text-danger m-0">{{ $message }}</p>
+                      @enderror
+                    </div>
                   </div>
-                </div>
-                <input id="course_id" name="course_id" value="{{$course['id']}}" hidden/>
-
-                <div class="col-12 d-flex justify-content-end">
-                  <a class="mx-2" href="{{url('settings/major/'.$course['id'])}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <div class="col-12 d-flex justify-content-end">
+                    <a class="mx-2" href="{{url('settings/major/'.$courseId)}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
                 </div>
               </form>
             </div>
