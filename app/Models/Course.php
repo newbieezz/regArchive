@@ -19,12 +19,12 @@ class Course extends Model
         return $this->belongsTo(Department::class, 'department_id');
     }
 
-    public function major(){
+    public function majors(){
         return $this->hasMany(Major::class, 'course_id');
     }
 
-    public static function courses(){
-        $getCourse = Course::get()->toArray();
-        return $getCourse;
+    public function scopeByDepartment($query, int $dept)
+    {
+        return $query->where('department_id', $dept);
     }
 }

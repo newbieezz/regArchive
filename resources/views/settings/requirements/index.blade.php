@@ -33,7 +33,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($categories as $category)
                 <tr>
-                    <td><span class="fw-medium">{{ $category['id'] }} {{ $category['id'] }}</span> </td>
+                    <td><span class="fw-medium">{{ $category['id'] }}</span> </td>
                     <td>{{ $category['type'] }}</td>
                     <td>{{ $category['description'] }}</td>
                     <td>{{ $category['created_at'] }}</td>
@@ -44,7 +44,7 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{url('settings/requirement/update/'.$category['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
-                            <a class="dropdown-item" href="{{url('settings/requirement/update/'.$category['id'])}}"><i class="fas fa-ban"></i> Delete</a>
+                            <a class="dropdown-item" href="{{url('settings/requirement/delete/'.$category['id'])}}"><i class="fas fa-ban"></i> Delete</a>
                         </div>
                     </div>
                     </td>

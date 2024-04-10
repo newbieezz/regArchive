@@ -17,4 +17,9 @@ class Major extends Model
     public function course(){
         return $this->belongsTo(Course::class, 'course_id');
     }
+
+    public function scopeByCourse($query, int $courseId)
+    {
+        return $query->where('course_id', $courseId);
+    }
 }

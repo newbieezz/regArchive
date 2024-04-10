@@ -7,22 +7,33 @@ use App\Models\Major;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use Illuminate\Validation\ValidationException;
+use App\Services\MajorService;
+use App\Http\Requests\Settings\Major\MajorRequest;
 use Exception;
 class CourseMajorController extends Controller
 {
+
+    /** @var App\Services\MajorService */
+    protected $majorService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param App\Services\MajorService $departmentService
+     */
+    public function __construct(MajorService $majorService)
+    {
+        $this->majorService = $majorService;
+    }
 
     /**
      * Display a listing of the resource.
      */
     public function index($id)
     {
-        $majors = Major::paginate(config('app.pages'));
-        $course_id = $id;
-        $courses = Course::get()->toArray();
-
-        //temporary pani kuys for the sake sa VIEW sa table rani, 
-        //ikaw na bahala connect'2 sa mga id ani nila haha lamats!
-        return view('settings.major.index', compact('course_id','majors','courses'));
+        $majors = Major::byCourse($id)->paginate(config('app.pages'));
+        $courseId = $id;
+        return view('settings.major.index', compact('majors', 'courseId'));
     }
 
     /**
@@ -30,32 +41,19 @@ class CourseMajorController extends Controller
      */
     public function create($id)
     {
-        $course = Course::select('id')->with('major')->find($id);
-
-        // dd($course);
-        return view('settings.major.create', compact('course'));
+        $courseId = $id;
+        return view('settings.major.create', compact('courseId'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $id)
+    public function store(MajorRequest $request, $id)
     {
-        $course = Course::select('id')->with('major')->find($id);
-        $request->validate([
-            'course_id' => 'required',
-            'name' => 'required'
-        ]);
-
-        $major = new Major;
-
-        $major->name = $request->name;
-        $major->course_id = $request->course_id;
-        // dd($request);
-        $major->save();
-
-     
-        return redirect()->with('success','Course Major has been created successfully.');
+        $request->merge(['course_id' => $id]);
+        $request->validated();
+        $major = $this->majorService->create($request->all());
+        return redirect('settings/major/'.$id)->with('success','Course Major has been created successfully.');
     }
 
     /**
@@ -84,15 +82,13 @@ class CourseMajorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(MajorRequest $request, int $id)
     {   
         try {
-            $request->validate([
-                'name' => 'required',
-              ]);
-              $major = Major::find($id);
-              $major->update($request->all());
-            return redirect('/settings/major/'.$major['course_id'])->with('success_message', 'Course Major updated successfully.');
+            $request->merge(['id' => $id]);
+            $request->validated();
+            $major = $this->majorService->update($request->all());
+            return redirect('/settings/major/'.$major->course->id)->with('success_message', 'Course Major updated successfully.');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->errors())->withInput();
         } catch (Exception $e) {
@@ -103,8 +99,13 @@ class CourseMajorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        try {
+            $this->majorService->delete($id);
+            return redirect()->back()->with('success_message','Major has been deleted successfully');
+        }catch (Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
     }
 }

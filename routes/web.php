@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/store', 'DepartmentController@store');
                 Route::get('/update/{id}', 'DepartmentController@edit');
                 Route::post('/update/{id}', 'DepartmentController@update');
+                Route::get('/delete/{id}', 'DepartmentController@destroy');
             });
             // Course routes
             Route::prefix('course')->group(function () {
@@ -63,6 +64,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/store', 'CourseController@store');
                 Route::get('/update/{id}', 'CourseController@edit');
                 Route::post('/update/{id}', 'CourseController@update');
+                Route::get('/delete/{id}', 'CourseController@destroy');
             });
             // Course MAjor routes
             Route::prefix('major')->group(function () {
@@ -71,6 +73,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::match(['get','post'],'/store/{id}', 'CourseMajorController@store');
                 Route::get('/update/{id}', 'CourseMajorController@edit');
                 Route::post('/update/{id}', 'CourseMajorController@update');
+                Route::get('/delete/{id}', 'CourseMajorController@destroy');
             });
             //Requirements category routes
             Route::prefix('requirement')->group(function () {
@@ -79,6 +82,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/store', 'RequirementController@store');
                 Route::get('/update/{id}', 'RequirementController@edit');
                 Route::post('/update/{id}', 'RequirementController@update');
+                Route::get('/delete/{id}', 'RequirementController@destroy');
             });
             //Trash routes
             Route::prefix('trash')->group(function () {

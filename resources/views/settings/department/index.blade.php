@@ -43,8 +43,9 @@
                             <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{url('settings/course?dept='.$department['id'])}}"><i class="fas fa-file me-1"></i> View Courses</a>
                             <a class="dropdown-item" href="{{url('settings/department/update/'.$department['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
-                            <a class="dropdown-item" href="{{url('settings/department/update/'.$department['id'])}}"><i class="fas fa-ban"></i> Delete</a>
+                            <a class="dropdown-item" href="{{url('settings/department/delete/'.$department['id'])}}"><i class="fas fa-ban"></i> Delete</a>
                         </div>
                     </div>
                     </td>

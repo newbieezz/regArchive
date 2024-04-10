@@ -6,9 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Models\DocumentCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Services\DocumentCategoryService;
+use App\Http\Requests\Settings\DocumentCategory\DocumentCategoryRequest;
 use Exception;
 class RequirementController extends Controller
 {
+
+    /** @var App\Services\DocumentCategoryService */
+    protected $requirementService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param App\Services\DocumentCategoryService $departmentService
+     */
+    public function __construct(DocumentCategoryService $requirementService)
+    {
+        $this->requirementService = $requirementService;
+    }
+    
+
     /**
      * Display a listing of the resource.
      */
@@ -30,20 +47,11 @@ class RequirementController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DocumentCategoryRequest $request)
     {
-        $request->validate([
-            'type' => 'required',
-            'description' => 'required'
-        ]);
+        $request->validated();
 
-        $category = new DocumentCategory;
-
-        $category->type = $request->type;
-        $category->description = $request->description;
-        $category->save();
-
-     
+        $category =  $this->requirementService->create($request->all());
         return redirect('/settings/requirement')->with('success','Document Category has been created successfully.');
     }
 
@@ -61,7 +69,7 @@ class RequirementController extends Controller
     public function edit(string $id)
     {
         try {
-            $category = DocumentCategory::findOrFail($id);
+            $category = $this->requirementService->findById($id);
             return view('settings.requirements.edit')->with(compact('category'));
         } catch (Exception $e) {
             return redirect('/settings/requirement');
@@ -71,15 +79,13 @@ class RequirementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(DocumentCategoryRequest $request, int $id)
     {
+
         try {
-            $request->validate([
-                'type' => 'required',
-                'description' => 'required',
-              ]);
-              $category = DocumentCategory::find($id);
-              $category->update($request->all());
+            $request->merge(['id' => $id]);
+            $request->validated();
+            $this->requirementService->update($request->all());
             return redirect('/settings/requirement')->with('success_message', 'Document Category updated successfully.');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->errors())->withInput();
@@ -93,7 +99,12 @@ class RequirementController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $this->requirementService->delete($id);
+            return redirect()->back()->with('success_message','Document Category has been deleted successfully');
+        }catch (Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
     }
 
 }
