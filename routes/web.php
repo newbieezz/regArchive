@@ -88,6 +88,14 @@ Route::group(['middleware' => ['auth']], function() {
             Route::prefix('trash')->group(function () {
                 Route::get('/', 'TrashController@index');
             });
+            // School Year routes
+            Route::prefix('schoolyear')->group(function () {
+                Route::get('/', 'SchoolYearController@index');
+                Route::post('/store', 'SchoolYearController@store');
+                Route::get('/update/{id}', 'SchoolYearController@edit');
+                Route::post('/update/{id}', 'SchoolYearController@update');
+                Route::get('/delete/{id}', 'SchoolYearController@destroy');
+            });
         });
     });
 });

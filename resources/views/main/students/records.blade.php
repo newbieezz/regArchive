@@ -8,11 +8,11 @@
           <div class="col-6">
             <h5 class="card-title">Student Records</h5>
           </div>
-          <div class="col-6 d-flex justify-content-end">
+          {{-- <div class="col-6 d-flex justify-content-end">
             <button type="button" class="btn btn-outline-secondary btn-sm btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
             <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-plus mx-2"></i> Add New</button>
             <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-upload mx-2"></i> Bulk Upload</button>
-          </div>
+          </div> --}}
         </div>
         <div class="table-responsive text-nowrap border">
           <table class="table">

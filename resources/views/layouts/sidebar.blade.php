@@ -81,6 +81,11 @@
                 <div data-i18n="Analytics">Categories/Requirements</div>
               </a>
             </li>
+            <li class="menu-item ">
+              <a href="{{ url('settings/schoolyear') }}" class="menu-link">
+                <div data-i18n="Analytics">School Year</div>
+              </a>
+            </li>
           @endif
           {{-- <li class="menu-item">
             <a href="{{ url('settings/requirements/') }}" class="menu-link">
