@@ -54,23 +54,17 @@ class StudentRecordsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show( $id)
     {
-        // get the shark
         $student = Student::find($id);
-
-        // show the view and pass the shark to it
-        return View::make('main.students.details')
-            ->with('student', $student);
+        return view('main.students.show', compact('student'));
     }
-    public function details(string $id){
-        
-        try { 
-            $student = Enrollment::findOrFail($id);
-            return view('main.students.details')->with(compact('student'));
-        } catch (Exception $e) {
-            return redirect('/student/records');
-        }
+
+    public function viewDetails($id){
+        // $studentDetails = Student::where('id',$id)->get()->first()->toArray();
+        // dd($studentDetails);
+        return view('main.students.show', compact('studentDetails'));
+
     }
     /**
      * Show the form for editing the specified resource.

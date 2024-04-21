@@ -44,7 +44,7 @@
                         <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="fas fa-file"></i> View Details</a>
+                        <a class="dropdown-item" href="{{url('student/view')}}"><i class="fas fa-file"></i> View Details</a>
                         {{-- <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-edit"></i> Update </a> --}}
                         <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-print"></i> Scan Documents</a>
                     </div>
@@ -57,6 +57,7 @@
         </div>
       </div>
       <!-- Pagination here -->
+      @include('components.pagination',  ['data' => $students])
     </div> 
   </div> 
 @endsection

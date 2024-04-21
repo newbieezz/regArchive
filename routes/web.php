@@ -29,8 +29,11 @@ Route::group(['middleware' => ['auth']], function() {
         // Students routes
         Route::prefix('student')->group(function () {
             Route::get('/records', 'StudentRecordsController@index');
+            // Route::get('/show/{id}', 'StudentRecordsController@viewDetails');
+        Route::get('/view', 'StudentRecordsController@viewDetails');
         });
-        // Enrollment routes
+
+        // Enrollment routesphp 
         Route::prefix('enrollment')->group(function () {
             Route::get('/', 'EnrollmentRecordsController@index');
             Route::get('/create', 'EnrollmentRecordsController@create');
