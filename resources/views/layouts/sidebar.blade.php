@@ -27,26 +27,9 @@
             </a>
           </li>
           <li class="menu-item ">
-            <a href="" class="menu-link menu-toggle">
+            <a href="{{url('graduating/applicants')}}" class="menu-link ">
               <div data-i18n="Analytics">Graduating Applicants</div>
             </a>
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="{{ url('graduating/applicants') }}" class="menu-link">
-                  <div data-i18n="Without menu">College of Education</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="{{ url('graduating/applicants') }}" class="menu-link">
-                  <div data-i18n="Without menu">College of Technology</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="{{ url('graduating/applicants') }}" class="menu-link">
-                  <div data-i18n="Without menu">College of Engineering</div>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="menu-item">
             <a href="{{ url('documents/records') }}"class="menu-link">

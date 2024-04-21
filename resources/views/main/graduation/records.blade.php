@@ -21,8 +21,7 @@
                 <th>Student ID</th>
                 <th>Last Name</th>
                 <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Program</th>
+                <th>Course</th>
                 <th>Requirements</th>
               </tr>
             </thead>
@@ -31,25 +30,52 @@
                 <td>1180802  </td>
                 <td>Lugo  </td>
                 <td>Mj </td>
-                <td> Lopez </td>
                 <td> BSIT </td>
-                <td><span class="badge bg-label-primary me-1">Complete </span></td>
+                <td>
+                  <div class="dropdown">Incomplete
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" data-bs-toggle="modal"data-bs-target="#scanModal" ><i class="fas fa-file"></i> No Diploma</a>
+                        <a class="dropdown-item" ><i class="fas fa-file"></i> No Form 137</a>
+                    </div>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td>1142122  </td>
                 <td>Veloso  </td>
                 <td>Cherry Ann  </td>
-                <td> Imortal </td>
                 <td> BSIT </td>
-                <td><span class="badge bg-label-danger me-1">Incomplete </span></td>
+                <td>
+                  <div class="dropdown">Incomplete
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" data-bs-toggle="modal"data-bs-target="#scanModal" ><i class="fas fa-file"></i> No Diploma</a>
+                        <a class="dropdown-item" ><i class="fas fa-file"></i> No Form 137</a>
+                    </div>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td>1187541 </td>
                 <td>Gonzalez  </td>
                 <td>Kim  </td>
-                <td> Kimberlat </td>
                 <td> BSIT </td>
-                <td><span class="badge bg-label-primary me-1">Complete </span></td>
+                <td>
+                  <div class="dropdown">Incomplete
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" data-bs-toggle="modal"data-bs-target="#scanModal" ><i class="fas fa-file"></i> No Diploma</a>
+                        <a class="dropdown-item" ><i class="fas fa-file"></i> No Form 137</a>
+                    </div>
+                  </div>
+                </td>
               </tr>
             
             </tbody>
