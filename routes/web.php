@@ -26,12 +26,18 @@ Route::get('/', [UserController::class, 'index']);
 Route::group(['middleware' => ['auth']], function() {
     Route::namespace('App\Http\Controllers\Main')->group(function(){
         Route::get('dashboard', 'HomeController@index');
-        Route::get('student/records', 'StudentRecordsController@index');
+        // Students routes
+        Route::prefix('student')->group(function () {
+            Route::get('/records', 'StudentRecordsController@index');
+        });
         // Enrollment routes
-        Route::get('student/enrollment', 'EnrollmentRecordsController@index');
-        Route::get('student/create', 'EnrollmentRecordsController@create');
-        Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
-        Route::post('/update/{id}', 'EnrollmentRecordsController@update');
+        Route::prefix('enrollment')->group(function () {
+            Route::get('/', 'EnrollmentRecordsController@index');
+            Route::get('/create', 'EnrollmentRecordsController@create');
+            Route::post('/store', 'EnrollmentRecordsController@store');
+            Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
+            Route::post('/update/{id}', 'EnrollmentRecordsController@update');
+        });
         // Graduating Applicants routes
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
         Route::get('documents/records', 'DocumentsController@index');
@@ -96,6 +102,18 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/update/{id}', 'SchoolYearController@update');
                 Route::get('/delete/{id}', 'SchoolYearController@destroy');
             });
+        });
+    });
+    Route::namespace('App\Http\Controllers\Settings')->group(function(){
+        Route::prefix('api')->group(function () {
+            Route::get('/courses/{departmentId}', 'CourseController@getCouresByDepartment');
+            Route::get('/majors/{courseId}', 'CourseMajorController@getMajorsByCourse');
+            Route::get('/student/{studentId}', 'StudentRecordsController@getSudentById');
+        });
+    });
+    Route::namespace('App\Http\Controllers\Main')->group(function(){
+        Route::prefix('api')->group(function () {
+            Route::get('/student/{studentId}', 'StudentRecordsController@getSudentById');
         });
     });
 });

@@ -86,4 +86,15 @@ class CourseService
 
         return $course;
     }
+
+    /**
+     * Retrieves a courses by department
+     */
+    public function listByDepartment(int $departmentId)
+    {
+        // retrieve the course
+        $courses = $this->course->where('department_id',  $departmentId)->get();
+
+        return $courses;
+    }
 }

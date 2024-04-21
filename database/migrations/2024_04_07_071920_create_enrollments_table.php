@@ -19,15 +19,15 @@ return new class extends Migration
             $table->integer('semester')->nullable(false);
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('major_id');
-            $table->string('section');
+            $table->unsignedBigInteger('major_id')->nullable();
+            $table->string('section')->nullable();
             $table->integer('student_status');
             $table->integer('enrollment_status');
             $table->date('date_enrolled');
             $table->timestamps();
 
             $table->foreign('student_id')
-                ->references('id')
+                ->references('student_id')
                 ->on('students')
                 ->onDelete('cascade');
 

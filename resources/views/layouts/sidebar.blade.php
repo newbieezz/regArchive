@@ -22,7 +22,7 @@
             </a>
           </li>
           <li class="menu-item">
-            <a href="{{ url('student/enrollment') }}"class="menu-link">
+            <a href="{{ url('/enrollment') }}"class="menu-link">
               <div data-i18n="CRM">Enrollment Records</div>
             </a>
           </li>

@@ -27,6 +27,22 @@ class DepartmentService
     }
 
     /**
+     * List all departments from database
+     *
+     */
+    public function listAll()
+    {
+        try {
+            $departments =  $this->department->orderBy('name', 'ASC')->get();
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $departments;
+    }
+
+
+    /**
      * Creates a new department in the database
      *
      * @param array $params

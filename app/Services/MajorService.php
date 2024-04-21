@@ -86,4 +86,15 @@ class MajorService
 
         return $major;
     }
+
+    /**
+     * Retrieves a majors by course
+     */
+    public function listByCourse(int $courseId)
+    {
+        // retrieve the majors
+        $majors = $this->major->where('course_id',  $courseId)->get();
+
+        return $majors;
+    }
 }

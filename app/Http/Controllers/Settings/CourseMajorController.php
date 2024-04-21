@@ -105,7 +105,21 @@ class CourseMajorController extends Controller
             $this->majorService->delete($id);
             return redirect()->back()->with('success_message','Major has been deleted successfully');
         }catch (Exception $e) {
+            throw $e;
             return redirect()->back()->with('error_message', $e->getMessage());
+        }
+    }
+
+    /**
+     * Get majors by course
+     */
+    public function getMajorsByCourse(int $courseId)
+    {
+        try {
+            $majors = $this->majorService->listByCourse($courseId);
+            return $majors;
+        }catch (Exception $e) {
+            return $e;
         }
     }
 }

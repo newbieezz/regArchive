@@ -112,4 +112,17 @@ class CourseController extends Controller
             return redirect()->back()->with('error_message', $e->getMessage());
         }
     }
+
+    /**
+     * Get courses by departments
+     */
+    public function getCouresByDepartment(int $departmentId)
+    {
+        try {
+            $courses = $this->courseService->listByDepartment($departmentId);
+            return $courses;
+        }catch (Exception $e) {
+            return $e;
+        }
+    }
 }

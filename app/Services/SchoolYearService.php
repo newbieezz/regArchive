@@ -19,12 +19,30 @@ class SchoolYearService
     /**
      * UserService constructor.
      *
-     * @param App\Models\SchoolYear $user
+     * @param App\Models\SchoolYear $SchoolYear
      */
     public function __construct(SchoolYear $schoolYear)
     {
         $this->schoolYear = $schoolYear;
     }
+
+        
+    /**
+     * List all schoolYear from database
+     *
+     */
+    public function listAll()
+    {
+        try {
+            $schoolYears =  $this->schoolYear->orderBy('year', 'DESC')->get();
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $schoolYears;
+    }
+
 
     /**
      * Creates a new schoolYear in the database

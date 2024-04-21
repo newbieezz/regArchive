@@ -1,21 +1,7 @@
 <?php
 
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Student extends Model
-{
-    use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'student_id',
+return [
+    'student_info' => [
         'first_name',
         'last_name',
         'middle_name',
@@ -40,20 +26,21 @@ class Student extends Model
         'primary_awards',
         'secondary',
         'secondary_sy',
-        'secondary_awards',
+        'secondary_sy_awards',
         'senior_high',
         'senior_high_sy',
         'senior_high_awards',
-    ];
-
-    /**
-     * Retrieve all enrollments under this student
-     *
-     * @return App\Models\Enrollment[]
-     */
-    public function enrollments()
-    {
-        return $this->hasMany(Enrollment::class,  'student_id', 'student_id');
-    }
-
-}
+    ],
+    'enrollment_data' => [
+        'student_id',
+        'school_year_id',
+        'year_level',
+        'semester',
+        'department_id',
+        'course_id',
+        'major_id',
+        'section',
+        'student_status',
+        'enrollment_status',
+    ],
+];
