@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use DB;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
