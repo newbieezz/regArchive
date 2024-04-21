@@ -23,7 +23,7 @@
                 <th>First Name</th>
                 <th>Middle Name</th>
                 <th>Department</th>
-                <th>Program</th>
+                <th>Course</th>
                 <th>School Year</th>
                 <th>Actions</th>
               </tr>
@@ -35,7 +35,7 @@
                 <td>{{ $student->last_name }}</td>
                 <td>{{ $student->first_name }}</td>
                 <td> {{ $student->middle_name }} </td>
-                <td> {{ $student->enrollments->last()->department->name }}</td>
+                <td> {{ $student->enrollments->last()->department->code }}</td>
                 <td> {{ $student->enrollments->last()->course->code }} </td>
                 <td> {{ $student->enrollments->last()->schoolYear->year }}</td>
                 <td>
@@ -45,7 +45,7 @@
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="javascript:void(0);"><i class="fas fa-file"></i> View Details</a>
-                        <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-edit"></i> Update Record</a>
+                        {{-- <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-edit"></i> Update </a> --}}
                         <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-print"></i> Scan Documents</a>
                     </div>
                   </div>

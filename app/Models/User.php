@@ -66,5 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
+    public function scopeByDepartment($query, int $dept)
+    {
+        return $query->where('department_id', $dept);
+    }
 
 }

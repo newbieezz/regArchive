@@ -69,6 +69,7 @@
           <th>Semester</th>
           <th>Department</th>
           <th>Program</th>
+          <th>Course</th>
           <th>Major</th>
           <th>Document</th>
           <th>Action</th>
@@ -79,10 +80,11 @@
         <tr>
           <td>{{ $enrollment->id }}</td>
           <td>{{ $enrollment->student->student_id }}</td>
-          <td>{{ $enrollment->student->first_name }} {{ $enrollment->student->middle_name }} {{ $enrollment->student->last_name }}</td>
+          <td>{{ $enrollment->student->first_name }} {{ $enrollment->student->last_name }}</td>
           <td>{{ $enrollment->schoolYear->year }}  </td>
           <td>{{ Config::get('student.semester')[$enrollment->semester] }} </td>
-          <td>{{ $enrollment->department->name }}  </td>
+          <td>{{ $enrollment->department->code }}  </td>
+          <td>{{ $enrollment->program }}  </td>
           <td>{{ $enrollment->course->code }}  </td>
           <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td>
           <td> 
@@ -102,8 +104,8 @@
                     <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{url('/enrollment/update/'.$enrollment->id)}}"><i class="bx bx-edit-alt me-1"></i> Update Enrollment</a>
-                    <a class="dropdown-item" href="{{url('student/'.$enrollment->student->id)}}" ><i class="bx bx-trash me-1"></i> View Student</a>
+                    <a class="dropdown-item" href="{{url('/enrollment/update/'.$enrollment->id)}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
+                    <a class="dropdown-item" href="{{url('student/'.$enrollment->student->id)}}" ><i class="fas fa-file"></i> View Student</a>
                 </div>
             </div>
           </td>

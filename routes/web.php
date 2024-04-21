@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth']], function() {
         // Graduating Applicants routes
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
         Route::get('documents/records', 'DocumentsController@index');
+
+        // User Profile routes
     });
     Route::namespace('App\Http\Controllers\Settings')->group(function(){
         Route::prefix('settings')->group(function () {

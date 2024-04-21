@@ -33,8 +33,11 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(config('app.pages'));
-        return view('settings.accounts.index', compact('users'));
+            $users = User::paginate(config('app.pages'));
+        
+        $departments = Department::all();
+        // $users = User::paginate(config('app.pages'));
+        return view('settings.accounts.index', compact('users','departments'));
     }
 
     /**

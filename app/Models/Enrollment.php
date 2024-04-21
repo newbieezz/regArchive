@@ -20,6 +20,7 @@ class Enrollment extends Model
         'year_level',
         'semester',
         'department_id',
+        'program',
         'course_id',
         'major_id',
         'section',

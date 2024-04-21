@@ -3,7 +3,7 @@
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\SchoolYearService;
 use App\Services\DepartmentService;
-
+use Illuminate\Support\Facades\Auth;
 /*
  * get logged in user
  * @return User $user

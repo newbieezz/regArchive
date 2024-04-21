@@ -11,6 +11,7 @@ use App\Http\Requests\Main\Enrollment\EnrollmentRequest;
 use App\Http\Requests\Main\Enrollment\EnrollmentEditRequest;
 use App\Services\EnrollmentService;
 use Exception;
+use Illuminate\Validation\ValidationException;
 class EnrollmentRecordsController extends Controller
 {
     

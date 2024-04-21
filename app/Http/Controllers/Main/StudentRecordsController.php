@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Services\StudentService;
-
+use Exception;
+use Illuminate\Support\Facades\View;
 class StudentRecordsController extends Controller
 {
         
@@ -29,6 +31,7 @@ class StudentRecordsController extends Controller
     public function index()
     {
         $students = Student::paginate(config('app.pages'));
+        // dd($students);
         return view('main.students.index', compact('students'));
     }
 
@@ -53,9 +56,22 @@ class StudentRecordsController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        // get the shark
+        $student = Student::find($id);
 
+        // show the view and pass the shark to it
+        return View::make('main.students.details')
+            ->with('student', $student);
+    }
+    public function details(string $id){
+        
+        try { 
+            $student = Enrollment::findOrFail($id);
+            return view('main.students.details')->with(compact('student'));
+        } catch (Exception $e) {
+            return redirect('/student/records');
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -91,5 +107,6 @@ class StudentRecordsController extends Controller
             return $e;
         }
     }
+
 
 }

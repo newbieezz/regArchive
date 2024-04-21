@@ -139,6 +139,19 @@
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
+                  <div class="col-sm-6 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Program/Sched</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="program" id="programRadio1" value="Day" checked {{ old('program') == 'Day' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="programRadio1">Day</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="program" id="programRadio2" value="Evening" {{ old('program') == 'Evening' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="programRadio2">Evening </label>
+                        </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="row mt-4"> 
