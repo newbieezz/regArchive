@@ -26,13 +26,14 @@ Route::get('/', [UserController::class, 'index']);
 Route::group(['middleware' => ['auth']], function() {
     Route::namespace('App\Http\Controllers\Main')->group(function(){
         Route::get('dashboard', 'HomeController@index');
+        Route::get('/update/{id}', 'HomeController@editprofile');
+        Route::post('/update/{id}', 'HomeController@updateprofile');
         // Students routes
         Route::prefix('student')->group(function () {
             Route::get('/records', 'StudentRecordsController@index');
-            // Route::get('/show/{id}', 'StudentRecordsController@viewDetails');
-        Route::get('/view', 'StudentRecordsController@viewDetails');
+            Route::get('/show/{id}', 'StudentRecordsController@show');
         });
-
+        
         // Enrollment routesphp 
         Route::prefix('enrollment')->group(function () {
             Route::get('/', 'EnrollmentRecordsController@index');
@@ -46,6 +47,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('documents/records', 'DocumentsController@index');
 
         // User Profile routes
+        Route::prefix('profile')->group(function () {
+            
+        });
     });
     Route::namespace('App\Http\Controllers\Settings')->group(function(){
         Route::prefix('settings')->group(function () {
@@ -59,6 +63,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/activate/{id}', 'AccountController@activate');
                 Route::get('/deactivate/{id}', 'AccountController@deactivate');
             });
+            ;
             // Department routes
             Route::prefix('department')->group(function () {
                 Route::get('/', 'DepartmentController@index');
@@ -106,6 +111,17 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/update/{id}', 'SchoolYearController@edit');
                 Route::post('/update/{id}', 'SchoolYearController@update');
                 Route::get('/delete/{id}', 'SchoolYearController@destroy');
+            });
+            // Class Section routes
+            Route::prefix('section')->group(function () {
+                Route::get('/', 'SectionController@index');
+                Route::post('/store', 'SectionController@store');
+                Route::get('/update/{id}', 'SectionController@edit');
+                Route::post('/update/{id}', 'SectionController@update');
+                Route::get('/delete/{id}', 'SectionController@destroy');
+            });
+            // Document Transaction routes
+            Route::prefix('transaction')->group(function () {
             });
         });
     });

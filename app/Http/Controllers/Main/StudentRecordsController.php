@@ -60,12 +60,6 @@ class StudentRecordsController extends Controller
         return view('main.students.show', compact('student'));
     }
 
-    public function viewDetails($id){
-        // $studentDetails = Student::where('id',$id)->get()->first()->toArray();
-        // dd($studentDetails);
-        return view('main.students.show', compact('studentDetails'));
-
-    }
     /**
      * Show the form for editing the specified resource.
      */

@@ -4,12 +4,29 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Department;
+use Exception;
+use App\Services\UserService;
+use Illuminate\Validation\ValidationException;
+use App\Http\Requests\Settings\Users\UpdateUserRequest;
 
 class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $userService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param App\Services\UserService $userService
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
     public function index()
     {
         return view('dashboard');
@@ -46,13 +63,35 @@ class HomeController extends Controller
     {
         //
     }
-
+    public function editprofile(Request $request, int $id)
+    {  
+        try {
+            $user = User::findOrFail($id);
+            $departments = Department::all();
+            return view('main.profile.index')->with(compact('user','departments'));
+        } catch (Exception $e) {
+            return redirect('/dashboard');
+        }
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateprofile(Request $request, string $id)
     {
-        //
+        try {
+            $request->merge(['id' => $id]);
+            if(empty($request->input('password'))){
+                $request->except(['password', 'password_confirmation']);
+            }
+            // $request->validated();
+            // dd($id);
+            $this->userService->updateStaff($request->all(), $id);
+            return redirect()->back()->with('success_message', 'Account updated successfully.');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->errors())->withInput();
+        } catch (Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
     }
 
     /**

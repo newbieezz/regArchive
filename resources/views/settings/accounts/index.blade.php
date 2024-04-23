@@ -27,6 +27,7 @@
                     <th>Role</th>
                     <th>Department</th>
                     <th>Email</th>
+                    <th>Scope Access</th>
                     <th>Status</th>
                     <th>Date Created</th>
                     <th>Actions</th>
@@ -48,6 +49,7 @@
                     </span> 
                     </td>
                     <td>{{ $user['email'] }}</td>
+                    <td>{{ $user['scope'] }}</td>
                     <td><span class="badge {{ $user->status->id == 1 ? 'bg-label-success' : 'bg-label-danger' }} me-1">{{ $user->status->id == 1 ? 'Active' : 'Deactivated'}}</span></td>
                     <td>{{ $user['created_at'] }}</td>
                     <td>

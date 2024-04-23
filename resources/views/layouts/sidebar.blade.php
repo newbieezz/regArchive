@@ -49,6 +49,11 @@
                 <div data-i18n="CRM">Users / Staff</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="{{ url('documents/records') }}"class="menu-link">
+                <div data-i18n="CRM">Document Transactions</div>
+              </a>
+            </li>
             <li class="menu-item ">
               <a href="{{url('settings/department')}}" class="menu-link">
                 <div data-i18n="Analytics">College Departments</div>
@@ -69,17 +74,12 @@
                 <div data-i18n="Analytics">School Year</div>
               </a>
             </li>
-          @endif
-          {{-- <li class="menu-item">
-            <a href="{{ url('settings/requirements/') }}" class="menu-link">
-              <div data-i18n="Analytics">Requirement/Category</div>
-            </a>
-          </li>
-            <li class="menu-item">
-              <a href="{{ url('settings/department/') }}" class="menu-link">
-                <div data-i18n="Analytics">Departments</div>
+            <li class="menu-item ">
+              <a href="{{ url('settings/section') }}" class="menu-link">
+                <div data-i18n="Analytics">Class Sections</div>
               </a>
-            </li> --}}
+            </li>
+          @endif
             <li class="menu-item">
               <a href="{{ url('settings/trash') }}" class="menu-link">
                 <div data-i18n="Analytics">Trash</div>

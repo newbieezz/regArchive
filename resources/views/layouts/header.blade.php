@@ -43,6 +43,12 @@ id="layout-navbar">
           <div class="dropdown-divider"></div>
         </li>
         <li>
+          <a class="dropdown-item" href="{{ url('update/'.Auth::user()->id) }}">
+            <i class="bx bx-user me-2"></i>
+            <span class="align-middle">Profile</span>
+          </a>
+        </li>
+        <li>
           <a class="dropdown-item" href="{{ url('user/logout') }}">
             <i class="bx bx-power-off me-2"></i>
             <span class="align-middle">Log Out</span>

@@ -8,7 +8,9 @@
     <div class="card-body">
       <div class="row mb-2">
         <div class="col-6">
-          <h5 class="card-title">Student Enrollment Records</h5>
+          <h5 class="card-title">All Records / 
+            <a href="">Incomplete / </a>
+            <a href="">Complete</a></h5>
         </div>
         <div class="col-6 d-flex justify-content-end">
           <button type="button" class="btn btn-outline-secondary btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
@@ -24,7 +26,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel3">Scan Document</h5>
+          <h5 class="modal-title" id="exampleModalLabel3">Scan Document</h5> <button type="button" class="btn btn-primary">Add New</button>
           
         </div>
         <div class="modal-body">
@@ -34,7 +36,7 @@
               <div class="btn-group">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuClickableInside"data-bs-toggle="dropdown" data-bs-auto-close="outside"
                   aria-expanded="false">
-                  Choose Document
+                  Document Type Lacking/automaic set here
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
                   <li><a class="dropdown-item" href="javascript:void(0)">Form 137</a></li>
@@ -89,7 +91,7 @@
           <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td>
           <td> 
             <div class="dropdown">Incomplete
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">badge num of docs
                   <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu">

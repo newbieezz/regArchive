@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\User;
 class TrashController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // wala pani siyaaa
+        
+        // $users = User::paginate(config('app.pages'));
+        // $users = $users->onlyTrashed();
+
         return view('settings.trash.trashes');
     }
 

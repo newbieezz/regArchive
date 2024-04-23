@@ -24,8 +24,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Code</th>
                     <th>Name</th>
+                    <th>Description</th>
                     <th>Date Created</th>
                     <th>Actions</th>
                 </tr>

@@ -84,7 +84,14 @@ class UserService
         return $user;
     }
 
-    
+    // Set user/staff scope access
+    // public function updateScope(array $params): User
+    // {
+    //     $user = $this->findById($params['id']);
+    //     $user->update($params);
+    //     return $user;
+    // }
+
     /**
      * Retrieves a user by id
      */

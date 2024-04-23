@@ -17,7 +17,7 @@
           <table class="table">
             <thead>
                 <tr>
-                  <th>Document ID</th>
+                  <th>ID #</th>
                   <th>Type</th>
                   <th>File Name</th>
                   <th>Date Deleted</th>
@@ -36,7 +36,6 @@
                         <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-view-alt me-1"></i> View</a>
                         <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Restore</a>
                         <a class="dropdown-item" href="javascript:void(0);" ><i class="bx bx-trash me-1"></i> Delete</a>
                     </div>
@@ -54,7 +53,6 @@
                           <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-view-alt me-1"></i> View</a>
                           <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Restore</a>
                           <a class="dropdown-item" href="javascript:void(0);" ><i class="bx bx-trash me-1"></i> Delete</a>
                       </div>
