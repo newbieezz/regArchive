@@ -67,7 +67,12 @@ class EnrollmentRecordsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try { 
+            $enrollment = Enrollment::findOrFail($id);
+            return view('main.enrollment.show')->with(compact('enrollment'));
+        } catch (Exception $e) {
+            return redirect('/enrollment');
+        }
     }
 
     /**

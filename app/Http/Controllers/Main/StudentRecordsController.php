@@ -57,6 +57,7 @@ class StudentRecordsController extends Controller
     public function show( $id)
     {
         $student = Student::find($id);
+        // dd($student);
         return view('main.students.show', compact('student'));
     }
 

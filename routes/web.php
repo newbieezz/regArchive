@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/store', 'EnrollmentRecordsController@store');
             Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
             Route::post('/update/{id}', 'EnrollmentRecordsController@update');
+            Route::get('/show/{id}', 'EnrollmentRecordsController@show');
         });
         // Graduating Applicants routes
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
