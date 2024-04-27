@@ -27,6 +27,22 @@ class MajorService
     }
 
     /**
+     * List all majors from database
+     *
+     */
+    public function listAll()
+    {
+        try {
+            $majors =  $this->major->orderBy('name', 'ASC')->get();
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $majors;
+    }
+
+
+    /**
      * Creates a new major in the database
      *
      * @param array $params

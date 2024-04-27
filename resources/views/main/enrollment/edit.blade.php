@@ -71,6 +71,7 @@
 
                 <div class="row">
                   <div class="col-sm-4 mb-2">
+                    <input type="hidden" value="{{ old('course_id', $enrollment->course_id) }}" id="course-value">
                     <label class="form-label" for="basic-default-fullname">Progam/Course</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="course_id" name="course_id" id="course_id" disabled>
@@ -81,6 +82,7 @@
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
+                    <input type="hidden" value="{{ old('major_id', $enrollment->major_id) }}" id="major-value">
                     <label class="form-label" for="basic-default-fullname">Major</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="major_id" name="major_id" id="major_id" disabled>
@@ -133,24 +135,17 @@
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Block Section</label>
-                    <input type="text" class="form-control" id="section" name="section" placeholder="Enter Block Section" value="{{ old('section', $enrollment->section) }}"/>
-                    @error('section')
+                    <label class="form-label" for="basic-default-fullname">Block Section and schedule</label>
+                    <div class="input-group input-group-merge">
+                      <select class="form-select" aria-label="section_id" name="section_id">
+                        @foreach(getSections() as $section)
+                          <option value="{{ $section->id }}" {{ (old('section_id', $enrollment->section_id) == $section->id) ? 'selected' : '' }}>{{ $section->name }} ({{ $section->sched }})</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @error('section_id')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
-                  </div>
-                  <div class="col-sm-6 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Program/Sched</label>
-                    <div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="program" id="programRadio1" value="Day" checked {{ old('program') == 'Day' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="programRadio1">Day</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="program" id="programRadio2" value="Evening" {{ old('program') == 'Evening' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="programRadio2">Evening </label>
-                        </div>
-                    </div>
                   </div>
                 </div>
 
@@ -160,7 +155,8 @@
                 <div class="row">
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">ID Number</label>
-                    <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Leave blank if none yet" value="{{ old('student_id', $enrollment->student->student_id) }}"/>
+                    <input type="text" class="form-control"  name="student_id" value="{{ old('student_id', $enrollment->student->student_id) }}" hidden/>
+                    <input type="text" class="form-control" id="student_id" name="student_display_id" placeholder="Leave blank if none yet" value="{{ old('student_id', $enrollment->student->student_id) }}" disabled/>
                     @error('student_id')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
@@ -429,11 +425,15 @@
     $( document ).ready(function() {
       var departmentDropdown =  document.getElementById('department_id');
       var courseDropdown = document.getElementById('course_id');
+      var hiddenCourseValue = document.getElementById('course-value');
       var majorDropdown = document.getElementById('major_id');
+      var hiddenMajorValue = document.getElementById('major-value');
 
       function getCourses(){
         var departmentId = departmentDropdown.value;
-        var selectedCourseId = courseDropdown.value; // Get the previously selected course ID
+        var selectedCourseId = courseDropdown.value || hiddenCourseValue.value; // Get the previously selected course ID
+
+        console.log('selectedCourseId', selectedCourseId)
 
         // Clear existing options
         courseDropdown.innerHTML = '';
@@ -457,6 +457,7 @@
 
                 // Enable the course dropdown
                 courseDropdown.disabled = false;
+                getMajors();
             })
             .catch(error => console.error('Error fetching courses:', error));
 
@@ -465,8 +466,8 @@
 
       function getMajors(){
         var courseId = courseDropdown.value;
-          var selectedMajorId = majorDropdown.value; // Get the previously selected course ID
-
+          var selectedMajorId = majorDropdown.value || hiddenMajorValue.value; // Get the previously selected course ID
+          console.log('selectedMajorId', selectedMajorId)
           // Clear existing options
           majorDropdown.innerHTML = '';
 
@@ -494,47 +495,18 @@
       }
 
       function getDefaultDropdownData(){
+        console.log('load')
         getCourses();
         setTimeout(() => {
           getMajors();
         }, 500);
       }
       //get course events
-      window.addEventListener("load", getDefaultDropdownData);
+      getDefaultDropdownData()
       departmentDropdown.addEventListener('change', getCourses);
       //get major events
       courseDropdown.addEventListener('change', getMajors);
-
-      document.getElementById('search-student-btn').addEventListener('click', function(){
-        var studentId = document.getElementById('student_id').value;
-        if(studentId){
-          // Get the form element
-          var form = document.getElementById('enrollemnt-form'); 
-
-          // Get all input elements inside the form
-          var inputs = form.querySelectorAll('input');
-
-          // Make AJAX request to fetch studet by id
-          fetch('/api/student/' + studentId)
-            .then(response => response.json())
-            .then(data => {
-                console.log('data', data)
-                inputs.forEach(function(input) {
-                  if(input.name in data){
-                    if(input.type=="radio"){
-                      if (input.value === data[input.name]) {
-                          input.checked = true;
-                      }
-                    }else{
-                      input.value = data[input.name]
-                    }
-                    
-                  }
-                });
-            })
-            .catch(error => console.error('Error fetching student:', error));
-        }
-      })
+      // document.getElementById('student_id').disabled = true;
       
     });
 </script>

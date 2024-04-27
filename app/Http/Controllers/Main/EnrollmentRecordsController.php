@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\SchoolYear;
 use App\Http\Requests\Main\Enrollment\EnrollmentRequest;
 use App\Http\Requests\Main\Enrollment\EnrollmentEditRequest;
+use App\Http\Requests\Main\Enrollment\BulkEnrollmentRequest;
 use App\Services\EnrollmentService;
 use Exception;
 use Illuminate\Validation\ValidationException;
@@ -31,10 +32,32 @@ class EnrollmentRecordsController extends Controller
      /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $enrollments = Enrollment::paginate(config('app.pages'));
-        return view('main.enrollment.index',compact('enrollments'));
+        $enrollments = $this->enrollmentService->list($request->all());
+        return view('main.enrollment.index',compact('enrollments', 'request'));
+    }
+
+    /**
+     * Show the form for bulk import.
+     */
+    public function import()
+    {
+        return view('main.enrollment.import');
+    }
+
+    public function upload(BulkEnrollmentRequest $request)
+    {
+        try {
+            $request->validated();
+            $enrollment = $this->enrollmentService->uploadStudents($request->all());
+            return redirect('/enrollment')->with('success_message', 'Data imported successfully.');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->errors())->withInput();
+        } catch (Exception $e) {
+            throw $e;
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
     }
 
     /**

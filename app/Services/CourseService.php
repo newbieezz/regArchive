@@ -27,6 +27,21 @@ class CourseService
     }
 
     /**
+     * List all courses from database
+     *
+     */
+    public function listAll()
+    {
+        try {
+            $courses =  $this->course->orderBy('name', 'ASC')->get();
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $courses;
+    }
+
+    /**
      * Creates a new course in the database
      *
      * @param array $params

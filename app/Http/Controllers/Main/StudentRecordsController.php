@@ -28,11 +28,10 @@ class StudentRecordsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::paginate(config('app.pages'));
-        // dd($students);
-        return view('main.students.index', compact('students'));
+        $students = $this->studentService->list($request->all());
+        return view('main.students.index', compact('students', 'request'));
     }
 
     /**

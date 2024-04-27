@@ -42,6 +42,9 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
             Route::post('/update/{id}', 'EnrollmentRecordsController@update');
             Route::get('/show/{id}', 'EnrollmentRecordsController@show');
+            Route::get('/import', 'EnrollmentRecordsController@import');
+            Route::get('/import', 'EnrollmentRecordsController@import');
+            Route::post('/upload', 'EnrollmentRecordsController@upload');
         });
         // Graduating Applicants routes
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');

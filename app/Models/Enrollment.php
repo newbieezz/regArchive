@@ -21,10 +21,9 @@ class Enrollment extends Model
         'year_level',
         'semester',
         'department_id',
-        'program',
         'course_id',
         'major_id',
-        'section',
+        'section_id',
         'student_status',
         'enrollment_status',
         'date_enrolled',
@@ -57,7 +56,7 @@ class Enrollment extends Model
      */
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class)->withTrashed();
     }
 
     /**
@@ -79,6 +78,16 @@ class Enrollment extends Model
     public function major()
     {
         return $this->belongsTo(Major::class);
+    }
+
+    /**
+     * Retrieves the section and program of the enrollment
+     *
+     * @return App\Models\Section
+     */
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
     }
     
 }

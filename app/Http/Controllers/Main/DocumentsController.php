@@ -10,9 +10,9 @@ class DocumentsController extends Controller
      /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('main.documents.records');
+        return view('main.documents.records', compact('request'));
     }
 
     /**

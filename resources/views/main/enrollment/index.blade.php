@@ -3,7 +3,7 @@
 @section('content')
   <body>
 <div class="container-xxl flex-grow-1 container-p-y">
-  @include('components.filters')
+  @include('components.filters',  ['url' => url('enrollment')])
   <div class="card">
     <div class="card-body">
       <div class="row mb-2">
@@ -15,9 +15,11 @@
         <div class="col-6 d-flex justify-content-end">
           <button type="button" class="btn btn-outline-secondary btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
           <a href="{{url('enrollment/create')}}" style="color: white">
-            <button type="button" class="btn btn-outline-secondary btn-sm mx-2" ><i class="fas fa-plus mx-2"></i> Add New</button>
+            <button type="button" class="btn btn-outline-secondary btn-large mx-2" ><i class="fas fa-plus mx-2"></i> Add New</button>
           </a>
-          <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-upload mx-2"></i> Bulk Upload</button>
+          <a href="{{url('enrollment/import')}}" style="color: white">
+            <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-upload mx-2"></i> Bulk Upload</button>
+          </a>
         </div>
       </div>
 
@@ -86,7 +88,7 @@
           <td>{{ $enrollment->schoolYear->year }}  </td>
           <td>{{ Config::get('student.semester')[$enrollment->semester] }} </td>
           <td>{{ $enrollment->department->code }}  </td>
-          <td>{{ $enrollment->program }}  </td>
+          <td>{{ $enrollment->section->name }}  ({{ $enrollment->section->sched }})</td>
           <td>{{ $enrollment->course->code }}  </td>
           <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td>
           <td> 

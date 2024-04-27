@@ -133,24 +133,17 @@
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Block Section</label>
-                    <input type="text" class="form-control" id="section" name="section" placeholder="Enter Block Section" value="{{ old('section') }}"/>
-                    @error('section')
+                    <label class="form-label" for="basic-default-fullname">Block Section and schedule</label>
+                    <div class="input-group input-group-merge">
+                      <select class="form-select" aria-label="section_id" name="section_id">
+                        @foreach(getSections() as $section)
+                          <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>{{ $section->name }} ({{ $section->sched }})</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @error('section_id')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
-                  </div>
-                  <div class="col-sm-6 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Program/Sched</label>
-                    <div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="program" id="programRadio1" value="Day" checked {{ old('program') == 'Day' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="programRadio1">Day</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="program" id="programRadio2" value="Evening" {{ old('program') == 'Evening' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="programRadio2">Evening </label>
-                        </div>
-                    </div>
                   </div>
                 </div>
 
@@ -460,6 +453,8 @@
 
                 // Enable the course dropdown
                 courseDropdown.disabled = false;
+                //fetch major
+                getMajors()
             })
             .catch(error => console.error('Error fetching courses:', error));
 
@@ -469,6 +464,7 @@
       function getMajors(){
         var courseId = courseDropdown.value;
           var selectedMajorId = majorDropdown.value; // Get the previously selected course ID
+          console.log('selectedMajorId', selectedMajorId)
 
           // Clear existing options
           majorDropdown.innerHTML = '';
@@ -497,13 +493,14 @@
       }
 
       function getDefaultDropdownData(){
+        console.log('load')
         getCourses();
         setTimeout(() => {
           getMajors();
         }, 500);
       }
       //get course events
-      window.addEventListener("load", getDefaultDropdownData);
+      getDefaultDropdownData();
       departmentDropdown.addEventListener('change', getCourses);
       //get major events
       courseDropdown.addEventListener('change', getMajors);
