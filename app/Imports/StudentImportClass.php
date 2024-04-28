@@ -25,7 +25,9 @@ class StudentImportClass implements ToCollection
                     'contact_no' => $row[6],
                     'email' => $row[7],
                     'gender' => $row[8],
-                    'birthdate' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[9]))->format('Y-m-d'),
+                    'birthdate' => is_numeric($row[9]) ? 
+                        Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[9]))->format('Y-m-d') :
+                        Carbon::createFromFormat('Y-m-d', $row[9])->format('Y-m-d'),
                     'birth_address' => $row[10],
                     'citizenship' => $row[11],
                     'religion' => $row[12],

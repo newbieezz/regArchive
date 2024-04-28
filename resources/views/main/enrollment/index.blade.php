@@ -3,6 +3,12 @@
 @section('content')
   <body>
 <div class="container-xxl flex-grow-1 container-p-y">
+  @if(Session::has('success_message'))
+    <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success: </strong> {{ Session::get('success_message')}}
+        <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('successMessage').style.display = 'none';"></button>
+    </div>
+  @endif
   @include('components.filters',  ['url' => url('enrollment')])
   <div class="card">
     <div class="card-body">
@@ -88,7 +94,7 @@
           <td>{{ $enrollment->schoolYear->year }}  </td>
           <td>{{ Config::get('student.semester')[$enrollment->semester] }} </td>
           <td>{{ $enrollment->department->code }}  </td>
-          <td>{{ $enrollment->section ? $enrollment->section->name + ' (' +  $enrollment->section->sched + ')' : ''}}</td>
+          <td>{{ $enrollment->section ? $enrollment->section->name . ' (' .  $enrollment->section->sched . ')' : ''}}</td>
           <td>{{ $enrollment->course->code }}  </td>
           <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td>
           <td> 
