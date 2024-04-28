@@ -11,21 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Add a new column
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->unsignedBigInteger('section_id')->after('major_id');
-        });
+        // Check if the column already exists before adding it
+        if (!Schema::hasColumn('enrollments', 'section_id')) {
+            // Add a new column
+            Schema::table('enrollments', function (Blueprint $table) {
+                $table->unsignedBigInteger('section_id')->after('major_id');
+            });
 
-        // Drop the old column
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->dropColumn('section');
-        });
+            // Drop the old column if it exists
+            if (Schema::hasColumn('enrollments', 'section')) {
+                Schema::table('enrollments', function (Blueprint $table) {
+                    $table->dropColumn('section');
+                });
+            }
 
-        // Add a foreign key relationship
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
-            // Replace 'related_table_name' with the name of the related table
-        });
+            // Add a foreign key relationship
+            Schema::table('enrollments', function (Blueprint $table) {
+                $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
+                // Replace 'related_table_name' with the name of the related table
+            });
+        }
     }
 
     /**
@@ -38,14 +43,18 @@ return new class extends Migration
             $table->dropForeign(['section_id']);
         });
 
-        // Recreate the old column
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->unsignedBigInteger('section')->after('major_id');
-        });
+        // Recreate the old column if it existed before
+        if (Schema::hasColumn('enrollments', 'section')) {
+            Schema::table('enrollments', function (Blueprint $table) {
+                $table->unsignedBigInteger('section')->after('major_id');
+            });
+        }
 
-        // Drop the new column
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->dropColumn('section_id');
-        });
+        // Drop the new column if it was added
+        if (Schema::hasColumn('enrollments', 'section_id')) {
+            Schema::table('enrollments', function (Blueprint $table) {
+                $table->dropColumn('section_id');
+            });
+        }
     }
 };

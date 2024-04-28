@@ -3,7 +3,7 @@
 @section('content')
   <body>
 <div class="container-xxl flex-grow-1 container-p-y">
-  @include('components.filters')
+  @include('components.filters',  ['url' => url('documents/records')])
   <div class="card">
     <div class="card-body">
       <div class="row mb-2">

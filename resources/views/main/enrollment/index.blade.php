@@ -18,7 +18,7 @@
             <button type="button" class="btn btn-outline-secondary btn-large mx-2" ><i class="fas fa-plus mx-2"></i> Add New</button>
           </a>
           <a href="{{url('enrollment/import')}}" style="color: white">
-            <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-upload mx-2"></i> Bulk Upload</button>
+            <button type="button" class="btn btn-outline-secondary btn-large mx-2"><i class="fas fa-upload mx-2"></i> Bulk Upload</button>
           </a>
         </div>
       </div>
@@ -88,7 +88,7 @@
           <td>{{ $enrollment->schoolYear->year }}  </td>
           <td>{{ Config::get('student.semester')[$enrollment->semester] }} </td>
           <td>{{ $enrollment->department->code }}  </td>
-          <td>{{ $enrollment->section->name }}  ({{ $enrollment->section->sched }})</td>
+          <td>{{ $enrollment->section ? $enrollment->section->name + ' (' +  $enrollment->section->sched + ')' : ''}}</td>
           <td>{{ $enrollment->course->code }}  </td>
           <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td>
           <td> 
