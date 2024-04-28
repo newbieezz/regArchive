@@ -86,4 +86,19 @@ class DocumentCategoryService
 
         return $category;
     }
+
+    /**
+     * List all document categories from database
+     *
+     */
+    public function listAll()
+    {
+        try {
+            $categories =  $this->documentCategory->orderBy('type', 'ASC')->get();
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $categories;
+    }
 }

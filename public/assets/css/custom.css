@@ -16,3 +16,22 @@
     height: fit-content !important;
     flex: unset !important;
 }
+
+.file-preview > .file-preview-item{
+ width: 300px !important;
+ height: 400px !important;
+}
+
+.file-preview > .file-preview-item > canvas{
+    width: 300px !important;
+    height: 400px !important;
+    border: 1px solid gray;
+}
+.file-preview > .file-preview-item > img{
+    width: 100% !important;
+    height: 100% !important;
+    border: 1px solid gray;
+}
+/* .file-badge{
+    
+} */

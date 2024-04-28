@@ -39,6 +39,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('assets/js/config.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/pdf_viewer.min.css')}}"/>
   </head>
 
   <body>
@@ -101,6 +102,9 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="{{asset('assets/js/pdf.min.js')}}"></script>
+    <script src="{{asset('assets/js/pdf.worker.entry.min.js')}}"></script>
+    <script src="{{asset('assets/js/pdf.worker.min.js')}}" ></script>
     <script src="{{ asset('assets/js/common.js') }}"></script>
     @yield('scripts')
   </body>

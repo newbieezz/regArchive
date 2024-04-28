@@ -46,7 +46,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{url('student/show/'.$student->id)}}"><i class="fas fa-file"></i> View Details</a>
                         {{-- <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-edit"></i> Update </a> --}}
-                        <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-print"></i> Scan Documents</a>
+                        <a class="dropdown-item" href="{{url('documents/upload/'.$student->id)}}" ><i class="fas fa-print"></i> Scan Documents</a>
                     </div>
                   </div>
                 </td>

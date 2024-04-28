@@ -48,7 +48,14 @@ Route::group(['middleware' => ['auth']], function() {
         });
         // Graduating Applicants routes
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
-        Route::get('documents/records', 'DocumentsController@index');
+
+        // Documents routes
+        Route::prefix('documents')->group(function () {
+            Route::get('/records', 'DocumentsController@index');
+            Route::get('/upload/{studentId}', 'DocumentsController@create');
+            Route::post('/upload/{studentId}', 'DocumentsController@store');
+        });
+        
 
         // User Profile routes
         Route::prefix('profile')->group(function () {

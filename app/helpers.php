@@ -6,6 +6,7 @@ use App\Services\DepartmentService;
 use App\Services\SectionService;
 use App\Services\CourseService;
 use App\Services\MajorService;
+use App\Services\DocumentCategoryService;
 
 use Illuminate\Support\Facades\Auth;
 /*
@@ -107,6 +108,17 @@ if (!function_exists('getSections')) {
     }
 }
 
+if (!function_exists('getDocumentCategories')) {
+
+    function getDocumentCategories()
+    {
+        // Instantiate the SchoolYearService
+        $documentCategoryService = app(DocumentCategoryService::class);
+
+        return $documentCategoryService->listAll();
+    }
+}
+
 /**
  * Validate search condition has a value
  * @param string $parameter
@@ -124,3 +136,5 @@ if (!function_exists('checkSearchHasValue')) {
         return $boolean;
     }
 }
+
+

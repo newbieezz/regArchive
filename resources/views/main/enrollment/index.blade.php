@@ -98,15 +98,32 @@
           <td>{{ $enrollment->course->code }}  </td>
           <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td>
           <td> 
-            <div class="dropdown">Incomplete
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">badge num of docs
+            @php $documentStatus = $enrollment->student->document_status; @endphp
+
+            @if($documentStatus['is_complete'])
+                {{ $documentStatus['status'] }}
+            @else
+
+            <div class="dropdown pe-2 d-flex">
+              {{ $documentStatus['status'] }}
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                   <i class="bx bx-dots-vertical-rounded"></i>
               </button>
+              <span class="badge rounded-pill bg-danger file-badge">
+                {{ $documentStatus['lacking']['count'] }}
+              </span>
               <div class="dropdown-menu">
-                  <a class="dropdown-item" data-bs-toggle="modal"data-bs-target="#scanModal" ><i class="fas fa-file"></i> No Diploma</a>
-                  <a class="dropdown-item" ><i class="fas fa-file"></i> No Form 137</a>
+                  @foreach ($documentStatus['lacking']['documents'] as $doc)
+                    <a class="dropdown-item"><i class="fas fa-file"></i> No {{$doc}}</a>
+                  @endforeach
+                  <div class="text-center">
+                    <a class="dropdown-item" href="{{url('documents/upload/'.$enrollment->student->id)}}" >
+                      <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> Scan Documents</button>
+                    </a>
+                  </div>
               </div>
             </div>
+            @endif
           </td>
           <td>
             <div class="dropdown">
