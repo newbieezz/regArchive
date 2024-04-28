@@ -49,11 +49,6 @@
                 <div data-i18n="CRM">Users / Staff</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="{{ url('documents/records') }}"class="menu-link">
-                <div data-i18n="CRM">Document Transactions</div>
-              </a>
-            </li>
             <li class="menu-item ">
               <a href="{{url('settings/department')}}" class="menu-link">
                 <div data-i18n="Analytics">College Departments</div>

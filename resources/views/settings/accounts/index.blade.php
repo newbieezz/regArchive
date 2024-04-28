@@ -11,7 +11,8 @@
       <div class="card-body">
         <div class="row mb-2">
           <div class="col-6">
-            <h5 class="card-title">List of Accounts</h5>
+            <h5 class="card-title">List of Accounts / 
+              <a href="">Transactions  </a> </h5>
           </div>
           <div class="col-6 d-flex justify-content-end">
             <a href="{{url('settings/user/create')}}" style="color: white">
@@ -62,6 +63,7 @@
                               <i class="{{ $user->status->id == 1 ? 'fas fa-ban' : 'fas fa-check'}} me-1"></i>
                               {{ $user->status->id == 1 ? 'Deactivate' : 'Activate' }}
                             </a>
+                            <a class="dropdown-item" href="{{url('settings/user/update/'.$user['id'])}}"><i class="fas fa-file"></i> Transactions</a>
                             <a class="dropdown-item" href="{{url('settings/user/update/'.$user['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
                         </div>
                     </div>

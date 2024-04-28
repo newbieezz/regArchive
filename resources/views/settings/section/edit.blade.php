@@ -28,7 +28,7 @@
                 <div class="row">
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Section Name</label>
-                    <input type="text" class="form-control" id="year" name="year" placeholder="Type"  value="{{ old('type', $section->name) }}">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Type"  value="{{ old('type', $section->name) }}">
                     @error('type')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror

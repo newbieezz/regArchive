@@ -78,7 +78,7 @@
           <th>Shcool Year</th>
           <th>Semester</th>
           <th>Department</th>
-          <th>Program</th>
+          <th>Section</th>
           <th>Course</th>
           <th>Major</th>
           <th>Document</th>
