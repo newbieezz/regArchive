@@ -28,9 +28,9 @@ class StudentRecordsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, $status = null)
     {
-        $students = $this->studentService->list($request->all());
+        $students = $this->studentService->list($request->all(), $status);
         return view('main.students.index', compact('students', 'request'));
     }
 

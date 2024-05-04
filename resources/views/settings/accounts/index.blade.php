@@ -63,7 +63,7 @@
                               <i class="{{ $user->status->id == 1 ? 'fas fa-ban' : 'fas fa-check'}} me-1"></i>
                               {{ $user->status->id == 1 ? 'Deactivate' : 'Activate' }}
                             </a>
-                            <a class="dropdown-item" href="{{url('settings/user/update/'.$user['id'])}}"><i class="fas fa-file"></i> Transactions</a>
+                            <a class="dropdown-item" href="{{url('documents/transactions?user_id='.$user['id'])}}"><i class="fas fa-file"></i> Transactions</a>
                             <a class="dropdown-item" href="{{url('settings/user/update/'.$user['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
                         </div>
                     </div>

@@ -31,12 +31,12 @@ Route::group(['middleware' => ['auth']], function() {
         // Students routes
         Route::prefix('student')->group(function () {
             Route::get('/records', 'StudentRecordsController@index');
+            Route::get('/records/{status}', 'StudentRecordsController@index');
             Route::get('/show/{id}', 'StudentRecordsController@show');
         });
         
         // Enrollment routesphp 
         Route::prefix('enrollment')->group(function () {
-            Route::get('/', 'EnrollmentRecordsController@index');
             Route::get('/create', 'EnrollmentRecordsController@create');
             Route::post('/store', 'EnrollmentRecordsController@store');
             Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/import', 'EnrollmentRecordsController@import');
             Route::get('/import', 'EnrollmentRecordsController@import');
             Route::post('/upload', 'EnrollmentRecordsController@upload');
+            Route::get('/', 'EnrollmentRecordsController@index');
+            Route::get('/{status}', 'EnrollmentRecordsController@index');
         });
         // Graduating Applicants routes
         Route::get('graduating/applicants', 'GraduatingApplicantsController@index');
@@ -52,8 +54,13 @@ Route::group(['middleware' => ['auth']], function() {
         // Documents routes
         Route::prefix('documents')->group(function () {
             Route::get('/records', 'DocumentsController@index');
+            Route::get('/records/{status}', 'DocumentsController@index');
             Route::get('/upload/{studentId}', 'DocumentsController@create');
             Route::post('/upload/{studentId}', 'DocumentsController@store');
+            Route::get('/trash', 'TrashController@index');
+            Route::get('/trash/restore', 'TrashController@restore');
+            Route::get('/trash/delete', 'TrashController@delete');
+            Route::get('/transactions', 'DocumentsController@transactions');
         });
         
 
@@ -110,10 +117,6 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/update/{id}', 'RequirementController@edit');
                 Route::post('/update/{id}', 'RequirementController@update');
                 Route::get('/delete/{id}', 'RequirementController@destroy');
-            });
-            //Trash routes
-            Route::prefix('trash')->group(function () {
-                Route::get('/', 'TrashController@index');
             });
             // School Year routes
             Route::prefix('schoolyear')->group(function () {

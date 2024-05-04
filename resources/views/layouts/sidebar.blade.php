@@ -26,16 +26,34 @@
               <div data-i18n="CRM">Enrollment Records</div>
             </a>
           </li>
-          <li class="menu-item ">
+          <!-- <li class="menu-item ">
             <a href="{{url('graduating/applicants')}}" class="menu-link ">
               <div data-i18n="Analytics">Graduating Applicants</div>
             </a>
-          </li>
+          </li> -->
+    </ul>
+    <li class="menu-header medium text-uppercase">
+      <i class="menu-icon tf-icons bx bx-home-circle"></i>
+      <span class="menu-header-text">Document/Files</span>
+    </li>
+    <ul class="menu-inner py-1">
           <li class="menu-item">
             <a href="{{ url('documents/records') }}"class="menu-link">
               <div data-i18n="CRM">Document Records</div>
             </a>
           </li>
+          <li class="menu-item">
+            <a href="{{ url('documents/trash') }}" class="menu-link">
+              <div data-i18n="Analytics">Trash</div>
+            </a>
+          </li>
+          @if (Auth::guard('web')->user()->role===Config::get('user.roles.admin'))
+          <li class="menu-item ">
+            <a href="{{url('documents/transactions')}}" class="menu-link ">
+              <div data-i18n="Analytics">Transactions</div>
+            </a>
+          </li>
+          @endif
     </ul>
     <div class="menu-inner-shadow"></div>
       <li class="menu-header medium text-uppercase">
@@ -75,12 +93,6 @@
               </a>
             </li>
           @endif
-            <li class="menu-item">
-              <a href="{{ url('settings/trash') }}" class="menu-link">
-                <div data-i18n="Analytics">Trash</div>
-              </a>
-            </li>
-            
       </ul>
    
 

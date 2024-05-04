@@ -32,10 +32,10 @@ class StudentService
      *
      * @param array $params
      */
-    public function list(array $request)
+    public function list(array $request, $status = null)
     {
         try {
-            $students = Student::query();
+            $students = Student::query()->status($status);
             $filteredStudents = $this->searchFilterList($request, $students);
             return $filteredStudents->paginate(config('app.pages'));
         } catch (Exception $e) {

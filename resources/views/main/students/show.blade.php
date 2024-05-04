@@ -18,7 +18,7 @@
                               <label class="form-label"> Course : &nbsp;</label> <b> {{ $student->enrollments->last()->course->name }} ( {{ $student->enrollments->last()->course->code }} )  </b> <br>
                               <label class="form-label"> Year Level : &nbsp;</label> <b> {{  $student->enrollments->last()->year_level }}  </b> <br>
                               <label class="form-label"> School Year : &nbsp;</label> <b> {{  $student->enrollments->last()->schoolYear->year }}  </b> <br>
-                              <label class="form-label"> Section : &nbsp;</label> <b> {{ $student->enrollments->last()->section->name }} ( {{ $student->enrollments->last()->section->sched }} ) </b> <br>
+                              <label class="form-label"> Section : &nbsp;</label> <b> {{ $student->enrollments->last()->section ? $student->enrollments->last()->section->name : '' }} ( {{ $student->enrollments->last()->section ? $student->enrollments->last()->section->sched : '' }} ) </b> <br>
                               </div>
                             </div>
                         </div>

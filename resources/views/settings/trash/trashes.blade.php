@@ -1,69 +1,62 @@
 @extends('layouts.layout')
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
+@if(Session::has('success_message'))
+  <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Success: </strong> {{ Session::get('success_message')}}
+      <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('successMessage').style.display = 'none';"></button>
+  </div>
+@endif
+@include('components.transaction_filter',  ['url' => url('documents/trash')])
 <div class="card">
       <div class="card-body">
         <div class="row mb-2">
           <div class="col-6">
             <h5 class="card-title">Recently Deleted Files/Documents</h5>
           </div>
-          <div class="col-6 d-flex justify-content-end">
-            <a href="{{url('settings/trash/create')}}" style="color: white">
-              <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-plus mx-2"></i> Add New</button>
-            </a>
-          </div>
         </div>
         <div class="table-responsive text-nowrap border">
           <table class="table">
             <thead>
                 <tr>
-                  <th>ID #</th>
                   <th>Type</th>
-                  <th>File Name</th>
+                  <th>Files</th>
+                  <th>Student Id</th>
                   <th>Date Deleted</th>
+                  <th>Deleted By</th>
                   <th>Action</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-            <tr>
-                <td>1</td>
-                <td>Form 137</td>
-                <td>FORM137_112344.pdf</td>
-                <td>2024-02-17 08:10</td>
-                <td>
-                <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Restore</a>
-                        <a class="dropdown-item" href="javascript:void(0);" ><i class="bx bx-trash me-1"></i> Delete</a>
-                    </div>
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>NSO</td>
-                <td>NSO_112344.pdf</td>
-                <td>2024-02-17 08:10</td>
-                <td>
+            @foreach ($trashRecords as $trash)
+              <tr>
+              <td>{{ $trash->category->type }}</td>
+              <td>
+                  @foreach ($trash->files as $document)
+                    <a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a><br/>
+                  @endforeach
+              </td>
+              <td><a href="{{url('student/records?student_query='.$trash->student_id)}}" >{{ $trash->student_id }}</a></td>
+              <td>{{ $trash->deleted_at }}</td>
+              <td>{{ $trash->deletedByUser->first_name }} &nbsp; {{ $trash->deletedByUser->last_name }}</td>
+              <td>
                   <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                           <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Restore</a>
-                          <a class="dropdown-item" href="javascript:void(0);" ><i class="bx bx-trash me-1"></i> Delete</a>
+                          <a class="dropdown-item" href="{{ url('documents/trash/restore?ids='.$trash->files->pluck('id')) }}"><i class="bx bx-edit-alt me-1"></i> Restore</a>
+                          <a class="dropdown-item" href="{{ url('documents/trash/delete?ids='.$trash->files->pluck('id')) }}"><i class="bx bx-edit-alt me-1"></i> Delete</a>
                       </div>
                   </div>
                 </td>
-            </tr>
+              </tr>
+            @endforeach
             </tbody>
           </table>
         </div>
       </div>
-      <!-- Pagination here -->
+      @include('components.pagination',  ['data' => $trashRecords])
     </div> 
 </div>
 @endsection

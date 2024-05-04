@@ -1,6 +1,6 @@
 <div class="card search-warpper mb-2">
   <div class="card-body">
-    <form action="{{$url}}" method="get" id="filter-form">
+    <form action="{{ str_contains(request()->path(), 'incomplete') ? $url.'/incomplete' : (str_contains(request()->path(), 'complete') ? $url.'/complete' : $url) }}" method="get" id="filter-form">
       <div class="row mb-3">
         <div class="col-sm-12 col-md-5 mb-3 mb-md-0 px-1">
           <input type="text" class="form-control" placeholder="Search ID number or Student Name" name="student_query"  value="{{$request->input('student_query') }}">

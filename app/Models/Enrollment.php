@@ -90,4 +90,14 @@ class Enrollment extends Model
         return $this->belongsTo(Section::class);
     }
     
+
+    public function scopeStatus($query, $status = null)
+    {
+        if($status){
+            return $query->whereHas('student', function ($query) use ($status) {
+                $query->where('is_complete', $status === 'complete');
+            });
+        }
+        return $query;
+    }
 }

@@ -35,10 +35,11 @@ class EnrollmentService
      *
      * @param array $params
      */
-    public function list(array $request)
+    public function list(array $request, $status=null)
     {
         try {
-            $enrollments = Enrollment::query();
+            
+            $enrollments = Enrollment::query()->status($status);
             $filteredEnrollments = $this->searchFilterList($request, $enrollments);
             return $filteredEnrollments->paginate(config('app.pages'));
         } catch (Exception $e) {

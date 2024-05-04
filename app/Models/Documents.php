@@ -25,6 +25,26 @@ class Documents extends Model
      */
     public function category()
     {
-        return $this->belongsTo(DocumentCategory::class)->withTrashed();
+        return $this->belongsTo(DocumentCategory::class, 'type')->withTrashed();
+    }
+
+    /**
+     * Retrieves the document deleted by 
+     *
+     * @return App\Models\User
+     */
+    public function deletedByUser()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
+
+     /**
+     * Retrieves the document added by 
+     *
+     * @return App\Models\User
+     */
+    public function addedByUser()
+    {
+        return $this->belongsTo(User::class, 'added_by');
     }
 }

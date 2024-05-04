@@ -32,9 +32,9 @@ class EnrollmentRecordsController extends Controller
      /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, $status = null)
     {
-        $enrollments = $this->enrollmentService->list($request->all());
+        $enrollments = $this->enrollmentService->list($request->all(), $status);
         return view('main.enrollment.index',compact('enrollments', 'request'));
     }
 

@@ -8,83 +8,58 @@
     <div class="card-body">
       <div class="row mb-2">
         <div class="col-6">
-          <h5 class="card-title">Document Records</h5>
-        </div>
-        <div class="col-6 d-flex justify-content-end">
-          <button type="button" class="btn btn-outline-secondary btn-sm btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
-          <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-plus mx-2"></i> Add New</button>
-          <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-upload mx-2"></i> Bulk Upload</button>
+          <h5 class="card-title">
+            <a class="text-black" href="{{ url('documents/records?' . request()->getQueryString()) }}">Document Records</a> / 
+            <a href="{{ url('documents/records/incomplete?' . request()->getQueryString()) }}">Incomplete</a> / 
+            <a href="{{ url('documents/records/complete?' . request()->getQueryString()) }}">Complete</a>
         </div>
       </div>
-  <div class="table-responsive text-nowrap">
-    <h4>Undecided pa sa UI na ibutang ari na part if foler icons ba then ig click kay table with that particular document type </h4>
-    <h4>Or the usual table then sa filter gihapon if ever nay pangitaon na file niya another SCAN and Upload File etc.</h4></h4>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Student ID</th>
-          <th>Last Name</th>
-          <th>First Name</th>
-          <th>SHS School</th>
-          <th>SHS Year Graduated</th>
-          <th>Program</th>
-          <th>Good Moral</th>
-          <th>PSA</th>
-          <th>Grades</th>
-          <th>Student Status</th>
-        </tr>
-      </thead>
-      <tbody class="table-border-bottom-0">
-        <tr>
-          <td>1180802  </td>
-          <td>Lugo  </td>
-          <td>Mj  </td>
-          <td> SWU </td>
-          <td> 2018 </td>
-          <td> BSIT </td>
-          
-          <td><span class="badge bg-label-primary me-1">Recieved (View) </span></td>
-          <td> N/A </td>
-          <td> N/A </td>
-          <td><span class="badge bg-label-primary me-1">Continuing </span></td>
-          
-        </tr>
-        <tr>
-          <td>1188520  </td>
-          <td>Veloso  </td>
-          <td>Cherry Ann  </td>
-          <td> UC </td>
-          <td> 2016 </td>
-          <td> BSIT </td>
-          <td> N/A </td>
-          <td> N/A </td>
-          <td><span class="badge bg-label-primary me-1">Recieved (View) </span></td>
-          <td><span class="badge bg-label-primary me-1">Returnee </span></td>
-          
-          
-        </tr>
-        <tr>
-          <td>NA  </td>
-          <td>Gonzalez  </td>
-          <td>Kim  </td>
-          <td> UV  </td>
-          <td> 2015 </td>
-          <td> BSIT </td>
-          <td><span class="badge bg-label-primary me-1">Recieved (View) </span></td>
-          <td><span class="badge bg-label-primary me-1">Recieved (View) </span></td>
-          <td><span class="badge bg-label-primary me-1">Recieved (View) </span></td>
-          <td><span class="badge bg-label-primary me-1">Shiftee </span></td>
-          
-        </tr>
-       
-      </tbody>
-    </table>
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Dept. & Course</th>
+            @foreach(getDocumentCategories() as $category)
+            <th>{{$category->type}}</th>
+            @endforeach
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+        @foreach ($documentRecords as $record)
+          <tr>
+            <td><a href="{{url('student/records?student_query='.$record->student_id)}}" >{{ $record->student_id }}</a></td>
+            <td>{{ $record->first_name }} {{ $record->last_name }}</td>
+            <td>
+              <span>{{ $record->enrollments->last()->department->code }}</span> <br/>
+              <span>{{ $record->enrollments->last()->course->code }}&nbsp;
+                {{ $record->enrollments->last()->section ? $record->enrollments->last()->section->name . ' (' .  $record->enrollments->last()->section->sched . ')' : ''}}</span>
+            </td>
+            @foreach(getDocumentCategories() as $category)
+              <td>
+                @if(count($record->documents->where('type', $category->id)) > 0)
+                  @foreach ($record->documents->where('type', $category->id) as $document)
+                    <a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a><br/>
+                  @endforeach
+                @else
+                N/A
+                @endif
+              </td>
+            @endforeach
+            <td>
+              <a href="{{url('documents/upload/'.$record->id)}}" >
+                <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> Scan</button>
+              </a>
+            </td>
+          </tr>
+        @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
+  @include('components.pagination',  ['data' => $documentRecords])
 </div>
-            <div class="content-backdrop fade"></div>
-
-      <div class="layout-overlay layout-menu-toggle"></div>
-    <!-- / Layout wrapper -->
-
+</div>
 @endsection
-</html>

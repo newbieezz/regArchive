@@ -25,9 +25,19 @@ class DocumentsController extends Controller
      /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, $status = null)
     {
-        return view('main.documents.records', compact('request'));
+        $documentRecords = $this->documentService->listByStudent($request->all(), $status);
+        return view('main.documents.records', compact('documentRecords', 'request'));
+    }
+
+    /**
+     * Display a listing of the transactions.
+     */
+    public function transactions(Request $request)
+    {
+        $transactions = $this->documentService->list($request->all());
+        return view('main.documents.transactions', compact('transactions', 'request'));
     }
 
     /**
@@ -36,8 +46,8 @@ class DocumentsController extends Controller
     public function create(string $studentId)
     {
         try { 
-            $enrollment = Student::findOrFail($studentId);
-            return view('main.documents.upload', compact('studentId'));
+            $studentData = Student::findOrFail($studentId);
+            return view('main.documents.upload', compact('studentId', 'studentData'));
         } catch (Exception $e) {
             return redirect()->back();
         }

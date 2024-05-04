@@ -67,7 +67,7 @@ class Student extends Model
      */
     public function documents()
     {
-        return $this->hasMany(Documents::class, 'student_id', 'student_id')->withTrashed();
+        return $this->hasMany(Documents::class, 'student_id', 'student_id');
     }
 
     /**
@@ -77,32 +77,15 @@ class Student extends Model
      */
     public function getDocumentStatusAttribute(): array
     {
-        // Retrieve all file categories
         $fileCategories = DocumentCategory::all();  
-
-        // Get the types of all required documents
-        $requiredDocumentTypes = DocumentCategory::all()->pluck('type')->toArray();  
-
-        // Count the total number of required documents
+        $requiredDocumentTypes = $fileCategories->pluck('type')->toArray();  
         $requiredDocumentCount = count($requiredDocumentTypes);
-
-        // Get the documents associated with this student
-        $studentDocuments = $this->documents;
-
-        // Get the documents associated with this student
-        $studentDocumentIds = $this->documents->pluck('type')->unique()->toArray();
-
-        // Get the corresponding types from DocumentCategory based on the IDs
-        $presentDocumentTypes = DocumentCategory::whereIn('id', $studentDocumentIds)->pluck('type')->toArray();
-
-        // Count the number of submitted documents
+        $this->load('documents');
+        $presentDocumentTypes = $this->documents->pluck('type')->unique()->toArray();
         $submittedDocumentCount = count($presentDocumentTypes);
-
-        // Find the lacking document types
         $lackingDocumentTypes = array_diff($requiredDocumentTypes, $presentDocumentTypes);
-        
-        $complete = $requiredDocumentCount === $submittedDocumentCount ? true : false;
-
+        $complete = $requiredDocumentCount === $submittedDocumentCount;
+    
         return [
             "is_complete" => $complete,
             "status" => $complete ? "Completed" : "Incomplete",
@@ -113,4 +96,30 @@ class Student extends Model
         ];
     }
 
+    public function scopeDocumentByType($query, $categoryId)
+    {
+        return $query->whereHas('documents', function ($query) use ($categoryId) {
+            $query->where('type', $categoryId);
+        });
+    }
+
+    // In the Student model
+    public function updateDocumentStatus()
+    {
+        // Calculate document status as before
+        $status = $this->getDocumentStatusAttribute();
+
+        // Update the 'is_complete' column in the database
+        $this->is_complete = $status['is_complete'];
+        $this->save();
+    }
+
+    
+    public function scopeStatus($query, $status = null)
+    {
+        if($status){
+            return $query->where('is_complete', $status === 'complete');
+        }
+        return $query;
+    }
 }
