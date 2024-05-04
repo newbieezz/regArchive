@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/show/{id}', 'EnrollmentRecordsController@show');
             Route::get('/import', 'EnrollmentRecordsController@import');
             Route::get('/import', 'EnrollmentRecordsController@import');
+            Route::get('/export', 'EnrollmentRecordsController@export_data');
             Route::post('/upload', 'EnrollmentRecordsController@upload');
             Route::get('/', 'EnrollmentRecordsController@index');
             Route::get('/{status}', 'EnrollmentRecordsController@index');

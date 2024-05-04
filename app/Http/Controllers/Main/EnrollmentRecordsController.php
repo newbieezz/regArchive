@@ -13,6 +13,8 @@ use App\Http\Requests\Main\Enrollment\BulkEnrollmentRequest;
 use App\Services\EnrollmentService;
 use Exception;
 use Illuminate\Validation\ValidationException;
+use Excel;
+use App\Exports\StudentExport;
 class EnrollmentRecordsController extends Controller
 {
     
@@ -134,5 +136,10 @@ class EnrollmentRecordsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function export_data()
+    {
+        return Excel::download(new StudentExport($this->enrollmentService),'students.xlsx');
     }
 }

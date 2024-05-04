@@ -21,7 +21,9 @@
           </h5>
         </div>
         <div class="col-6 d-flex justify-content-end">
-          <button type="button" class="btn btn-outline-secondary btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
+          <a href="{{url('enrollment/export')}}" style="color: white">
+            <button type="button" class="btn btn-outline-secondary btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
+          </a>
           <a href="{{url('enrollment/create')}}" style="color: white">
             <button type="button" class="btn btn-outline-secondary btn-large mx-2" ><i class="fas fa-plus mx-2"></i> Add New</button>
           </a>
