@@ -57,7 +57,7 @@
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Department</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="semester" name="department_id" id="department_id">
+                      <select class="form-select" aria-label="department" name="department_id" id="department_id">
                         @foreach(getDepartments() as $dept)
                         <option value="{{ $dept->id }}" {{ old('department_id') == $dept->id ? 'selected' : '' }}>{{ $dept->name }}</option>
                         @endforeach

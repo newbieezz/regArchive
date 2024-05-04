@@ -3,7 +3,7 @@
 return [
     'semester' => [
         '1' => '1st Semester',
-        '2' => '2n Semester',
+        '2' => '2nd Semester',
         '3' => 'Trimester',
         '4' => 'Summer Term',
     ],
