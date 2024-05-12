@@ -35,14 +35,18 @@ class StudentService
     public function list(array $request, $status = null)
     {
         try {
-            $students = Student::query()->status($status);
+            $authUser = getLoggedInUser();
+            if($authUser->role === config('user.roles.staff') && $authUser->scope === 2){
+                $students = Student::query()->byDepartment($authUser->department_id)->status($status);
+            } else{
+                $students = Student::query()->status($status);
+            }
             $filteredStudents = $this->searchFilterList($request, $students);
             return $filteredStudents->paginate(config('app.pages'));
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $enrollment;
     }
 
     /**

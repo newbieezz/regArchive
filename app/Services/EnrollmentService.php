@@ -38,8 +38,12 @@ class EnrollmentService
     public function list(array $request, $status=null)
     {
         try {
-            
-            $enrollments = Enrollment::query()->status($status);
+            $authUser = getLoggedInUser();
+            if($authUser->role === config('user.roles.staff') && $authUser->scope === 2){
+                $enrollments = Enrollment::query()->byDepartment($authUser->department_id)->status($status);
+            } else{
+                $enrollments = Enrollment::query()->status($status);
+            }
             $filteredEnrollments = $this->searchFilterList($request, $enrollments);
             return $filteredEnrollments->paginate(config('app.pages'));
         } catch (Exception $e) {

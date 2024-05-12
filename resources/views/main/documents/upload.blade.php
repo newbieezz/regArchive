@@ -5,7 +5,7 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('settings/documents/records/')}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('documents/records/')}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">
@@ -21,8 +21,9 @@
                   </div>
               @endif
             </div>
-
+            <!-- Upload Documents -->
             <div class="card-body">
+                <h5>Upload Documents</h5>
               <p id="register-success"></p>
               <form action="{{url('documents/upload/'.$studentId)}}" method="post" enctype="multipart/form-data"> @csrf
                 <div class="row">
@@ -55,6 +56,42 @@
                 </div>
               </form>
             </div>
+
+            <!-- Scan Documents-->
+            <!-- <div class="card-body">
+                <h5>Scan Documents</h5>
+              <p id="register-success"></p>
+              <form id="form1" action="https://asprise.com/scan/applet/upload.php?action=dump" method="POST" enctype="multipart/form-data" target="_blank" > @csrf
+                <div class="row">
+                    @foreach(getDocumentCategories() as $category)
+                    <div class="card mb-4 p-4" >
+                        <div class="row">
+                            <div class="col-sm-12 col-md-8">
+                                <h4>{{$category->type}}</h4>
+                                @if(count($studentData->documents->where('type', $category->id)) > 0)
+                                    <p class="text-warning m-0">
+                                        Note: There are documents already uploaded. Reuploading documents will removed old documents.<br/>
+                                        You can restore deleted documents on the trash section.
+                                    </p>
+                                @endif
+                                <button type="button" class="btn btn-secondary"  onclick="scanToJpg();">Scan</button>
+                                @error('file')
+                                    <p class="text-danger m-0">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="col-sm-12 file-preview d-flex flex-wrap align-content-start gap-2 mt-4" id="previewContainer{{$loop->index}}" data-asset-path="{{ asset('storage/') }}">
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  <a class="mx-2" href="{{url('settings/department/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                  <input type="button" value="Submit" onclick="submitFormWithScannedImages();">
+                </div>
+              </form>
+
+            </div> -->
           </div>
         </div>
       </div>
@@ -64,6 +101,7 @@
 </div>
   <!-- Content wrapper -->
 @endsection
+<script src="{{asset('scannerjs/scanner.js')}}" type="text/javascript"></script>
 
 @section('scripts')
 <script>
@@ -188,3 +226,89 @@
 
 </script>
 @endsection
+
+<!-- Scanner Script -->
+@section('scripts')
+<script>
+
+        /** Initiates a scan */
+        function scanToJpg() {
+            scanner.scan(displayImagesOnPage,
+                    {
+                        "output_settings": [
+                            {
+                                "type": "return-base64",
+                                "format": "jpg"
+                            }
+                        ]
+                    }
+            );
+        }
+
+        /** Processes the scan result */
+        function displayImagesOnPage(successful, mesg, response) {
+            if(!successful) { // On error
+                console.error('Failed: ' + mesg);
+                return;
+            }
+
+            if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User cancelled.
+                console.info('User cancelled');
+                return;
+            }
+
+            var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+            for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+                var scannedImage = scannedImages[i];
+                processScannedImage(scannedImage);
+            }
+        }
+
+        /** Images scanned so far. */
+        var imagesScanned = [];
+
+        /** Processes a ScannedImage */
+        function processScannedImage(scannedImage) {
+            imagesScanned.push(scannedImage);
+            var elementImg = scanner.createDomElementFromModel( {
+                'name': 'img',
+                'attributes': {
+                    'class': 'scanned',
+                    'src': scannedImage.src
+                }
+            });
+            document.getElementById('images').appendChild(elementImg);
+        }
+
+        <!-- Previous lines are same as demo-01, below is new addition to demo-02 -->
+
+        /** Upload scanned images by submitting the form */
+        function submitFormWithScannedImages() {
+            if (scanner.submitFormWithImages('form1', imagesScanned, function (xhr) {
+                if (xhr.readyState == 4) { // 4: request finished and response is ready
+                    document.getElementById('server_response').innerHTML = "<h2>Response from the server: </h2>" + xhr.responseText;
+                    document.getElementById('images').innerHTML = ''; // clear images
+                    imagesScanned = [];
+                }
+            })) {
+                document.getElementById('server_response').innerHTML = "Submitting, please stand by ...";
+            } else {
+                document.getElementById('server_response').innerHTML = "Form submission cancelled. Please scan first.";
+            }
+        }
+
+    </script>
+@endsection
+
+    <style>
+        img.scanned {
+            height: 200px; /** Sets the display size */
+            margin-right: 12px;
+        }
+
+        div#images {
+            margin-top: 20px;
+        }
+    </style>
+
+

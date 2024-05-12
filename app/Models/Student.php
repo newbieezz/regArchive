@@ -70,6 +70,14 @@ class Student extends Model
         return $this->hasMany(Documents::class, 'student_id', 'student_id');
     }
 
+    public function scopeByDepartment($query, $department_id)
+    {
+            return $query->whereHas('enrollments', function ($query) use ($department_id) {
+                $query->where('department_id', $department_id );
+            });
+        
+    }
+
     /**
      * Get the count of u records.
      *

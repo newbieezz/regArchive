@@ -43,14 +43,14 @@
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-email">Select Department</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="department" name="department">
+                      <select class="form-select" aria-label="department" name="department_id" id="department_id">
                         @foreach($departments as $dept)
-                        <option value="{{ $dept->id }}" {{ old('department') == $dept->id ? 'selected' : '' }}>{{ $dept->name }}</option>
+                        <option value="{{ $dept->id }}" {{ old('department_id') == $dept->id ? 'selected' : '' }}>{{ $dept->name }}</option>
                         @endforeach
                       </select>
                     </div>
                     <div class="form-text">You can use letters, numbers & periods</div>  
-                    @error('department')
+                    @error('department_id')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>

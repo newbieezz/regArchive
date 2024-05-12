@@ -68,7 +68,7 @@ if (!function_exists('getDepartments')) {
 
     function getDepartments()
     {
-        // Instantiate the SchoolYearService
+        // Instantiate the DepartmentService
         $departmentService = app(DepartmentService::class);
 
         return $departmentService->listAll();

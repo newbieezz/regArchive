@@ -11,8 +11,7 @@
       <div class="card-body">
         <div class="row mb-2">
           <div class="col-6">
-            <h5 class="card-title">List of Accounts / 
-              <a href="">Transactions  </a> </h5>
+            <h5 class="card-title">List of Accounts </h5>
           </div>
           <div class="col-6 d-flex justify-content-end">
             <a href="{{url('settings/user/create')}}" style="color: white">
@@ -39,18 +38,14 @@
                 <tr>
                     <td><span class="fw-medium">{{ $user['first_name'] }} {{ $user['last_name'] }}</span> </td>
                     <td><span class="fw-medium">{{ $user['role'] === 1 ? 'Admin' : 'Staff' }}</span> </td>
-                    <td><span class="fw-medium">
-                      @foreach ($departments as $dept)
-                        @if ($user['department_id'] == $dept['id'])
-                          {{$dept['name']}}
-                        @elseif ($user['department_id'] == null) 
-                          <span></span>
-                        @endif
-                      @endforeach
-                    </span> 
+                    <td> @foreach($departments as $department)
+                          @if($user['department_id'] === $department['id'])
+                            {{ $department['name'] }}
+                          @endif
+                         @endforeach  
                     </td>
                     <td>{{ $user['email'] }}</td>
-                    <td>{{ $user['scope'] }}</td>
+                    <td>{{  $user['scope'] === 1 ? 'All Department' : 'Assigned Department' }}</td>
                     <td><span class="badge {{ $user->status->id == 1 ? 'bg-label-success' : 'bg-label-danger' }} me-1">{{ $user->status->id == 1 ? 'Active' : 'Deactivated'}}</span></td>
                     <td>{{ $user['created_at'] }}</td>
                     <td>

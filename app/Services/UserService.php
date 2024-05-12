@@ -39,7 +39,7 @@ class UserService
             $params['password'] = Hash::make($params['password']);
             $status = UserStatus::where('name', config('user.statuses.active'))->firstOrFail();
             $params['role'] = config('user.roles.staff');
-            $params['department_id'] = $params['department'];
+            $params['department_id'] = $params['department_id'];
             $params['user_status_id'] = $status->id;
             $user = $this->user->create($params);
 

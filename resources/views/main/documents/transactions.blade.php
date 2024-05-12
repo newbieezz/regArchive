@@ -34,8 +34,8 @@
             <td><a href="{{url('student/records?student_query='.$document->student_id)}}" >{{ $document->student_id }}</a></td>
             <td>{{ $document->created_at }}</td>
             <td>{{ $document->addedByUser ? $document->addedByUser->first_name . ' ' . $document->addedByUser->last_name : '-' }}</td>
-            <td>{{ $document->deleted_at ? $document->deleted_at : '-' }}</td>
             <td>{{ $document->deletedByUser ? $document->deletedByUser->first_name . ' ' . $document->deletedByUser->last_name : '-' }}</td>
+            <td>{{ $document->deleted_at ? $document->deleted_at : '-' }}</td>
           </tr>
         @endforeach
         </tbody>

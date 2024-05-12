@@ -86,7 +86,7 @@ class HomeController extends Controller
             // $request->validated();
             // dd($id);
             $this->userService->updateStaff($request->all(), $id);
-            return redirect()->back()->with('success_message', 'Account updated successfully.');
+            return redirect('/dashboard')->with('success_message', 'Account updated successfully.');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->errors())->withInput();
         } catch (Exception $e) {

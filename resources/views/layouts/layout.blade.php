@@ -89,7 +89,8 @@
     <script src="{{asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{asset('assets/vendor/js/menu.js')}}"></script>
 
-    <!-- endbuild -->
+    <!-- Scanner JS -->
+    <script src="{{asset('scannerjs/scanner.js')}}" type="text/javascript"></script>
 
     <!-- Vendors JS -->
     <script src="{{asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>

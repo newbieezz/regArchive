@@ -16,7 +16,7 @@ class CreateUserRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'department' => 'required',
+            'department_id' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed', // confirmed rule for matching passwords
         ];
@@ -31,7 +31,7 @@ class CreateUserRequest extends FormRequest
             'last_name.required' => 'Last Name is required!',
             'last_name.string' => 'Last Name must be a string!',
             'last_name.max' => 'Last Name  must less than 255 characters!',
-            'department.required' => 'Department is required!',
+            'department_id.required' => 'Department is required!',
             'email.required' => 'Email Address is required!',
             'email.email' => 'Valid Email Address is required!',
             'email.max' => 'Email Address must less than 255 characters!',

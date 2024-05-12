@@ -42,17 +42,16 @@
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-email">Select Department</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="department" name="department">
+                      <select class="form-select" aria-label="department" name="department_id" id="department_id">
                         @foreach($departments as $dept)
                         <option value="{{ $dept->id }}" 
-                            {{ (old('department', optional($user->department)->id) == $dept->id) ? 'selected' : '' }}>
+                            {{ (old('department_id', optional($user->department_id)->id) == $dept->id) ? 'selected' : '' }}>
                             {{ $dept->name }}
                         </option>
                         @endforeach
                       </select>
                     </div>
-                    <div class="form-text">You can use letters, numbers & periods</div>  
-                    @error('department')
+                    @error('department_id')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
@@ -95,6 +94,19 @@
                     @enderror
                   </div>
                 </div>
+                <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="basic-default-fullname">Select Scope Access</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="scope" value="1" {{ (old('scope') ?? $user->scope) == '1' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="inlineRadio1">All Department</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="scope" value="2" {{ (old('scope') ?? $user->scope) == '2' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="inlineRadio2">Assigned Departmengt</label>
+                        </div>
+                    </div>
+                  </div>
                 <div class="col-12 d-flex justify-content-end">
                   <a class="mx-2" href="{{url('settings/user/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
                   <button type="submit" class="btn btn-primary">Save</button>

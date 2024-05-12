@@ -138,7 +138,7 @@ class EnrollmentRecordsController extends Controller
         //
     }
 
-    public function export_data()
+     public function export_data()
     {
         return Excel::download(new StudentExport($this->enrollmentService),'students.xlsx');
     }

@@ -18,6 +18,7 @@ class UpdateUserRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'department' => 'required',
+            'scope' => 'required',
             'email' => 'required|string|email|max:255',
         ];
 
@@ -44,6 +45,7 @@ class UpdateUserRequest extends FormRequest
             'last_name.string' => 'Last Name must be a string!',
             'last_name.max' => 'Last Name  must less than 255 characters!',
             'department.required' => 'Department is required!',
+            'scope.required' => 'Department is required!',
             'email.required' => 'Email Address is required!',
             'email.email' => 'Valid Email Address is required!',
             'email.max' => 'Email Address must less than 255 characters!',

@@ -56,8 +56,10 @@ class Enrollment extends Model
      */
     public function department()
     {
-        return $this->belongsTo(Department::class)->withTrashed();
+        return $this->belongsTo(Department::class,)->withTrashed();
     }
+
+    
 
     /**
      * Retrieves the course of the enrollment
@@ -99,5 +101,13 @@ class Enrollment extends Model
             });
         }
         return $query;
+    }
+
+    public function scopeByDepartment($query, $department_id)
+    {
+            return $query->whereHas('student', function ($query) use ($department_id) {
+                $query->where('department_id', $department_id );
+            });
+        
     }
 }
