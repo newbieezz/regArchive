@@ -35,6 +35,7 @@
             </thead>
             <tbody class="table-border-bottom-0">
             @foreach ($students as $student)
+              
               <tr>
                 <td>{{ $student->student_id }}</td>
                 <td>{{ $student->last_name }}</td>

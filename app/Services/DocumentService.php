@@ -7,11 +7,13 @@ use Hash;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Documents;
+use App\Models\DocumentCategory;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\ModelNotFoundException;  
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Process;
 
 
 class DocumentService
@@ -144,17 +146,56 @@ class DocumentService
                             'added_by' => getLoggedInUser()->id,
                         ]);
                     }
-
-                    
                 }
             }
+            //Clean temp files of scanned documents
+            $tempDirectory = 'temp/user_'.getLoggedInUser()->id.'/'.$student->student_id;
+            // Check if the directory exists
+            if (Storage::disk('public')->exists($tempDirectory)) {
+                // Delete the directory and its contents
+                Storage::disk('public')->deleteDirectory($tempDirectory);
+            }
+
             $student->updateDocumentStatus();
+            return true;
         } catch (Exception $e) {
             throw $e;
         }
 
         return;
     }
+
+    public function scan(Request $request, $studentID, $categoryID){
+        try {
+            $student = Student::findOrFail($studentID);
+            $category = DocumentCategory::findOrFail($categoryID);
+            $userId = $request->input('userId');
+    
+            $outputDirectory = 'temp/user_'.$userId.'/'.$student->student_id.'/'.$category->type;
+            $filename = $category->type.'_'.time().'.jpg'; // Assuming the scanned document is saved as a PDF
+    
+            // Define the output path on the storage disk
+            $storagePath = $outputDirectory.'/'.$filename;
+            Storage::disk('public')->makeDirectory($outputDirectory, 0755, true);
+            $storagePath = str_replace('/', '\\', $storagePath);
+            // Run NAPS2 command to scan directly to the storage disk
+            $process = new Process([
+                'C:\Program Files\NAPS2\naps2.console.exe', // Path to NAPS2 executable
+                '--output', str_replace('/','\\',Storage::disk('public')->path($storagePath)), // Output directory for scanned documents
+            ]);
+            $process->run();
+    
+            // Check if scanning was successful
+            if (!$process->isSuccessful()) {
+                return response()->json(['message' => 'Scanning failed', 'error' => $process->getErrorOutput()], 500);
+            }
+            return response()->json(['path' =>  $storagePath], 200);
+    
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
 
     public function searchFilterList($conditions, $query)
     {

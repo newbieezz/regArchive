@@ -55,13 +55,13 @@
           </li>
           @endif
     </ul>
+    @if (Auth::guard('web')->user()->role===Config::get('user.roles.admin'))
     <div class="menu-inner-shadow"></div>
       <li class="menu-header medium text-uppercase">
         <i class="menu-icon tf-icons bx bx-dock-top"></i>
         <span class="menu-header-text">Settings</span>
       </li>
       <ul class="menu-inner py-1">
-          @if (Auth::guard('web')->user()->role===Config::get('user.roles.admin'))
             <li class="menu-item">
               <a href="{{ url('settings/user') }}"class="menu-link">
                 <div data-i18n="CRM">Users / Staff</div>
@@ -92,8 +92,7 @@
                 <div data-i18n="Analytics">Class Sections</div>
               </a>
             </li>
-          @endif
+          
       </ul>
-   
-
+    @endif
   </aside>

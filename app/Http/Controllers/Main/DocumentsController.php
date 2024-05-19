@@ -59,12 +59,20 @@ class DocumentsController extends Controller
      */
     public function store(Request $request, string $studentId)
     {
+        $res = [];
         try { 
-            $this->documentService->uploadDocumnets($request, $studentId);
-            return redirect('/documents/records')->with('success_message', 'Document uploaded successfully.');
+            $updload = $this->documentService->uploadDocumnets($request, $studentId);
+            $res= [
+                'message' => 'Document uploaded successfully.',
+                "code" => 200,
+            ];
         } catch (Exception $e) {
-            throw $e;
+            $res = [
+                'error' => $e->getMessage(),
+                'code' => 500,
+            ];
         }
+        return response()->json($res, $res['code']);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,6 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        if(Auth::check())
+            return redirect('/dashboard');
         return view('login');
     }
 

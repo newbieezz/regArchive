@@ -86,7 +86,7 @@ class Student extends Model
     public function getDocumentStatusAttribute(): array
     {
         $fileCategories = DocumentCategory::all();  
-        $requiredDocumentTypes = $fileCategories->pluck('type')->toArray();  
+        $requiredDocumentTypes = $fileCategories->pluck('id')->toArray();  
         $requiredDocumentCount = count($requiredDocumentTypes);
         $this->load('documents');
         $presentDocumentTypes = $this->documents->pluck('type')->unique()->toArray();
@@ -99,7 +99,7 @@ class Student extends Model
             "status" => $complete ? "Completed" : "Incomplete",
             "lacking" => [
                 'count' => count($lackingDocumentTypes),
-                'documents' => $lackingDocumentTypes,
+                'documents' => DocumentCategory::find($lackingDocumentTypes)->pluck('type')->toArray(),
             ]
         ];
     }

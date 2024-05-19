@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="{{asset('assets/vendor/fonts/boxicons.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{asset('assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
@@ -89,8 +90,9 @@
     <script src="{{asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{asset('assets/vendor/js/menu.js')}}"></script>
 
-    <!-- Scanner JS -->
-    <script src="{{asset('scannerjs/scanner.js')}}" type="text/javascript"></script>
+    <script src="{{asset('assets/js/html2canvas.js')}}"></script>
+    <script src="{{asset('assets/js/jspdf.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 
     <!-- Vendors JS -->
     <script src="{{asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>

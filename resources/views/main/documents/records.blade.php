@@ -2,6 +2,19 @@
 @extends('layouts.layout')
 @section('content')
   <body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('success_message');
+        if (successMessage) {
+            alert(decodeURIComponent(successMessage)); // Display the success message
+            // Remove the query parameter from the URL without reloading the page
+            const url = new URL(window.location);
+            url.searchParams.delete('success_message');
+            window.history.replaceState(null, '', url);
+        }
+    });
+</script>
 <div class="container-xxl flex-grow-1 container-p-y">
   @include('components.filters',  ['url' => url('documents/records')])
   <div class="card">

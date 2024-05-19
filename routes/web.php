@@ -21,7 +21,7 @@ Route::prefix('user')->group(function () {
     Route::get('/logout', [LoginController::class, 'logout']);
 });
 
-Route::get('/', [UserController::class, 'index']);
+Route::get('/', [UserController::class, 'index'])->name('login');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::namespace('App\Http\Controllers\Main')->group(function(){
@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/trash', 'TrashController@index');
             Route::get('/trash/restore', 'TrashController@restore');
             Route::get('/trash/delete', 'TrashController@delete');
-            Route::get('/transactions', 'DocumentsController@transactions');
+            Route::get('/transactions', 'DocumentsController@transactions')->middleware('admin_only');
         });
         
 
@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth']], function() {
             
         });
     });
-    Route::namespace('App\Http\Controllers\Settings')->group(function(){
+    Route::namespace('App\Http\Controllers\Settings')->middleware('admin_only')->group(function(){
         Route::prefix('settings')->group(function () {
             // Account routes
             Route::prefix('user')->group(function () {

@@ -15,6 +15,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if(getLoggedInUser()->role === config('user.roles.admin')){
+            return $next($request);
+        }else{
+            return redirect('/dashboard');
+        }
+        
     }
 }
