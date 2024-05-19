@@ -345,7 +345,6 @@
             }
             scannedFiles[category] = pdfBlob
 
-            pdf.save('test.pdf')
         }
     }
 
