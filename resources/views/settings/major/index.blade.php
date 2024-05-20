@@ -12,7 +12,7 @@
       <div class="card-body">
         <div class="row mb-2">
           <div class="col-6">
-            <h5 class="card-title">List of Majors
+            <h5 class="card-title">List of Majors  / <a href="{{url('settings/course/')}}">Back</a>
             </h5>
           </div>
           <div class="col-6 d-flex justify-content-end">

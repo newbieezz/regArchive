@@ -30,7 +30,7 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('login/images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('login/images/admin.png');">
 			<div class="wrap-login100 p-t-30 p-b-50">
                 
 				<span class="login100-form-title p-b-41">	
@@ -68,7 +68,13 @@
 					<div class="container-login100-form-btn m-t-32">
 						<button class="login100-form-btn" type="submit"> Login </button>
 					</div>
-
+ 				<div class="form-group row">
+                    <div class="container-login100-form-btn m-t-32">
+                        <div>
+                            <a href="{{ route('forget.password.get') }}">Forgot Password ?</a>
+                        </div>
+                    </div>
+                </div>
 				</form>
 			</div>
 		</div>
