@@ -13,4 +13,14 @@ class Department extends Model
         'code',
         'name',
     ];
+
+    public function students()
+    {
+        return $this->hasManyThrough(Student::class, Enrollment::class, 'department_id', 'student_id', 'id', 'student_id');
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
 }

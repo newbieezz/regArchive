@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Department;
 use Exception;
 use App\Services\UserService;
+use App\Services\StudentService;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Settings\Users\UpdateUserRequest;
 
@@ -18,18 +19,23 @@ class HomeController extends Controller
      */
     protected $userService;
 
+    /** @var App\Services\StudentService */
+    protected $studentService;
+
     /**
      * UserController constructor.
      *
      * @param App\Services\UserService $userService
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, StudentService $studentService)
     {
         $this->userService = $userService;
+        $this->studentService = $studentService;
     }
     public function index()
     {
-        return view('dashboard');
+        $reports = $this->studentService->getReports();
+        return view('dashboard', compact('reports'));
     }
 
     /**

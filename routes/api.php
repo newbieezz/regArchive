@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\DocumentController;
+use App\Http\Controllers\API\ReportsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,3 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/scan/{studentID}/{category}', [DocumentController::class, 'scan']);
+Route::get('student/department-report', [ReportsController:: class, 'departmentStudentReport']);
+Route::get('enrollment/report', [ReportsController:: class, 'enrollmentReport']);
+Route::get('document/report', [ReportsController:: class, 'documentReport']);

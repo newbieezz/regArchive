@@ -7,6 +7,10 @@ use Hash;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Student;
+use App\Models\Department;
+use App\Models\Enrollment;
+use App\Models\Course;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;  
 
 class StudentService
@@ -127,4 +131,150 @@ class StudentService
         return $query;
     }
 
+    public function getReports(){
+        try {
+            $studentCount = Student::count(); // Count all students
+            $departments = Department::withCount('students')->get();
+            
+            $highSchoolReport = Student::select('secondary AS school_name', DB::raw('count(*) as students_count'))
+            ->groupBy('school_name')
+            ->having('school_name', '!=', '')
+            ->get();
+            
+            $seniorHighReport = Student::select('senior_high AS school_name', DB::raw('count(*) as students_count'))
+            ->groupBy('school_name')
+            ->having('school_name', '!=', '')
+            ->get();
+
+            $reports = [
+                "studentReport" => [
+                    "studentCount" => $studentCount,
+                    "departments" => $departments,
+                ],
+                "schoolReports" => [
+                    "highSchool" => $highSchoolReport,
+                    "seniorHigh" => $seniorHighReport,
+                ],
+            ];
+            return $reports;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function departmentStudentReport(){
+        try {
+            // Count all students
+            $studentCount = Student::count();
+
+            // Get departments with the count of students in each
+            $departments = Department::select('code')->withCount('students')->get();
+
+            // Calculate the percentage of students in each department
+            $departments = $departments->map(function ($department) use ($studentCount) {
+                $department->student_percentage = ($studentCount > 0) ? ($department->students_count / $studentCount) * 100 : 0;
+                return $department;
+            });
+
+            return [
+                "total" => $studentCount,
+                "departments" => $departments,
+            ];
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function enrollmentReport(Request $request){
+        try {
+            $sy = $request->input('schoolYear', null);
+            $enrollment = Enrollment::query();
+            if($sy){
+                $enrollment->where('school_year_id', $sy);
+            }
+
+            $totalEnrollees = $enrollment->count();
+
+            $totalSemesterEnrollees =  $enrollment->select('semester', DB::raw('count(*) as total'))
+            ->groupBy('semester')
+            ->having('semester', '!=', '')
+            ->get();
+
+            $departmentEnrolles = Department::withCount('enrollments');
+            if($sy){
+                $departmentEnrolles = $departmentEnrolles->whereHas('enrollments', function ($innerQuery) use ($sy) {
+                    $innerQuery->where('school_year_id', $sy);
+                });
+            }
+            
+            $departmentEnrolles = $departmentEnrolles->get();
+
+
+
+            $departmentEnrolles = $departmentEnrolles->map(function ($deptEnrollee) {
+                // Retrieve courses along with the count of students for each department
+                $courses = Course::select('code')->where('department_id', $deptEnrollee->id)
+                                ->withCount('enrollments')
+                                ->get();
+
+                // Attach the courses information to the current item
+                $deptEnrollee->courses = $courses;
+
+                return $deptEnrollee;
+            });
+
+            $reports = [
+                "totalEnrollees" => $totalEnrollees,
+                "totalSemesterEnrollees" => $totalSemesterEnrollees,
+                "departmentEnrolles" => $departmentEnrolles
+            ];
+
+            return $reports;
+            
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+
+    public function documentReport(Request $request){
+        try {
+            $department = $request->input('department', null);
+            $courses = Course::query();
+            if($department){
+                $courses->where('department_id', $department);
+            }
+
+            $allCourse = $courses->get();
+
+            $complete = $allCourse->map(function ($course) {
+                // Count students who have completed the course
+                $course->total = Student::where('is_complete', true)->whereHas('enrollments', function ($innerQuery) use ($course) {
+                    $innerQuery->where('course_id', $course->id)
+                       ->where('department_id', $course->department_id);
+                })->count();
+                
+                return $course;
+            });
+
+            $incomplete = $allCourse->map(function ($course) {
+                // Count students who have not completed the course
+                $course->total = Student::where('is_complete', false)->whereHas('enrollments', function ($innerQuery) use ($course) {
+                    $innerQuery->where('course_id', $course->id)
+                       ->where('department_id', $course->department_id);
+                })->count();
+            
+                return $course;
+            });
+
+            return $reports = [
+                'complete' => $complete,
+                'incomplete' => $incomplete,
+            ];
+            
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

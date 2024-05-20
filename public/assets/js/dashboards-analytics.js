@@ -4,7 +4,7 @@
 
 'use strict';
 
-(function () {
+(async function () {
   let cardColor, headingColor, axisColor, shadeColor, borderColor;
 
   cardColor = config.colors.cardColor;
@@ -13,19 +13,52 @@
   borderColor = config.colors.borderColor;
 
   // Total Revenue Report Chart - Bar Chart
+
+  async function getDocumentReports(department = null){
+    let reports = {
+      categories: [],
+      series: [],
+      total: 0,
+    }
+    // Send form data via AJAX
+    const url = department ? `/api/document/report?department=${department}` : '/api/document/report'
+    await fetch(url, {
+        method: 'GET',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Convert response to JSON
+    })
+    .then(data => {
+        if(data.code === 200){
+          reports['categories'] = data.data['incomplete'].map(item => item.code);
+          reports['series'] = [
+            {
+              name: "Complete",
+              data:  data.data['complete'] && data.data['complete'].length>0 ? data.data['complete'].map(item => item.total) : [0]
+            },
+            {
+              name: "incomplete",
+              data:   data.data['complete'] && data.data['incomplete'].length>0 ? data.data['incomplete'].map(item => -item.total) : [0]
+            },
+          ]
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        // Handle error, e.g., show error message
+    });
+
+    return reports
+  }
   // --------------------------------------------------------------------
+  const {categories: docLabels,  series: docSeries,} = await getDocumentReports()
+  let btnDeptDropdown = document.getElementById('growthReportId')
   const totalRevenueChartEl = document.querySelector('#totalRevenueChart'),
     totalRevenueChartOptions = {
-      series: [
-        {
-          name: '2021',
-          data: [18, 7, 15, 29, 18, 12, 9]
-        },
-        {
-          name: '2020',
-          data: [-13, -18, -9, -14, -5, -17, -15]
-        }
-      ],
+      series: docSeries,
       chart: {
         height: 300,
         stacked: true,
@@ -41,7 +74,7 @@
           endingShape: 'rounded'
         }
       },
-      colors: [config.colors.primary, config.colors.info],
+      colors: [config.colors.primary, config.colors.danger],
       dataLabels: {
         enabled: false
       },
@@ -78,7 +111,7 @@
         }
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: docLabels,
         labels: {
           style: {
             fontSize: '13px',
@@ -272,7 +305,25 @@
   if (typeof totalRevenueChartEl !== undefined && totalRevenueChartEl !== null) {
     const totalRevenueChart = new ApexCharts(totalRevenueChartEl, totalRevenueChartOptions);
     totalRevenueChart.render();
+
+    
+    var elements = document.getElementsByClassName('department-input');
+
+    // Loop through the elements and attach the event listener to each one
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', async function(event) {
+            // Your event handling code here
+            const dept = event.target.dataset.id
+            const {categories: docLabels,  series: docSeries,} = await getDocumentReports(dept)
+            console.log('data',docLabels , docSeries)
+            totalRevenueChart.updateSeries(docSeries);
+            let value = event.target.dataset.value
+            let btnDeptDropdown = document.getElementById('deptDropdownId')
+            btnDeptDropdown.textContent  = value;
+        });
+    }
   }
+
 
   // Growth Chart - Radial Bar Chart
   // --------------------------------------------------------------------
@@ -418,18 +469,51 @@
     profileReportChart.render();
   }
 
+  async function getStudentDeptReports(){
+    let reports = {
+      labels: [],
+      series: [],
+      total: 0,
+    }
+    // Send form data via AJAX
+    await fetch('/api/student/department-report', {
+        method: 'GET',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Convert response to JSON
+    })
+    .then(data => {
+        if(data.code === 200){
+          console.log('hey', data)
+          reports['labels'] = data.data['departments'].map(item => item.code);
+          reports['series'] = data.data['departments'].map(item => item.student_percentage);
+          reports['total'] = data.data['total'];
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        // Handle error, e.g., show error message
+    });
+
+    return reports
+  }
+  
   // Order Statistics Chart
   // --------------------------------------------------------------------
+  
+  const {labels, series, total} = await getStudentDeptReports()
   const chartOrderStatistics = document.querySelector('#orderStatisticsChart'),
     orderChartConfig = {
       chart: {
-        height: 165,
-        width: 130,
+        height: 200,
+        width: 200,
         type: 'donut'
       },
-      labels: ['Electronic', 'Sports', 'Decor', 'Fashion'],
-      series: [85, 15, 50, 50],
-      colors: [config.colors.primary, config.colors.secondary, config.colors.info, config.colors.success],
+      labels: labels,
+      series: series,
       stroke: {
         width: 5,
         colors: [cardColor]
@@ -481,9 +565,9 @@
                 show: true,
                 fontSize: '0.8125rem',
                 color: axisColor,
-                label: 'Weekly',
+                label: 'Total Students',
                 formatter: function (w) {
-                  return '38%';
+                  return total;
                 }
               }
             }
@@ -498,13 +582,61 @@
 
   // Income Chart - Area chart
   // --------------------------------------------------------------------
-  const incomeChartEl = document.querySelector('#incomeChart'),
-    incomeChartConfig = {
-      series: [
-        {
-          data: [24, 21, 30, 22, 42, 26, 35, 29]
+
+  
+  async function getEnrollmentReports(schoolYear = null){
+    var semester_inputs = document.getElementsByClassName('semester-input');
+    for (var i = 0; i < semester_inputs.length; i++) {
+      semester_inputs[i].innerHTML = '0'
+    }
+    let reports = {
+      series: [],
+      categories: [],
+      total: 0,
+      totalSemesterEnrollees: []
+    }
+    // Send form data via AJAX
+    const url = schoolYear ? `/api/enrollment/report?schoolYear=${schoolYear}` : '/api/enrollment/report'
+    await fetch(url, {
+        method: 'GET',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-      ],
+        return response.json(); // Convert response to JSON
+    })
+    .then(data => {
+        if(data.code === 200){
+          console.log('hey', data)
+          reports['series'] = {
+            name: "Enrollee",
+            data: [0, ...data.data['departmentEnrolles'].map(item => item.enrollments_count), 0]
+           };
+          reports['categories'] = data.data['departmentEnrolles'].map(item => item.code);
+          reports['total'] = data.data['totalEnrollees'];
+          reports['totalSemesterEnrollees'] = data.data['totalSemesterEnrollees']
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        // Handle error, e.g., show error message
+    });
+
+    return reports
+  }
+
+  const {series : erolleeSeries, categories, total: totalEnrollee, totalSemesterEnrollees} = await getEnrollmentReports()
+
+    let total_enrollee = document.getElementById('total_enrollee');
+    total_enrollee.innerHTML = totalEnrollee;
+    totalSemesterEnrollees.forEach(semEnrollee => {
+      const semElement =   document.getElementById(`sem_input_${semEnrollee.semester}`)
+      semElement.innerHTML = semEnrollee.total
+    });
+    const incomeChartEl = document.querySelector('#incomeChart'),
+    incomeChartConfig = {
+      series: [erolleeSeries],
       chart: {
         height: 215,
         parentHeightOffset: 0,
@@ -566,7 +698,7 @@
         }
       },
       xaxis: {
-        categories: ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: ['', ...categories, ''],
         axisBorder: {
           show: false
         },
@@ -585,16 +717,44 @@
         labels: {
           show: false
         },
-        min: 10,
-        max: 50,
-        tickAmount: 4
       }
     };
-  if (typeof incomeChartEl !== undefined && incomeChartEl !== null) {
-    const incomeChart = new ApexCharts(incomeChartEl, incomeChartConfig);
-    incomeChart.render();
-  }
+    if (typeof incomeChartEl !== undefined && incomeChartEl !== null) {
+      console.log('heyyy')
+      const incomeChart = new ApexCharts(incomeChartEl, incomeChartConfig);
+      incomeChart.render();
 
+      
+      var elements = document.getElementsByClassName('sy_options');
+
+      // Loop through the elements and attach the event listener to each one
+      for (var i = 0; i < elements.length; i++) {
+          elements[i].addEventListener('click', async function(event) {
+              // Your event handling code here
+              const schoolYear = event.target.dataset.id
+              const {series : erolleeSeries, categories, total: totalEnrollee, totalSemesterEnrollees} = await getEnrollmentReports(schoolYear)
+
+              let total_enrollee = document.getElementById('total_enrollee');
+              total_enrollee.innerHTML = totalEnrollee;
+              totalSemesterEnrollees.forEach(semEnrollee => {
+                const semElement =   document.getElementById(`sem_input_${semEnrollee.semester}`)
+                semElement.innerHTML = semEnrollee.total
+              });
+
+              const value = event.target.dataset.value
+              let btnSYDropdown = document.getElementById('syDropdownId')
+              btnSYDropdown.textContent  = value;
+
+              incomeChart.updateOptions({
+                series: [erolleeSeries],
+                xaxis: {
+                  categories: ['', ...categories, ''],
+                }
+              });
+          });
+      }
+    }
+  
   // Expenses Mini Chart - Radial Chart
   // --------------------------------------------------------------------
   const weeklyExpensesEl = document.querySelector('#expensesOfWeek'),
