@@ -27,6 +27,8 @@ class User extends Authenticatable
         'email',
         'scope',
         'password',
+        'password_default',
+        'employee_id'
     ];
 
     /**

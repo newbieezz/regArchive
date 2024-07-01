@@ -19,12 +19,16 @@ class CreateUserRequest extends FormRequest
             'department_id' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed', // confirmed rule for matching passwords
+            'employee_id' => 'required|string|max:50',
         ];
     }
 
     public function messages()
     {
         return [
+            'employee_id.required' => 'Employee ID is required!',
+            'employee_id.string' => 'Employee ID must be a string!',
+            'employee_id.max' => 'Employee ID must less than 100 characters!',
             'first_name.required' => 'First Name is required!',
             'first_name.string' => 'First Name must be a string!',
             'first_name.max' => 'First Name  must less than 255 characters!',

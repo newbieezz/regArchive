@@ -6,6 +6,14 @@
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="py-3 mb-4">Update Account / <a href="{{url('dashboard')}}">Back</a></h4>
 
+      @if(Session::has('message'))
+      <div class="alert alert-danger alert-dismissible" role="alert">
+          <strong>Notice: </strong> {{ Session::get('message')}}
+          <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+          </button>
+      </div>
+      @endif
+      
       <!-- Basic Layout -->
       <div class="row">
         <div class="col-xl">
@@ -55,6 +63,13 @@
                     <div class="form-text m-0">You can use letters, numbers & periods</div>  
                     @error('email')
                         <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="basic-default-fullname">Employee ID</label>
+                    <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Employee ID" value="{{ old('employee_id', $user->employee_id) }}"/>
+                    @error('employee_id')
+                        <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">

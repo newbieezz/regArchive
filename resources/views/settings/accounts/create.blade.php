@@ -27,21 +27,28 @@
               <form action="{{url('settings/user/store')}}" method="post"> @csrf
                 <div class="row">
                   <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-fullname">First Name</label>
+                    <label class="form-label" for="employee_id">Employee ID</label>
+                    <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Employee ID" value="{{ old('employee_id') }}"/>
+                    @error('employee_id')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="first_name">First Name</label>
                     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{ old('first_name') }}"/>
                     @error('first_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-fullname">Last Name</label>
+                    <label class="form-label" for="last_name">Last Name</label>
                     <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name"  value="{{ old('last_name') }}"/>
                     @error('last_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-email">Select Department</label>
+                    <label class="form-label" for="department_id">Select Department</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="department" name="department_id" id="department_id">
                         @foreach($departments as $dept)
@@ -55,7 +62,7 @@
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-email">Email</label>
+                    <label class="form-label" for="email">Email</label>
                     <div class="input-group input-group-merge">
                       <input
                         type="text"
@@ -73,7 +80,7 @@
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-password">Password</label>
+                    <label class="form-label" for="password">Password</label>
                     <div class="input-group input-group-merge">
                       <input class="form-control" type="password" id="password" name="password"  value="{{ old('password') }}"/>
                     </div>
@@ -83,7 +90,7 @@
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-confirm-password">Confirm Password</label>
+                    <label class="form-label" for="password_confirmation">Confirm Password</label>
                     <div class="input-group input-group-merge">
                       <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" value="{{ old('password_confirmation') }}"/>
                     </div>
