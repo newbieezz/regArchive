@@ -27,12 +27,31 @@
               <form action="{{url('settings/requirement/store')}}" method="post"> @csrf
                 <div class="row">
                   <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="required_student">Students Required</label>
+                    <ul>
+                      <li>A: ALL</li>
+                      <li>B: FIRST YEAR STUDENTS</li>
+                      <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
+                      <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
+                      <li>E: CROSS ENROLLES</li>
+                      <li>F: INTERNATIONAL STUDENTS</li>
+                      <li>G: TRANSFEREES</li>
+                      <li>H: MARRIED</li>
+                    </ul>
+                    <input type="text" class="form-control" id="required_student" name="required_student" placeholder="Student Required for this Document" value="{{ old('required_student') }}"/>
+                    <div class="form-text m-0">You can have combination: "BEF"</div>  
+                    @error('required_student')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Document Type/Name</label>
                     <input type="text" class="form-control" id="type" name="type" placeholder="Type" value="{{ old('type') }}"/>
                     @error('type')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
+                 
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Document Description</label>
                     <input type="text" class="form-control" id="description" name="description" placeholder="Description"  value="{{ old('description') }}"/>

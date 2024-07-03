@@ -12,5 +12,6 @@ class DocumentCategory extends Model
     protected $fillable = [
         'type',
         'description',
+        'required_student'
     ];
 }

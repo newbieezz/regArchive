@@ -10,9 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('password_default')->default(false);
-            $table->string('employee_id')->nullable();
+        Schema::table('document_categories', function (Blueprint $table) {
+            //
+            $table->string('required_student')->nullable();
         });
     }
 
@@ -21,9 +21,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('document_categories', function (Blueprint $table) {
             //
-            $table->dropColumn('employee_id');
+            $table->dropColumn('required_student');
         });
     }
 };
