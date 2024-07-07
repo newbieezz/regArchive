@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Student;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\SchoolYearService;
 use App\Services\DepartmentService;
@@ -110,12 +111,19 @@ if (!function_exists('getSections')) {
 
 if (!function_exists('getDocumentCategories')) {
 
-    function getDocumentCategories()
+    function getDocumentCategories(?int $student_id = null): mixed
     {
-        // Instantiate the SchoolYearService
         $documentCategoryService = app(DocumentCategoryService::class);
+        if (is_null($student_id)) {
+            return $documentCategoryService->listAll();
+        }
 
-        return $documentCategoryService->listAll();
+        $student = Student::find($student_id);
+        // Instantiate the SchoolYearService
+        $the_category = $documentCategoryService->findByRequiredStudent('A' . $student->required_document);
+        //dd($the_category);
+
+        return $the_category;
     }
 }
 

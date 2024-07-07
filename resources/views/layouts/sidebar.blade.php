@@ -17,14 +17,16 @@
       <span class="menu-header-text">Registrar Files</span>
     </li>
     <ul class="menu-inner py-1">
+       <!-- <li class="menu-item ">
           <li class="menu-item">
             <a href="{{ url('student/records') }}"class="menu-link">
               <div data-i18n="CRM">Students Records</div>
             </a>
           </li>
+        -->
           <li class="menu-item">
             <a href="{{ url('/enrollment') }}"class="menu-link">
-              <div data-i18n="CRM">Enrollment Records</div>
+              <div data-i18n="CRM">Students Records</div>
             </a>
           </li>
           <!-- <li class="menu-item ">

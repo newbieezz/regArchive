@@ -27,7 +27,7 @@
               <p id="register-success"></p>
               <form action="{{url('documents/upload/'.$studentId)}}" method="post" enctype="multipart/form-data" id="documentForm"> @csrf
                 <div class="row">
-                    @foreach(getDocumentCategories() as $category)
+                    @foreach(getDocumentCategories($studentId) as $category)
                     <div class="card mb-4 p-4" >
                         <div class="row">
                             <h4>{{$category->type}}</h4>

@@ -46,6 +46,7 @@ class Student extends Model
         'senior_high',
         'senior_high_sy',
         'senior_high_awards',
+        'required_document'
     ];
 
     protected $appends = ['document_status'];
@@ -78,6 +79,7 @@ class Student extends Model
         
     }
 
+
     /**
      * Get the count of u records.
      *
@@ -85,8 +87,20 @@ class Student extends Model
      */
     public function getDocumentStatusAttribute(): array
     {
-        $fileCategories = DocumentCategory::all();  
+        $studentRequiredDocument = 'A' . $this->required_document;
+        //dd($studentRequiredDocument);
+
+        // Fetch Document Categories
+        $fileCategories = DocumentCategory::where(function ($query) use ($studentRequiredDocument) {
+            foreach (str_split($studentRequiredDocument) as $char) {
+                $query->orWhere('required_student', 'LIKE', '%' . $char . '%');
+            }
+        })->get();
+        //dd($fileCategories);
+
+        //$fileCategories = DocumentCategory::all();  
         $requiredDocumentTypes = $fileCategories->pluck('id')->toArray();  
+
         $requiredDocumentCount = count($requiredDocumentTypes);
         $this->load('documents');
         $presentDocumentTypes = $this->documents->pluck('type')->unique()->toArray();

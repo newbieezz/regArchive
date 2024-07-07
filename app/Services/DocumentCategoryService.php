@@ -87,6 +87,19 @@ class DocumentCategoryService
         return $category;
     }
 
+    public function findByRequiredStudent(string $required_student)
+    {
+        // retrieve the categories
+
+        $fileCategories = $this->documentCategory->where(function ($query) use ($required_student) {
+            foreach (str_split($required_student) as $char) {
+                $query->orWhere('required_student', 'LIKE', '%' . $char . '%');
+            }
+        })->get();
+
+        return $fileCategories;
+    }
+
     /**
      * List all document categories from database
      *
