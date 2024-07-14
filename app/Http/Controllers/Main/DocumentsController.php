@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\Documents;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Services\DocumentService;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentsController extends Controller
 {
@@ -105,5 +107,30 @@ class DocumentsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function download(string $id)
+    {
+        //$document = Documents::findOrFail($id);
+        //$student = Student::findOrFail($id);
+        $parts = explode('_', $id);
+        //dd($parts);
+        $student_id = $parts[0];
+        $category_id = $parts[1];
+        $action = $parts[2];
+
+        $student = Student::findOrFail($student_id);
+        $document_data = $student->documents->where('type', $category_id);
+        $current_document = $document_data->first();
+        //dd($current_document);
+        $path = Storage::path($current_document->file_path);
+
+        if ($action == 'view') {
+            return response()->file($path);
+        }
+
+        if ($action == 'download') {
+            return response()->download($path);
+        }
     }
 }

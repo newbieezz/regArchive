@@ -32,10 +32,17 @@
                         <div class="row">
                             <h4>{{$category->type}}</h4>
                             @if(count($studentData->documents->where('type', $category->id)) > 0)
-                                <p class="text-warning m-0">
+                            
+                            <div class="col-md-9">
+                                <p class="text-warning">
                                     Note: There are documents already uploaded. Reuploading documents will removed old documents.<br/>
-                                    You can restore deleted documents on the trash section.
+                                          You can restore deleted documents on the trash section.
                                 </p>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_view')}}"  type="button"class="btn btn-info" >View</a>
+                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_download')}}"  type="button"class="btn btn-danger" >Download</a>
+                           </div>
                             @endif
                             <div class="col-sm-6 col-md-8">
                                 <input class="form-control" type="file" id="fileInput{{$category->id}}" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" name="file[{{$category->id}}][]" multiple>
