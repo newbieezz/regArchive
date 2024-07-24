@@ -74,7 +74,10 @@ class DocumentsController extends Controller
                 'code' => 500,
             ];
         }
-        return response()->json($res, $res['code']);
+
+        $studentData = Student::findOrFail($studentId);
+        return view('main.documents.upload', compact('studentId', 'studentData'));
+        //return response()->json($res, $res['code']);
     }
 
     /**

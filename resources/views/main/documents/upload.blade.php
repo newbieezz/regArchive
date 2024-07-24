@@ -40,8 +40,8 @@
                                 </p>
                             </div>
                             <div class="col-md-2">
-                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_view')}}"  type="button"class="btn btn-info" >View</a>
-                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_download')}}"  type="button"class="btn btn-danger" >Download</a>
+                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_view')}}"  type="button"class="btn btn-info" target="_blank" >View</a>
+                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_download')}}"  type="button"class="btn btn-danger" target="_blank" >Download</a>
                            </div>
                             @endif
                             <div class="col-sm-6 col-md-8">

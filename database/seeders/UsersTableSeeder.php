@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
             'role' => config('user.roles.admin'),
             'email_verified_at' => Carbon::now(),
             'password_default' => false,
-            'employee_id' => null,
+            'employee_id' => 1,
         ]);
     }
 
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
             'role' => config('user.roles.staff'),
             'email_verified_at' => Carbon::now(),
             'password_default' => true,
-            'employee_id' => null,
+            'employee_id' => 2,
         ]);
     }
 }

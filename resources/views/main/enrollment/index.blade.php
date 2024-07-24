@@ -98,6 +98,7 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{url('/enrollment/update/'.$enrollment->id)}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
                     <a class="dropdown-item" href="{{url('student/show/'.$enrollment->student->id)}}" ><i class="fas fa-file"></i> View Student</a>
+                    <a class="dropdown-item" href="{{url('documents/upload/'.$enrollment->student->id)}}" ><i class="fas fa-print"></i> Manage Documents</a>
                 </div>
             </div>
           </td>
