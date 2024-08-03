@@ -66,7 +66,25 @@
             @php $documentStatus = $enrollment->student->document_status; @endphp
 
             @if($documentStatus['is_complete'])
-                {{ $documentStatus['status'] }}
+                <div class="dropdown pe-2 d-flex">
+                  {{ $documentStatus['status'] }}
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <span class="badge rounded-pill bg-success file-badge">
+                    {{ $documentStatus['completed']['count'] }}
+                  </span>
+                  <div class="dropdown-menu">
+                      @foreach ($documentStatus['completed']['documents'] as $doc)
+                        <a class="dropdown-item"><i class="fas fa-file"></i> {{$doc}}</a>
+                      @endforeach
+                      <div class="text-center">
+                        <a class="dropdown-item" href="{{url('documents/upload/'.$enrollment->student->id)}}" >
+                          <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> View Documents</button>
+                        </a>
+                      </div>
+                  </div>
+                </div>
             @else
 
             <div class="dropdown pe-2 d-flex">

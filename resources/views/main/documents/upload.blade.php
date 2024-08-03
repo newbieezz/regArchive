@@ -5,7 +5,7 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('documents/records/')}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('enrollment/')}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">

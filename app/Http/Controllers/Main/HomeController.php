@@ -170,8 +170,6 @@ class HomeController extends Controller
                 'log_ref_id' => intval($latestEntry->id),
             ];
 
-
-
             //$newLog = ActivityLog::create($params);
             // Check if the entry already exists
             $existingLog = ActivityLog::where('added_by', $params['added_by'])
@@ -180,7 +178,11 @@ class HomeController extends Controller
 
 
             if ($existingLog) {
-                return response()->json(['message' => 'Entry already exists'], 200);
+                $oneMonthAgo = Carbon::now()->subMonth();
+                $current_user_records = ActivityLog::where('added_by', $params['added_by'])
+                    ->where('created_at', '>=', $oneMonthAgo)
+                    ->get();
+                return response()->json(['message' => 'Entry already exists', 'current_user_records' => $current_user_records], 200);
             }
 
             $params['existingLog'] = $existingLog;

@@ -114,6 +114,10 @@ class Student extends Model
             "lacking" => [
                 'count' => count($lackingDocumentTypes),
                 'documents' => DocumentCategory::find($lackingDocumentTypes)->pluck('type')->toArray(),
+            ],
+            "completed" => [
+                'count' => $submittedDocumentCount,
+                'documents' => DocumentCategory::find($presentDocumentTypes)->pluck('type')->toArray()
             ]
         ];
     }
