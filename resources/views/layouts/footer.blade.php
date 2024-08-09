@@ -75,7 +75,11 @@
     }
     activity_logs.forEach((log, index) => {
       const logLink = document.createElement('a');
-      logLink.href = `{{url('documents/upload/${1}')}}`;
+      if (log?.student_ref_id){
+        logLink.href = `{{url('documents/upload/${log.student_ref_id}')}}`;
+      }else{
+        logLink.href = `{{url('enrollment/')}}`;
+      }
       logLink.style.display = 'block';
       logLink.style.padding = '15px 20px';
       logLink.style.color = '#000';
@@ -124,6 +128,7 @@
                 });
                 }
                 
+                checkForNewEntry();
       
                 setInterval(checkForNewEntry, 5000); // Check every 5 seconds
             });

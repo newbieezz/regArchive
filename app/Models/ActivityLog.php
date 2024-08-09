@@ -14,6 +14,9 @@ class ActivityLog extends Model
         'log_ref_id',
         'type',
         'content',
-
+        'added_by_ref_id',
+        'student_ref_id',
+        'added_by_employee_id',
+        'student_id'
     ];
 }

@@ -160,12 +160,15 @@ class HomeController extends Controller
 
             $authUser = getLoggedInUser();
 
-            $json = json_encode($latestEntry);
+            $student = Student::where('student_id', $latestEntry->student_id)->firstOrFail();
             //$content = 'Document '. $latestEntry->file_name. ' for student '. $latestStudentRef->student_id .'-'. $latestStudentRef->student_id.' added by '.$employeeRef->email.'-'. $employeeRef->employee_id .'.';
             $content = "{$latestEntry->updated_at}: Document {$latestEntry->file_name} for student ID:{$latestEntry->student_id} added by {$employeeRef->email} ID: {$employeeRef->employee_id}.";
             $params = [
                 'content' => $content,
                 'added_by' => intval($authUser->id),
+                'added_by_employee_id' => $authUser->employee_id,
+                'student_ref_id' => intval($student->id),
+                'student_id' => $latestEntry->student_id,
                 'type' => 'document',
                 'log_ref_id' => intval($latestEntry->id),
             ];
@@ -181,6 +184,7 @@ class HomeController extends Controller
                 $oneMonthAgo = Carbon::now()->subMonth();
                 $current_user_records = ActivityLog::where('added_by', $params['added_by'])
                     ->where('created_at', '>=', $oneMonthAgo)
+                    ->orderBy('created_at', 'desc') // Order by descending created_at
                     ->get();
                 return response()->json(['message' => 'Entry already exists', 'current_user_records' => $current_user_records], 200);
             }
