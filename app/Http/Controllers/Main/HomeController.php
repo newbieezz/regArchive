@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
+use App\Models\Documents;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Department;
 use Exception;
 use App\Services\UserService;
 use App\Services\StudentService;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Settings\Users\UpdateUserRequest;
 
@@ -106,5 +110,96 @@ class HomeController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function checkNewEntry()
+    {
+        try {
+            $latestEntry = Documents::latest()->get()->first();
+            if (!$latestEntry) {
+                return response()->json(['message' => 'No entries found'], 404);
+            }
+            return response()->json(['latestEntry' => $latestEntry], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+
+    }
+    public function checkPrevEntry()
+    {
+        try {
+            $latestEntry = Documents::latest()->get()->first();
+            if (!$latestEntry) {
+                return response()->json(['message' => 'No entries found'], 404);
+            }
+            return response()->json(['latestEntry' => $latestEntry], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+
+    }
+
+    public function storeActivityLog()
+    {
+        try {
+            $latestEntry = Documents::latest()->get()->first();
+
+            if (!$latestEntry) {
+                return response()->json(['message' => 'No latestEntry found'], 404);
+            }
+
+            /*  $latestStudentRef = Student::findOrFail($latestEntry->student_id);
+             if (!$latestStudentRef) {
+                 return response()->json(['message' => 'No latestStudentRef found'], 404);
+             }
+            */
+            $employeeRef = User::findOrFail($latestEntry->added_by);
+            if (!$employeeRef) {
+                return response()->json(['message' => 'No employeeRef found'], 404);
+            }
+
+            $authUser = getLoggedInUser();
+
+            $student = Student::where('student_id', $latestEntry->student_id)->firstOrFail();
+            //$content = 'Document '. $latestEntry->file_name. ' for student '. $latestStudentRef->student_id .'-'. $latestStudentRef->student_id.' added by '.$employeeRef->email.'-'. $employeeRef->employee_id .'.';
+            $content = "{$latestEntry->updated_at}: Document {$latestEntry->file_name} for student ID:{$latestEntry->student_id} added by {$employeeRef->email} ID: {$employeeRef->employee_id}.";
+            $params = [
+                'content' => $content,
+                'added_by' => intval($authUser->id),
+                'added_by_employee_id' => $authUser->employee_id,
+                'student_ref_id' => intval($student->id),
+                'student_id' => $latestEntry->student_id,
+                'type' => 'document',
+                'log_ref_id' => intval($latestEntry->id),
+            ];
+
+            //$newLog = ActivityLog::create($params);
+            // Check if the entry already exists
+            $existingLog = ActivityLog::where('added_by', $params['added_by'])
+                ->where('log_ref_id', $params['log_ref_id'])
+                ->first();
+
+
+            if ($existingLog) {
+                $oneMonthAgo = Carbon::now()->subMonth();
+                $current_user_records = ActivityLog::where('added_by', $params['added_by'])
+                    ->where('created_at', '>=', $oneMonthAgo)
+                    ->orderBy('created_at', 'desc') // Order by descending created_at
+                    ->get();
+                return response()->json(['message' => 'Entry already exists', 'current_user_records' => $current_user_records], 200);
+            }
+
+            $params['existingLog'] = $existingLog;
+
+            $newLog = ActivityLog::create($params);
+            if ($newLog) {
+                return response()->json(['latestEntry' => $newLog], 201);
+            }
+
+            return response()->json(['message' => $params], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e], 500);
+        }
+
     }
 }

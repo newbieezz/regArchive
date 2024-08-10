@@ -16,12 +16,15 @@ class DocumentCategoryRequest extends FormRequest
         return [
             'type' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'required_student' => 'required|string|max:255',
         ];
     }
 
     public function messages()
     {
         return [
+            'required_student.required' => 'Required Students is required!',
+            'required_student.string' => 'Required Students must be a string!',
             'type.required' => 'Type is required!',
             'type.string' => 'Type must be a string!',
             'type.max' => 'Type must less than 255 characters!',

@@ -24,8 +24,26 @@
 
             <div class="card-body">
               <p id="register-success"></p>
+              <label class="fw-medium" >Students Required Reference</label>
+            <ul>
+              <li>A: ALL</li>
+              <li>B: FIRST YEAR STUDENTS</li>
+              <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
+              <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
+              <li>E: CROSS ENROLLES</li>
+              <li>F: INTERNATIONAL STUDENTS</li>
+              <li>G: TRANSFEREES</li>
+              <li>H: MARRIED</li>
+            </ul>
               <form action="{{url('settings/requirement/update/'.$category->id)}}" method="post"> @csrf
                 <div class="row">
+                  <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="required_student">Student Required</label>
+                    <input type="text" class="form-control" id="required_student" name="required_student" placeholder="Student Required for this document."  value="{{ old('type', $category->required_student) }}">
+                    @error('required_student')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Document Type/Name</label>
                     <input type="text" class="form-control" id="type" name="type" placeholder="Type"  value="{{ old('type', $category->type) }}">

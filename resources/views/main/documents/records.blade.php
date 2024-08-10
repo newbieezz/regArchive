@@ -63,7 +63,7 @@
             @endforeach
             <td>
               <a href="{{url('documents/upload/'.$record->id)}}" >
-                <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> Scan</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> Manage</button>
               </a>
             </td>
           </tr>

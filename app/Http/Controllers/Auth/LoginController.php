@@ -50,7 +50,12 @@ class LoginController extends Controller
             if(Auth::attempt(['email'=>$request->getEmail(),'password'=>$request->getPassword()]))
             {
                 if(Auth::user()->status->name == config('user.statuses.active')){
-                    return redirect('dashboard');
+
+                    if (Auth::user()->password_default == 1) {
+                        return redirect('update/' . Auth::user()->id)->with('message', 'Please change the default password.');
+                    } else {
+                        return redirect('dashboard');
+                    }
                 }else{
                     return redirect()->back()->with('error_message','Account Deactivated');
                 }

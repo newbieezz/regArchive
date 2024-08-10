@@ -5,7 +5,7 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('documents/records/')}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('enrollment/')}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">
@@ -27,15 +27,22 @@
               <p id="register-success"></p>
               <form action="{{url('documents/upload/'.$studentId)}}" method="post" enctype="multipart/form-data" id="documentForm"> @csrf
                 <div class="row">
-                    @foreach(getDocumentCategories() as $category)
+                    @foreach(getDocumentCategories($studentId) as $category)
                     <div class="card mb-4 p-4" >
                         <div class="row">
                             <h4>{{$category->type}}</h4>
                             @if(count($studentData->documents->where('type', $category->id)) > 0)
-                                <p class="text-warning m-0">
+                            
+                            <div class="col-md-9">
+                                <p class="text-warning">
                                     Note: There are documents already uploaded. Reuploading documents will removed old documents.<br/>
-                                    You can restore deleted documents on the trash section.
+                                          You can restore deleted documents on the trash section.
                                 </p>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_view')}}"  type="button"class="btn btn-info" target="_blank" >View</a>
+                                <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_download')}}"  type="button"class="btn btn-danger" target="_blank" >Download</a>
+                           </div>
                             @endif
                             <div class="col-sm-6 col-md-8">
                                 <input class="form-control" type="file" id="fileInput{{$category->id}}" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" name="file[{{$category->id}}][]" multiple>

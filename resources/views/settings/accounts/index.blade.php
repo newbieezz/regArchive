@@ -23,6 +23,7 @@
           <table class="table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Role</th>
                     <th>Department</th>
@@ -36,6 +37,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($users as $user)
                 <tr>
+                  <td><span class="fw-medium">{{ $user['employee_id'] }}</span> </td>
                     <td><span class="fw-medium">{{ $user['first_name'] }} {{ $user['last_name'] }}</span> </td>
                     <td><span class="fw-medium">{{ $user['role'] === 1 ? 'Admin' : 'Staff' }}</span> </td>
                     <td> @foreach($departments as $department)

@@ -4,13 +4,14 @@
     <body>
         <div class="content-backdrop fade"></div>
         <!-- Content -->
-        @if(Session::has('success_message'))
-        <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        
+        <div class="container-xxl flex-grow-1 container-p-y">
+          @if(Session::has('success_message'))
+          <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success: </strong> {{ Session::get('success_message')}}
             <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('successMessage').style.display = 'none';"></button>
-        </div>
-        @endif
-        <div class="container-xxl flex-grow-1 container-p-y">
+          </div>
+          @endif
             <div class="row">
                 <!-- Student Reports -->
                 <div class="col-md-12 col-lg-6 col-xl-6 order-0 mb-4">

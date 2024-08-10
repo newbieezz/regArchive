@@ -33,6 +33,9 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
 Route::group(['middleware' => ['auth']], function() {
     Route::namespace('App\Http\Controllers\Main')->group(function(){
         Route::get('dashboard', 'HomeController@index');
+        Route::get('/checkNewEntry', 'HomeController@checkNewEntry');
+        Route::get('/checkPrevEntry', 'HomeController@checkPrevEntry');
+        Route::post('/storeActivityLog', 'HomeController@storeActivityLog');
         Route::get('/update/{id}', 'HomeController@editprofile');
         Route::post('/update/{id}', 'HomeController@updateprofile');
         // Students routes
@@ -69,6 +72,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/trash/restore', 'TrashController@restore');
             Route::get('/trash/delete', 'TrashController@delete');
             Route::get('/transactions', 'DocumentsController@transactions')->middleware('admin_only');
+            Route::get('/download/{studentId}', 'DocumentsController@download');
         });
         
 

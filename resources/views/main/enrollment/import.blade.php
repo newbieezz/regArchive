@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 <div class="col-12 d-flex justify-content-end mt-3">
-                  <a class="mx-2" href="{{url('settings/user/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                  <a class="mx-2" href="{{url('enrollment/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
                   <button type="submit" class="btn btn-primary" id="uploadButton">Save</button>
                 </div>
               </form>

@@ -41,6 +41,7 @@ class UserService
             $params['role'] = config('user.roles.staff');
             $params['department_id'] = $params['department_id'];
             $params['user_status_id'] = $status->id;
+            $params['password_default'] = true;
             $user = $this->user->create($params);
 
         } catch (Exception $e) {
@@ -59,12 +60,14 @@ class UserService
         $user = $this->findById($params['id']);
 
         if (array_key_exists('password', $params)) {
+            $params['password_default'] = false;
             // update user password if provided in request or retain the current password
             $params['password'] = strlen($params['password']) > 0 ?
                 Hash::make($params['password']) :
                 $user->password;
         }
 
+        
         // perform update
         $user->update($params);
 

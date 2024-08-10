@@ -404,8 +404,32 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="row mt-4"> 
+                  <h4>Documents Category</h4>
+              </div>
+              <div class="row">
+              <div class="col-sm-6 mb-2">
+                <label class="form-label" for="required_document">Student Required Documents Category</label>
+                <ul>
+                  <li>B: FIRST YEAR STUDENTS</li>
+                  <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
+                  <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
+                  <li>E: CROSS ENROLLES</li>
+                  <li>F: INTERNATIONAL STUDENTS</li>
+                  <li>G: TRANSFEREES</li>
+                  <li>H: MARRIED</li>
+                </ul>
+                <input type="text" class="form-control" id="required_document" name="required_document" placeholder="Student Required Documents Category" value="{{ old('required_document', $enrollment->student->required_document) }}"/>
+                <div class="form-text m-0">You can have combination: "BEF"</div>  
+                @error('required_document')
+                    <p class="text-danger m-0">{{ $message }}</p>
+                @enderror
+              </div>
+              </div>
+
                 <div class="col-12 d-flex justify-content-end mt-3">
-                  <a class="mx-2" href="{{url('settings/user/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                  <a class="mx-2" href="{{url('enrollment/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
                   <button type="submit" class="btn btn-primary">Save</button>
                 </div>
               </form>

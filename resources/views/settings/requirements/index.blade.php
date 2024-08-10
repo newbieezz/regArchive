@@ -12,6 +12,17 @@
         <div class="row mb-2">
           <div class="col-6">
             <h5 class="card-title">List of Categories/Requirements for Enrollment</h5>
+            <label class="fw-medium" >Students Required Reference</label>
+            <ul>
+              <li>A: ALL</li>
+              <li>B: FIRST YEAR STUDENTS</li>
+              <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
+              <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
+              <li>E: CROSS ENROLLES</li>
+              <li>F: INTERNATIONAL STUDENTS</li>
+              <li>G: TRANSFEREES</li>
+              <li>H: MARRIED</li>
+            </ul>
           </div>
           <div class="col-6 d-flex justify-content-end">
             <a href="{{url('settings/requirement/create')}}" style="color: white">
@@ -24,6 +35,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Required Student</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Date Created</th>
@@ -34,6 +46,7 @@
             @foreach($categories as $category)
                 <tr>
                     <td><span class="fw-medium">{{ $category['id'] }}</span> </td>
+                    <td>{{ $category['required_student'] }}</td>
                     <td>{{ $category['type'] }}</td>
                     <td>{{ $category['description'] }}</td>
                     <td>{{ $category['created_at'] }}</td>
