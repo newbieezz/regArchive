@@ -78,6 +78,7 @@
                       <input class="form-control" type="password" id="password" name="password"  value="{{ old('password') }}"/>
                     </div>
                     <div class="form-text">Must be atleast 8 characters with numbers & symbols.</div>
+                    <p id="passwordStrength" class="m-0"></p>
                     @error('password')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
@@ -95,7 +96,7 @@
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                   <a class="mx-2" href="{{url('/dashboard')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button id="submitBtn" type="submit" class="btn btn-primary">Save</button>
                 </div>
               </form>
             </div>
@@ -105,6 +106,40 @@
     </div>
     <!-- / Content -->
     <div class="content-backdrop fade"></div>
+    <script>
+      function isStrongPassword(password) {
+          const minLength = 8;
+          const hasNumber = /\d/;
+          const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+          
+          return password.length >= minLength && hasNumber.test(password) && hasSpecialChar.test(password);
+      }
+  
+      function validatePasswordStrength() {
+          const passwordInput = document.getElementById('password');
+          const passwordStrengthSpan = document.getElementById('passwordStrength');
+          const submitBtn = document.getElementById('submitBtn');
+
+          if (!passwordInput.value) {
+            submitBtn.disabled = false;
+            passwordStrengthSpan.style.visibility = "hidden";
+          }
+          else if (isStrongPassword(passwordInput.value)) {
+              passwordStrengthSpan.textContent = 'Password is strong.';
+              passwordStrengthSpan.style.color = 'green';
+              submitBtn.disabled = false;
+              passwordStrengthSpan.style.visibility = "visible";
+          } else {
+              passwordStrengthSpan.textContent = 'Password must be at least 8 characters long, include a number and a special character.';
+              passwordStrengthSpan.style.color = 'red';
+              submitBtn.disabled = true;
+              passwordStrengthSpan.style.visibility = "visible";
+          }
+      }
+      document.getElementById('password').addEventListener('input', function() {
+        validatePasswordStrength();
+    });
+      </script>
 </div>
   <!-- Content wrapper -->
 @endsection
