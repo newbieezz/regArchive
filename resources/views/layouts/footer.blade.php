@@ -34,8 +34,13 @@
       </div>
       -->
       <div class="mini-window" id="miniWindow" style="position: fixed; bottom: 0; right: 0; width: 300px; height: 40px; border: 1px solid #ccc; background: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); transition: height 0.3s ease; z-index: 9999; border-radius:15px 0px 0px 0px">
-        <div class="mini-window-header" onclick="toggleMinimize()" style="padding: 10px; background: #6f42c1; color: #fff; cursor: pointer; border-radius:15px 0px 0px 0px">Activity Logs</div>
-        <div class="mini-window-content" id="miniWindowContent" style="padding: 10px; overflow-y: auto; height: calc(100% - 40px);">
+        <div class="mini-window-header" onclick="toggleMinimize()" style="padding: 10px; background: #6f42c1; color: #fff; cursor: pointer; border-radius:15px 0px 0px 0px">Activity Logs 
+          <span id="badge-span" class="badge rounded-pill bg-danger file-badge">
+          
+        </span>
+      </div>
+        
+        <div class="mini-window-content" id="miniWindowContent" style="overflow-y: auto; height: calc(100% - 40px);">
         </div>
       </div>
      
@@ -64,6 +69,28 @@
     return false;
   }
 
+  // Function to count logs within the last hour
+function countLogsWithinLastHour(logs) {
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000); // 1 hour ago
+    let count = 0;
+
+    logs.forEach(log => {
+        const logTime = new Date(log.created_at);
+        if (logTime >= oneHourAgo) {
+            count++;
+        }
+    });
+
+    return count;
+}
+
+function isLogWithinLastHour(activityLog) {
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000); // 1 hour ago
+    const logTime = new Date(activityLog.created_at);
+    
+    return logTime >= oneHourAgo;
+}
+
 
   function displayContent(activity_logs) {
     if (areLogsDifferent(activity_logs, prev_activity_logs)) {
@@ -83,6 +110,8 @@
       logLink.style.display = 'block';
       logLink.style.padding = '15px 20px';
       logLink.style.color = '#000';
+      logLink.style.color = '#000';
+      logLink.style.fontWeight = isLogWithinLastHour(log)?"bold":"normal";
       logLink.style.backgroundColor = index % 2 === 0 ? '#f9f9f9' : '#e9e9e9';
       logLink.textContent = log.content;
       miniWindowContent.appendChild(logLink);
@@ -95,6 +124,17 @@
         }
         }
     });
+    const badgeSpan = document.getElementById('badge-span')
+    
+    const logsCount = countLogsWithinLastHour(activity_logs);
+    console.log('activity_logs within one hour:', logsCount)
+    if (logsCount < 1){
+      badgeSpan.style.visibility = "hidden";
+    }else{
+      badgeSpan.innerText = logsCount;
+      badgeSpan.style.visibility = "visible";
+    }
+
   }
   }
 
