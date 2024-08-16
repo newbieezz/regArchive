@@ -56,7 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/import', 'EnrollmentRecordsController@import');
             Route::get('/export', 'EnrollmentRecordsController@export_data');
             Route::post('/upload', 'EnrollmentRecordsController@upload');
-            Route::get('/', 'EnrollmentRecordsController@index');
+            Route::get('/records', 'EnrollmentRecordsController@index');
             Route::get('/{status}', 'EnrollmentRecordsController@index');
         });
         // Graduating Applicants routes
@@ -120,6 +120,14 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/update/{id}', 'CourseMajorController@edit');
                 Route::post('/update/{id}', 'CourseMajorController@update');
                 Route::get('/delete/{id}', 'CourseMajorController@destroy');
+            });
+            //Student Type Reference routes
+            Route::prefix('studentType')->group(function () {
+                Route::get('/', 'StudentTypeController@index');
+                Route::post('/store', 'StudentTypeController@store');
+                Route::get('/update/{id}', 'StudentTypeController@edit');
+                Route::post('/update/{id}', 'StudentTypeController@update');
+                Route::get('/delete/{id}', 'StudentTypeController@destroy');
             });
             //Requirements category routes
             Route::prefix('requirement')->group(function () {

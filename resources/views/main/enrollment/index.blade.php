@@ -21,7 +21,7 @@
           </h5>
         </div>
         <div class="col-6 d-flex justify-content-end">
-          <a href="{{url('enrollment/export')}}" style="color: white">
+          <a href="{{url('student/export')}}" style="color: white">
             <button type="button" class="btn btn-outline-secondary btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
           </a>
           <a href="{{url('enrollment/create')}}" style="color: white">
@@ -114,7 +114,7 @@
                     <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{url('/enrollment/update/'.$enrollment->id)}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
+                    <a class="dropdown-item" href="{{url('/student/update/'.$enrollment->id)}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
                     <a class="dropdown-item" href="{{url('student/show/'.$enrollment->student->id)}}" ><i class="fas fa-file"></i> View Student</a>
                     <a class="dropdown-item" href="{{url('documents/upload/'.$enrollment->student->id)}}" ><i class="fas fa-print"></i> Manage Documents</a>
                 </div>
