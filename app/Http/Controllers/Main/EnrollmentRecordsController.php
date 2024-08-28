@@ -13,8 +13,11 @@ use App\Http\Requests\Main\Enrollment\BulkEnrollmentRequest;
 use App\Services\EnrollmentService;
 use Exception;
 use Illuminate\Validation\ValidationException;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StudentExport;
+use App\Models\StudentType;
+use App\Services\StudentTypeService;
+
 class EnrollmentRecordsController extends Controller
 {
     
@@ -67,7 +70,8 @@ class EnrollmentRecordsController extends Controller
      */
     public function create()
     {
-        return view('main.enrollment.create');
+        $studentTypes = StudentType::get();
+        return view('main.enrollment.create',compact('studentTypes'));
     }
 
     /**
@@ -106,8 +110,9 @@ class EnrollmentRecordsController extends Controller
     public function edit(string $id)
     {
         try { 
+            $studentTypes = StudentType::get();
             $enrollment = Enrollment::findOrFail($id);
-            return view('main.enrollment.edit')->with(compact('enrollment'));
+            return view('main.enrollment.edit')->with(compact('enrollment','studentTypes'));
         } catch (Exception $e) {
             return redirect('/enrollment');
         }

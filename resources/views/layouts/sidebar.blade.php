@@ -25,7 +25,7 @@
           </li>
         -->
           <li class="menu-item">
-            <a href="{{ url('enrollment/records') }}"class="menu-link">
+            <a href="{{ url('enrollment/') }}"class="menu-link">
               <div data-i18n="CRM">Students Records</div>
             </a>
           </li>

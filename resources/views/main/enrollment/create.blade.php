@@ -400,13 +400,9 @@
               <div class="col-sm-6 mb-2">
                 <label class="form-label" for="required_document">Student Required Documents Category</label>
                 <ul>
-                  <li>B: FIRST YEAR STUDENTS</li>
-                  <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
-                  <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
-                  <li>E: CROSS ENROLLES</li>
-                  <li>F: INTERNATIONAL STUDENTS</li>
-                  <li>G: TRANSFEREES</li>
-                  <li>H: MARRIED</li>
+                  @foreach ($studentTypes as $studentType)
+                    <li> {{ $studentType['letter_tag'] }} :	{{ $studentType['name'] }} </li>
+                  @endforeach
                 </ul>
                 <input type="text" class="form-control" id="required_document" name="required_document" placeholder="Student Required Documents Category" value="{{ old('required_document') }}"/>
                 <div class="form-text m-0">You can have combination: "BEF"</div>  
