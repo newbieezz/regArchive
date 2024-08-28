@@ -21,7 +21,6 @@ class EnrollmentRequest extends FormRequest
             'course_id' => 'required',
             'year_level' => 'required',
             'student_status' => 'required',
-            'enrollment_status' => 'required',
             'section_id' => 'required',
             'student_id' => [
                 'required',

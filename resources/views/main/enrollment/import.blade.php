@@ -107,13 +107,13 @@
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Student Status</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="enrollment_status" name="enrollment_status">
-                        @foreach(config('student.enrollment_status'); as $key => $status)
-                        <option value="{{ $key}}" {{ old('enrollment_status') == $key ? 'selected' : '' }}>{{ $status}}</option>
+                      <select class="form-select" aria-label="student_status" name="student_status">
+                        @foreach(config('student.student_status'); as $key => $status)
+                        <option value="{{ $key}}" {{ old('student_status') == $key ? 'selected' : '' }}>{{ $status}}</option>
                         @endforeach
                       </select>
                     </div>
-                    @error('enrollment_status')
+                    @error('student_status')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>

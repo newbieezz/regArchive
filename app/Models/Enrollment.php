@@ -25,7 +25,6 @@ class Enrollment extends Model
         'major_id',
         'section_id',
         'student_status',
-        'enrollment_status',
         'date_enrolled',
     ];
 
