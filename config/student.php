@@ -14,13 +14,18 @@ return [
         '4' => '4th year',
     ],
     'student_status' => [
-        '1' => 'New Enrollee',
-        '2' => 'Returnee',
-        '3' => 'Shiftee',
-        '4' => 'Cross Enrollee',
+        '1' => 'Regular',
+        '2' => 'Irregular',
     ],
     'enrollment_status' => [
         '1' => 'Regular',
         '2' => 'Irregular',
     ],
 ];
+
+/* 'student_status' => [
+        '1' => 'New Enrollee',
+        '2' => 'Returnee',
+        '3' => 'Shiftee',
+        '4' => 'Cross Enrollee',
+    ], */
