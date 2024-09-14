@@ -3,14 +3,19 @@
     <div class="app-brand demo">
     <img src="{{asset('assets/img/logo.png')}}" alt class="w-px-40 h-auto rounded-circle" />
 
-      <a href="{{url('dashboard')}}" class="app-brand-link">
-        <span class="demo menu-text fw-bold ms-2"><h4>Registrar-Archive</h4></span>
-      </a>
+    @if (Auth::guard('web')->user()->password_default===0)
+    <a href="{{url('dashboard')}}" class="app-brand-link">
+      <span class="demo menu-text fw-bold ms-2"><h4>Registrar-Archive</h4></span>
+    </a>
+    @else
+    <span class="demo menu-text fw-bold ms-2"><h4>Registrar-Archive</h4></span>
+    @endif
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
         <i class="bx bx-chevron-left bx-sm align-middle"></i>
       </a>
     </div>
 
+    @if (Auth::guard('web')->user()->password_default===0)
     <div class="menu-inner-shadow"></div>
     <li class="menu-header medium text-uppercase">
       <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -97,5 +102,14 @@
             </li>
           
       </ul>
+    @endif   
+    @else
+    <div style="width: 100%; padding: 15px;">
+      <div class="alert alert-warning" role="alert" style="width: 100%; padding: 15px; font-size: 16px; text-align: center;">
+        <a href="{{url('update/'.Auth::guard('web')->user()->id)}}" class="app-brand-link" style="text-decoration: none; color: inherit;">
+        To fully access, please change your default password.
+        </a>
+      </div>
+    </div>
     @endif
   </aside>

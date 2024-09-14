@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/checkNewEntry', 'HomeController@checkNewEntry');
         Route::get('/checkPrevEntry', 'HomeController@checkPrevEntry');
         Route::post('/storeActivityLog', 'HomeController@storeActivityLog');
+        Route::post('/storeStudentsLog', 'HomeController@storeStudentsLog');
         Route::get('/update/{id}', 'HomeController@editprofile');
         Route::post('/update/{id}', 'HomeController@updateprofile');
         // Students routes
