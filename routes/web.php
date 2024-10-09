@@ -150,6 +150,15 @@ Route::group(['middleware' => ['auth']], function() {
             // Document Transaction routes
             Route::prefix('transaction')->group(function () {
             });
+            // Roles routes
+            Route::prefix('role')->group(function () {
+                Route::get('/', 'RoleController@index');
+                Route::get('/create', 'RoleController@create');
+                Route::post('/store', 'RoleController@store');
+                Route::get('/update/{id}', 'RoleController@edit');
+                Route::post('/update/{id}', 'RoleController@update');
+                Route::get('/delete/{id}', 'RoleController@destroy');
+            });
         });
     });
     Route::namespace('App\Http\Controllers\Settings')->group(function(){

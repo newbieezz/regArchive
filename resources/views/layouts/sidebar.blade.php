@@ -100,6 +100,11 @@
                 <div data-i18n="Analytics">Class Sections</div>
               </a>
             </li>
+            <li class="menu-item ">
+              <a href="{{ url('settings/role') }}" class="menu-link">
+                <div data-i18n="Analytics">Roles</div>
+              </a>
+            </li>
           
       </ul>
     @endif   

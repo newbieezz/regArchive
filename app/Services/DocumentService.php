@@ -129,7 +129,6 @@ class DocumentService
                     //remove previous dile data
                     $this->documents->where('student_id', $student->student_id)->where('type', $category->id)->update(['deleted_by' => getLoggedInUser()->id]);
                     $this->documents->where('student_id', $student->student_id)->where('type', $category->id)->delete();
-                   
                     // Process each file
                     foreach ($files as $file) {
                         $key = Str::random(10);
@@ -144,6 +143,7 @@ class DocumentService
                             'file_name' => $customFilename,
                             'file_path' => $fullPath,
                             'added_by' => getLoggedInUser()->id,
+                            'expiration' => $request->expiration
                         ]);
                     }
                 }
