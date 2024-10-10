@@ -32,7 +32,9 @@
                         <div class="row">
                             <h4>{{$category->type}}</h4>
                             @if(count($studentData->documents->where('type', $category->id)) > 0)
-                            
+                            @php
+                            $theDocument = $studentData->documents->where('type', $category->id)->first();
+                            @endphp
                             <div class="col-md-9">
                                 <p class="text-warning">
                                     Note: There are documents already uploaded. Reuploading documents will removed old documents.<br/>
@@ -41,7 +43,9 @@
                             </div>
                             <div class="col-md-2">
                                 <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_view')}}"  type="button"class="btn btn-info" target="_blank" >View</a>
+                                @if (!$category->restricted || ($category->restricted && Auth::guard('web')->user()->role==1))
                                 <a href="{{ url('documents/download/'.$studentId.'_'.$category->id.'_download')}}"  type="button"class="btn btn-danger" target="_blank" >Download</a>
+                                @endif
                            </div>
                             @endif
                             <div class="col-sm-6 col-md-8">
@@ -56,6 +60,11 @@
                             <div class="col-sm-6 col-md-3">
                                 <button type="button"class="btn btn-outline-primary" data-toggle="modal" data-target="#scanModal" data-type="{{$category->id}}">Scan Document</button>
                            </div>
+                           <div class="col-sm-6 col-md-3 mt-2">
+                            <label class="form-label" for="expiration">Expiration</label>
+                            <input type="date" name="expiration" id="expiration" class="form-control" value="{{ old('expiration', $theDocument->expiration) }}">
+                            <div class="form-text m-0">You can leave this null for PERMANENT documents</div>      
+                        </div>
                             <div class="col-sm-12 file-preview d-flex flex-wrap align-content-start gap-2 mt-4" id="previewContainer{{$category->id}}" data-asset-path="{{ asset('storage/') }}">
                                 <!-- Preview Images will appear here -->
                             </div>

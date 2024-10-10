@@ -40,6 +40,16 @@
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="role">Role</label>
+                    <div class="input-group input-group-merge">
+                      <select class="form-select" aria-label="role" name="role" id="role">
+                        @foreach($roles as $rl)
+                        <option value="{{ $rl->code }}" {{ old('code', $user->role == $rl->code) ? 'selected' : '' }}>{{ $rl->value }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-email">Select Department</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="department" name="department_id" id="department_id">

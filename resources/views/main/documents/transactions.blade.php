@@ -19,6 +19,7 @@
             <th>Type</th>
             <th>File</th>
             <th>Student ID</th>
+            <th>EXPIRATION</th>
             <th>Uploaded At</th>
             <th>Uploaded By</th>
             <th>Deleted By</th>
@@ -32,6 +33,7 @@
             <td>{{ $document->category->type }}</td>
             <td><a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a></td>
             <td><a href="{{url('student/records?student_query='.$document->student_id)}}" >{{ $document->student_id }}</a></td>
+            <td>{{ $document->expiration ? $document->expiration  : 'PERMANENT' }}</td>
             <td>{{ $document->created_at }}</td>
             <td>{{ $document->addedByUser ? $document->addedByUser->first_name . ' ' . $document->addedByUser->last_name : '-' }}</td>
             <td>{{ $document->deletedByUser ? $document->deletedByUser->first_name . ' ' . $document->deletedByUser->last_name : '-' }}</td>

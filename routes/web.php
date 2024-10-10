@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/checkNewEntry', 'HomeController@checkNewEntry');
         Route::get('/checkPrevEntry', 'HomeController@checkPrevEntry');
         Route::post('/storeActivityLog', 'HomeController@storeActivityLog');
+        Route::post('/storeStudentsLog', 'HomeController@storeStudentsLog');
         Route::get('/update/{id}', 'HomeController@editprofile');
         Route::post('/update/{id}', 'HomeController@updateprofile');
         // Students routes
@@ -156,6 +157,15 @@ Route::group(['middleware' => ['auth']], function() {
             });
             // Document Transaction routes
             Route::prefix('transaction')->group(function () {
+            });
+            // Roles routes
+            Route::prefix('role')->group(function () {
+                Route::get('/', 'RoleController@index');
+                Route::get('/create', 'RoleController@create');
+                Route::post('/store', 'RoleController@store');
+                Route::get('/update/{id}', 'RoleController@edit');
+                Route::post('/update/{id}', 'RoleController@update');
+                Route::get('/delete/{id}', 'RoleController@destroy');
             });
         });
     });

@@ -50,6 +50,15 @@
                     @error('type')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
+                    <div class="mt-4">
+                      <label class="form-label" for="basic-default-fullname">Is Restricted</label>
+                      <div class="input-group input-group-merge">
+                        <select class="form-select" aria-label="restricted" name="restricted" id="restricted">
+                          <option value={{0}} >{{ 'FALSE' }}</option>
+                          <option value={{1}} >{{ 'TRUE' }}</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                  
                   <div class="col-sm-6 mb-4">

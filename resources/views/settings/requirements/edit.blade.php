@@ -52,6 +52,15 @@
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="basic-default-fullname">Is Restricted</label>
+                      <div class="input-group input-group-merge">
+                        <select class="form-select" aria-label="restricted" name="restricted" id="restricted">
+                          <option value={{0}} {{ old('restricted', $category->restricted) == 0 ? 'selected' : '' }}>{{ 'FALSE' }}</option>
+                          <option value={{1}} {{ old('restricted', $category->restricted) == 1 ? 'selected' : '' }}>{{ 'TRUE' }}</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-fullname">Document Description</label>
                     <input type="text" class="form-control" id="description" name="description" placeholder="description" value="{{ old('description', $category->description) }}">
                     @error('description')

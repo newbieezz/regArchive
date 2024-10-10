@@ -16,6 +16,7 @@ class Documents extends Model
         'file_name',
         'file_path',
         'added_by',
+        'expiration',
     ];
 
     /**

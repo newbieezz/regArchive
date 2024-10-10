@@ -35,10 +35,11 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Required Student</th>
+                    <th>Req. Student</th>
                     <th>Name</th>
-                    <th>Description</th>
-                    <th>Date Created</th>
+                    <th>Desc.</th>
+                    <th>Is Restricted</th>
+                    <th>Created at</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -49,6 +50,7 @@
                     <td>{{ $category['required_student'] }}</td>
                     <td>{{ $category['type'] }}</td>
                     <td>{{ $category['description'] }}</td>
+                    <td>{{ $category['restricted'] ? 'RESTRICTED' : '-' }}</td>
                     <td>{{ $category['created_at'] }}</td>
                     <td>
                     <div class="dropdown">

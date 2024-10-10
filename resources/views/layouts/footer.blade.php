@@ -32,7 +32,10 @@
           >Support</a
         > 
       </div>
+      (Auth::guard('web')->user()->password_default===0)
       -->
+
+      @if (Auth::guard('web')->user()->password_default===0)
       <div class="mini-window" id="miniWindow" style="position: fixed; bottom: 0; right: 0; width: 300px; height: 40px; border: 1px solid #ccc; background: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); transition: height 0.3s ease; z-index: 9999; border-radius:15px 0px 0px 0px">
         <div class="mini-window-header" onclick="toggleMinimize()" style="padding: 10px; background: #6f42c1; color: #fff; cursor: pointer; border-radius:15px 0px 0px 0px">Activity Logs 
           <span id="badge-span" class="badge rounded-pill bg-danger file-badge">
@@ -43,6 +46,8 @@
         <div class="mini-window-content" id="miniWindowContent" style="overflow-y: auto; height: calc(100% - 40px);">
         </div>
       </div>
+      @endif
+      
      
     </div>
         <script>
@@ -102,7 +107,7 @@ function isLogWithinLastHour(activityLog) {
     }
     activity_logs.forEach((log, index) => {
       const logLink = document.createElement('a');
-      if (log?.student_ref_id){
+      if (log?.type == 'document' && log?.student_ref_id){
         logLink.href = `{{url('documents/upload/${log.student_ref_id}')}}`;
       }else{
         logLink.href = `{{url('enrollment/')}}`;
@@ -143,7 +148,7 @@ function isLogWithinLastHour(activityLog) {
       
                 function checkForNewEntry() {
                   $.ajax({
-                    url: '/storeActivityLog',
+                    url: '/storeStudentsLog',
                     type: 'POST',
                     data: {},
                     headers: {
@@ -171,6 +176,41 @@ function isLogWithinLastHour(activityLog) {
                 checkForNewEntry();
       
                 setInterval(checkForNewEntry, 5000); // Check every 5 seconds
+            });
+
+            $(document).ready(function() {
+                let lastEntryId = null;
+      
+                function checkForNewStudentEntry() {
+                  $.ajax({
+                    url: '/storeActivityLog',
+                    type: 'POST',
+                    data: {},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        //console.log('STORE...', data);
+                        if (data.message == 'Already Informed'){
+                          //console.log(data.message);
+                        }
+                        else if (data.message == 'Entry already exists'){
+                          //console.log(data.current_user_records);
+                          displayContent(data.current_user_records);
+                        }
+                        else if (data.latestEntry.id){
+                          alert(data.latestEntry.content);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                    }
+                });
+                }
+                
+                checkForNewStudentEntry();
+      
+                setInterval(checkForNewStudentEntry, 5000); // Check every 5 seconds
             });
 
         </script>
