@@ -54,7 +54,7 @@
         <!-- / Menu -->
 
         <!-- Layout container -->
-        <div class="layout-page">
+        <div class="layout-page" style="width: 100%;">
           <!-- Navbar - HEADER w/search -->
           @include('layouts.header')
           <!-- / Navbar -->

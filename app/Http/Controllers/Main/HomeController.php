@@ -162,7 +162,7 @@ class HomeController extends Controller
 
             $student = Student::where('student_id', $latestEntry->student_id)->firstOrFail();
             //$content = 'Document '. $latestEntry->file_name. ' for student '. $latestStudentRef->student_id .'-'. $latestStudentRef->student_id.' added by '.$employeeRef->email.'-'. $employeeRef->employee_id .'.';
-            $content = "{$latestEntry->updated_at}: Document {$latestEntry->file_name} for student ID:{$latestEntry->student_id} added by {$employeeRef->email} ID: {$employeeRef->employee_id}.";
+            $content = "{$latestEntry->updated_at}: Document {$latestEntry->file_name} for student ID:{$latestEntry->student_id} added by {$employeeRef->email} ID: {$employeeRef->employee_id}";
             $params = [
                 'content' => $content,
                 'added_by' => intval($authUser->id),
@@ -170,6 +170,59 @@ class HomeController extends Controller
                 'student_ref_id' => intval($student->id),
                 'student_id' => $latestEntry->student_id,
                 'type' => 'document',
+                'log_ref_id' => intval($latestEntry->id),
+            ];
+
+            //$newLog = ActivityLog::create($params);
+            // Check if the entry already exists
+            $existingLog = ActivityLog::where('added_by', $params['added_by'])
+                ->where('log_ref_id', $params['log_ref_id'])
+                ->first();
+
+
+            if ($existingLog) {
+                $oneMonthAgo = Carbon::now()->subMonth();
+                $current_user_records = ActivityLog::where('added_by', $params['added_by'])
+                    ->where('created_at', '>=', $oneMonthAgo)
+                    ->orderBy('created_at', 'desc') // Order by descending created_at
+                    ->get();
+                return response()->json(['message' => 'Entry already exists', 'current_user_records' => $current_user_records], 200);
+            }
+
+            $params['existingLog'] = $existingLog;
+
+            $newLog = ActivityLog::create($params);
+            if ($newLog) {
+                return response()->json(['latestEntry' => $newLog], 201);
+            }
+
+            return response()->json(['message' => $params], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e], 500);
+        }
+
+    }
+
+    public function storeStudentsLog()
+    {
+        try {
+            $latestEntry = Student::latest()->get()->first();
+
+            if (!$latestEntry) {
+                return response()->json(['message' => 'No latestEntry found'], 404);
+            }
+
+            $authUser = getLoggedInUser();
+
+            //$content = 'Document '. $latestEntry->file_name. ' for student '. $latestStudentRef->student_id .'-'. $latestStudentRef->student_id.' added by '.$employeeRef->email.'-'. $employeeRef->employee_id .'.';
+            $content = "{$latestEntry->updated_at}: Student {$latestEntry->first_name} {$latestEntry->last_name} with ID:{$latestEntry->student_id} was added";
+            $params = [
+                'content' => $content,
+                'added_by' => intval($authUser->id),
+                'added_by_employee_id' => $authUser->employee_id,
+                'student_ref_id' => intval($latestEntry->id),
+                'student_id' => $latestEntry->student_id,
+                'type' => 'student',
                 'log_ref_id' => intval($latestEntry->id),
             ];
 

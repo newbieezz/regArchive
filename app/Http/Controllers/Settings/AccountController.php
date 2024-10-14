@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Department;
@@ -47,7 +48,8 @@ class AccountController extends Controller
     public function create()
     {
         $departments = Department::all();
-        return view('settings.accounts.create', compact('departments'));
+        $roles = Role::all();
+        return view('settings.accounts.create', compact('departments', 'roles'));
     }
 
     /**
@@ -82,7 +84,8 @@ class AccountController extends Controller
         try {
             $user = User::findOrFail($id);
             $departments = Department::all();
-            return view('settings.accounts.edit')->with(compact('user','departments'));
+            $roles = Role::all();
+            return view('settings.accounts.edit')->with(compact('user', 'departments', 'roles'));
         } catch (Exception $e) {
             return redirect('/settings/user');
         }
