@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/trash/delete', 'TrashController@delete');
             Route::get('/transactions', 'DocumentsController@transactions')->middleware('admin_only');
             Route::get('/download/{studentId}', 'DocumentsController@download');
+            Route::get('/bulkDownload', 'DocumentsController@bulkDownload');
         });
         
 

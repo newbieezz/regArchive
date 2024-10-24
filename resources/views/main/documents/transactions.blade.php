@@ -7,9 +7,12 @@
   <div class="card">
     <div class="card-body">
       <div class="row mb-2">
-        <div class="col-6">
-          <h5 class="card-title">Transaction Records</h5>
-        </div>
+        <div class="col-8"><h5 class="card-title">Transaction Records</h5></div>
+          <div class="col-4">
+            <a href="{{url('documents/bulkDownload')}}" style="color: white" class="float-end">
+              <button type="button" class="btn btn-outline-secondary btn-large mx-2"><i class="fas fa-download mx-2"></i> Bulk Download</button>
+            </a>  
+          </div>
       </div>
     <div class="table-responsive text-nowrap">
       <table class="table">
