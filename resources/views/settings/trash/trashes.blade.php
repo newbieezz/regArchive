@@ -38,7 +38,10 @@
               </td>
               <td><a href="{{url('student/records?student_query='.$trash->student_id)}}" >{{ $trash->student_id }}</a></td>
               <td>{{ $trash->deleted_at }}</td>
-              <td>{{ $trash->deletedByUser->first_name }} &nbsp; {{ $trash->deletedByUser->last_name }}</td>
+              <td>
+                {{ $trash->deletedByUser->first_name ?? 'EXPIRED' }} &nbsp; 
+                {{ $trash->deletedByUser->last_name ?? '' }}
+            </td>
               <td>
                   <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

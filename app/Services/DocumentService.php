@@ -73,6 +73,20 @@ class DocumentService
         return $enrollment;
     }
 
+    public function cleanRecords()
+    {
+        try {
+            $expiredDocuments = $this->documents->where('expiration', '<', now())->get();
+            if ($expiredDocuments->isNotEmpty()) {
+                foreach ($expiredDocuments as $expiredDocument) {
+                    $expiredDocument->delete();
+                }
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
     /**
      * List all Trash Documents 
      *

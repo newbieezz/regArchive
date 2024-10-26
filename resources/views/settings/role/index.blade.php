@@ -7,6 +7,24 @@
       <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('successMessage').style.display = 'none';"></button>
   </div>
 @endif
+<div class="card search-warpper mb-2">
+  <div class="card-body">
+  <form action="{{url('settings/role/store')}}" method="post"> @csrf
+    <div class="row mb-3">
+      <label>Add Role</label>
+      <div class="col-sm-12 col-md-3 mb-2 mb-md-0 px-1">
+        <input type="text" class="form-control" id="value" name="value" placeholder="Enter Role" value="{{ old('value') }}">
+      </div>
+      <div class="col-sm-12 col-md-3 mb-2 mb-md-0 px-1">
+        <input type="text" class="form-control" id="code" name="code" placeholder="Enter Role Code" value="{{ old('code') }}">
+      </div>
+      <div class="col-sm-12 col-md-2 px-1">
+        <button type="submit" class="btn btn-primary w-100">Add</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
 <div class="card">
       <div class="card-body">
         <div class="row mb-2">
@@ -43,7 +61,6 @@
                           <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu">
-                          <a class="dropdown-item" href="{{url('settings/role/update/'.$role['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
                           <a class="dropdown-item" href="{{url('settings/role/delete/'.$role['id'])}}"><i class="bx bx-trash-alt me-1"></i> Delete</a>
                       </div>
                   </div>

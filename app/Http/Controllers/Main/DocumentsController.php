@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Services\DocumentService;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class DocumentsController extends Controller
 {
@@ -29,6 +30,7 @@ class DocumentsController extends Controller
      */
     public function index(Request $request, $status = null)
     {
+        
         $documentRecords = $this->documentService->listByStudent($request->all(), $status);
         return view('main.documents.records', compact('documentRecords', 'request'));
     }
@@ -38,6 +40,7 @@ class DocumentsController extends Controller
      */
     public function transactions(Request $request)
     {
+        $this->documentService->cleanRecords();
         $transactions = $this->documentService->list($request->all());
         return view('main.documents.transactions', compact('transactions', 'request'));
     }
@@ -135,5 +138,41 @@ class DocumentsController extends Controller
         if ($action == 'download') {
             return response()->download($path);
         }
+    }
+
+    public function bulkDownload()
+    {
+        // Define the path of the folder you want to download
+        $folderPath = storage_path('app/public/documents');
+        $zipFileName = 'documents.zip'; // Name of the zip file
+
+        // Ensure the folder exists
+        if (!is_dir($folderPath)) {
+            return response()->json(['message' => 'Folder not found.'], 404);
+        }
+
+        // Create a zip file
+        $zip = new ZipArchive;
+        $zipFilePath = storage_path($zipFileName);
+
+        // Open the zip file
+        if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+            // Add each file from the folder into the zip
+            $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($folderPath));
+            foreach ($files as $name => $file) {
+                // Ignore directories
+                if (!$file->isDir()) {
+                    // Get relative path of the file
+                    $relativePath = substr($file->getPathname(), strlen($folderPath) + 1);
+                    $zip->addFile($file->getPathname(), $relativePath);
+                }
+            }
+            $zip->close();
+        } else {
+            return response()->json(['message' => 'Failed to create zip file.'], 500);
+        }
+
+        // Return the zip file as a download
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);
     }
 }

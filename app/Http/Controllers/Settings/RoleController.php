@@ -24,15 +24,15 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
         $data = $request->validate([
             "value" => "required",
             "code" => "required|numeric",
             "added_by" => "nullable",
         ]);
 
-        $product = Role::create($data);
-        return redirect(route('product.index'));
+        $role = Role::create($data);
+        return redirect('/settings/role')->with('success_message', 'Role has been added successfully');
+        ;
     }
 
     public function edit(Role $role)
@@ -41,7 +41,7 @@ class RoleController extends Controller
         //return view('settings.role.edit', ['role' => $role]);
     }
 
-    public function update(Role $product, Request $request)
+    public function update(Role $role, Request $request)
     {
 
         $data = $request->validate([
@@ -49,9 +49,9 @@ class RoleController extends Controller
             "code" => "required|numeric",
             "added_by" => "nullable",
         ]);
-        $product->update($data);
+        $role->update($data);
 
-        return redirect(route("settings.role.index"))->with("success", "Role Updated Successfully!");
+        return redirect(route("/settings/role'"))->with("success", "Role Updated Successfully!");
 
     }
     public function destroy(string $id)
