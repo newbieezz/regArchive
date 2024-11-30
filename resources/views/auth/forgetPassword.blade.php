@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="{{ url('login/images/icons/favicon.ico') }}"/>
+        {{-- <link rel="icon" type="image/png" href="{{ url('login/images/icons/favicon.ico') }}"/> --}}
+        <link rel="icon" type="image/x-icon" href="{{asset('assets/img/logo.png')}}" />
     <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{{ url('login/vendor/bootstrap/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->
@@ -57,6 +58,7 @@
                                   Send Password Reset Link
                               </button>
                           </div>
+                          <div class="container-login100-form-btn "> <a href="{{url('/')}}">Back</a></div>
                       </form>
                         
                   </div>

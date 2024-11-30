@@ -52,12 +52,12 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/store', 'EnrollmentRecordsController@store');
             Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
             Route::post('/update/{id}', 'EnrollmentRecordsController@update');
+            // Route::get('/show/{studentId}', 'EnrollmentRecordsController@showByStudent')->name('enrollment.show.student');
             Route::get('/show/{id}', 'EnrollmentRecordsController@show');
-            Route::get('/import', 'EnrollmentRecordsController@import');
             Route::get('/import', 'EnrollmentRecordsController@import');
             Route::get('/export', 'EnrollmentRecordsController@export_data');
             Route::post('/upload', 'EnrollmentRecordsController@upload');
-            Route::get('/records', 'EnrollmentRecordsController@index');
+            Route::get('/', 'EnrollmentRecordsController@index');
             Route::get('/{status}', 'EnrollmentRecordsController@index');
         });
         // Graduating Applicants routes

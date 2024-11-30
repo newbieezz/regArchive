@@ -33,7 +33,8 @@
               <td>{{ $trash->category->type }}</td>
               <td>
                   @foreach ($trash->files as $document)
-                    <a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a><br/>
+                    {{-- <a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a><br/> --}}
+                    {{$document->file_name}}<br/>
                   @endforeach
               </td>
               <td><a href="{{url('student/records?student_query='.$trash->student_id)}}" >{{ $trash->student_id }}</a></td>

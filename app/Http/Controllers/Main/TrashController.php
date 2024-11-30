@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\DocumentService;
 use App\Models\Documents;
 use Illuminate\Support\Facades\Storage;
+use Exception;
 class TrashController extends Controller
 {
     /** @var App\Services\DocumentService */

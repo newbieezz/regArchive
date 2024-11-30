@@ -5,7 +5,7 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Bulk Upload Enrollee/Student/ <a href="{{url('enrollment')}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Bulk Students Upload/ <a href="{{url('enrollment')}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">
@@ -25,7 +25,7 @@
               <p id="register-success"></p>
               <form action="{{url('enrollment/upload')}}" method="post" id="enrollemnt-form"  enctype="multipart/form-data"> @csrf
                 <div class="row"> 
-                    <h4>Enrollment Information</h4>
+                    <h4>Students Information</h4>
                 </div>
                 <div class="row">
                   <div class="col-sm-4 mb-2">
@@ -45,7 +45,7 @@
                     <label class="form-label" for="basic-default-fullname">Semester</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="semester" name="semester">
-                        @foreach(config('student.semester'); as $key => $sem)
+                        @foreach(config('student.semester') as $key => $sem)
                         <option value="{{ $key}}" {{ old('semester') == $key ? 'selected' : '' }}>{{ $sem}}</option>
                         @endforeach
                       </select>
@@ -93,7 +93,7 @@
                     <label class="form-label" for="basic-default-fullname">Year Level</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="year_level" name="year_level">
-                        @foreach(config('student.year_level'); as $key => $level)
+                        @foreach(config('student.year_level') as $key => $level)
                         <option value="{{ $key}}" {{ old('year_level') == $key ? 'selected' : '' }}>{{ $level}}</option>
                         @endforeach
                       </select>
@@ -108,7 +108,7 @@
                     <label class="form-label" for="basic-default-fullname">Student Status</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="student_status" name="student_status">
-                        @foreach(config('student.student_status'); as $key => $status)
+                        @foreach(config('student.student_status') as $key => $status)
                         <option value="{{ $key}}" {{ old('student_status') == $key ? 'selected' : '' }}>{{ $status}}</option>
                         @endforeach
                       </select>

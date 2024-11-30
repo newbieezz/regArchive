@@ -19,8 +19,8 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Type</th>
-            <th>File</th>
+            <th>Document Type</th>
+            <th>File Name</th>
             <th>Student ID</th>
             <th>EXPIRATION</th>
             <th>Uploaded At</th>
@@ -34,7 +34,8 @@
           <tr>
             <td>{{ $document->id }}</td>
             <td>{{ $document->category->type }}</td>
-            <td><a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a></td>
+            {{-- <td><a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a></td> --}}
+            <td>{{$document->file_name}}</td>
             <td><a href="{{url('student/records?student_query='.$document->student_id)}}" >{{ $document->student_id }}</a></td>
             <td>{{ $document->expiration ? $document->expiration  : 'PERMANENT' }}</td>
             <td>{{ $document->created_at }}</td>

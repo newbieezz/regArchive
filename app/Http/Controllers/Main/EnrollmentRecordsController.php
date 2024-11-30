@@ -48,7 +48,8 @@ class EnrollmentRecordsController extends Controller
      */
     public function import()
     {
-        return view('main.enrollment.import');
+        $studentTypes = StudentType::get();
+        return view('main.enrollment.import',compact('studentTypes'));
     }
 
     public function upload(BulkEnrollmentRequest $request)
