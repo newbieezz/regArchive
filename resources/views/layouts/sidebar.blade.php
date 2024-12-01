@@ -74,7 +74,7 @@
             </li>
             <li class="menu-item ">
               <a href="{{ url('settings/studentType') }}" class="menu-link">
-                <div data-i18n="Analytics">Student Type</div>
+                <div data-i18n="Analytics">Student Type Reference</div>
               </a>
             </li>
             <li class="menu-item ">

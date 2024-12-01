@@ -18,7 +18,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
+            {{-- <th>ID</th> --}}
             <th>Document Type</th>
             <th>File Name</th>
             <th>Student ID</th>
@@ -32,7 +32,7 @@
         <tbody class="table-border-bottom-0">
         @foreach ($transactions as $document)
           <tr>
-            <td>{{ $document->id }}</td>
+            {{-- <td>{{ $document->id }}</td> --}}
             <td>{{ $document->category->type }}</td>
             {{-- <td><a href="{{ asset('storage/'. $document->file_path) }}" target="{{ asset('storage/'. $document->file_path) }}">{{$document->file_name}}</a></td> --}}
             <td>{{$document->file_name}}</td>

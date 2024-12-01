@@ -44,7 +44,7 @@
           <table class="table" id="section">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>Section Name</th>
                     <th>Schedule</th>
                     <th>Date Created</th>
@@ -54,7 +54,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($sections as $section)
                 <tr>
-                    <td><span class="fw-medium">{{ $section['id'] }}</span> </td>
+                    {{-- <td><span class="fw-medium">{{ $section['id'] }}</span> </td> --}}
                     <td>{{ $section['name'] }}</td>
                     <td>{{ $section['sched'] }}</td>
                     <td>{{ $section['created_at'] }}</td>

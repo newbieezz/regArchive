@@ -38,7 +38,7 @@
           <table class="table" id="section">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>Letter Tag</th>
                     <th>Name/Indication</th>
                     <th>Date Created</th>
@@ -48,7 +48,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($studentTypes as $studentType)
                 <tr>
-                    <td><span class="fw-medium">{{ $studentType['id'] }}</span> </td>
+                    {{-- <td><span class="fw-medium">{{ $studentType['id'] }}</span> </td> --}}
                     <td>{{ $studentType['letter_tag'] }}</td>
                     <td>{{ $studentType['name'] }}</td>
                     <td>{{ $studentType['created_at'] }}</td>

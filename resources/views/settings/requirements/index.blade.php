@@ -31,7 +31,7 @@
           <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>Letter Tag</th>
                     <th>Name</th>
                     <th>Desc.</th>
@@ -43,7 +43,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($categories as $category)
                 <tr>
-                    <td><span class="fw-medium">{{ $category['id'] }}</span> </td>
+                    {{-- <td><span class="fw-medium">{{ $category['id'] }}</span> </td> --}}
                     <td>{{ $category['required_student'] }}</td>
                     <td>{{ $category['type'] }}</td>
                     <td>{{ $category['description'] }}</td>
