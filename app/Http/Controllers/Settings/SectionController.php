@@ -21,7 +21,8 @@ class SectionController extends Controller
     }
 
     public function index(){
-        $sections = Section::paginate(config('app.pages'));
+        $sections = Section::orderBy('created_at', 'desc')
+            ->paginate(config('app.pages'));
         return view('settings.section.index',compact('sections'));
     }
 

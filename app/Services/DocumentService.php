@@ -50,6 +50,7 @@ class DocumentService
         try {
             $documents = $this->documents->withTrashed();
             $filteredDocuments = $this->searchFilterList($request, $documents);
+            $documents = $documents->orderBy('updated_at', 'desc');
             return $documents->paginate(config('app.pages'));
         } catch (Exception $e) {
             throw $e;
@@ -196,7 +197,7 @@ class DocumentService
 
             // Format the filename
             $originalFilename = $file->getClientOriginalName();
-            $filename = "{$studentId}/{$studentId}_{$category}_{$originalFilename}";
+            $filename = "documents/{$studentId}/{$studentId}_{$category}_{$originalFilename}";
 
             // Check if the file exists in Firebase Storage
             $object = $bucket->object($filename);

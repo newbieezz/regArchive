@@ -160,6 +160,12 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/update/{id}', 'RoleController@update');
                 Route::get('/delete/{id}', 'RoleController@destroy');
             });
+            // Backup routes
+            Route::prefix('backup')->group(function () {
+                Route::get('/', 'BackupController@index');
+                Route::post('/upload', 'BackupController@generateBackup');
+                Route::post('/restore', 'BackupController@restoreBackup');
+            });
         });
     });
     Route::namespace('App\Http\Controllers\Settings')->group(function(){

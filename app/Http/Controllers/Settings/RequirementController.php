@@ -31,7 +31,8 @@ class RequirementController extends Controller
      */
     public function index()
     {
-        $categories = DocumentCategory::paginate(config('app.pages'));
+        $categories = DocumentCategory::orderBy('created_at', 'desc')
+            ->paginate(config('app.pages'));
         return view('settings.requirements.index',compact('categories'));
     }
 

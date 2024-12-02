@@ -125,7 +125,7 @@ function isLogWithinLastHour(activityLog) {
           if (activity_logs.length < 4 ){
           miniWindow.style.height = '200px';
         }else {
-          miniWindow.style.height = '500px';
+          //miniWindow.style.height = '500px';
         }
         }
     });

@@ -105,7 +105,13 @@
                 <div data-i18n="Analytics">Roles</div>
               </a>
             </li>
-          
+            @if (Auth::guard('web')->user()->role===Config::get('user.roles.admin'))
+            <li class="menu-item ">
+              <a href="{{ url('settings/backup') }}" class="menu-link">
+                <div data-i18n="Analytics">Data Backup</div>
+              </a>
+            </li>
+            @endif
       </ul>
     @endif   
     @else
