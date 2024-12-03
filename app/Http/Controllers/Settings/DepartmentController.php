@@ -32,7 +32,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::paginate(config('app.pages'));
+        $departments = Department::orderBy('created_at', 'desc')
+            ->paginate(config('app.pages'));
         return view('settings.department.index',compact('departments'));
     }
 

@@ -35,7 +35,6 @@ class UserService
     public function createStaff(array $params): User
     {
         try {
-            dd($params);
             $params['password'] = Hash::make($params['password']);
             $status = UserStatus::where('name', config('user.statuses.active'))->firstOrFail();
             $params['department_id'] = $params['department_id'];

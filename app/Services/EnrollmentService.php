@@ -45,6 +45,7 @@ class EnrollmentService
                 $enrollments = Enrollment::query()->status($status);
             }
             $filteredEnrollments = $this->searchFilterList($request, $enrollments);
+            $filteredEnrollments = $filteredEnrollments->orderBy('id', 'desc');
             return $filteredEnrollments->paginate(config('app.pages'));
         } catch (Exception $e) {
             throw $e;

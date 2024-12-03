@@ -21,7 +21,8 @@ class SchoolYearController extends Controller
     }
 
     public function index(){
-        $schoolYear = SchoolYear::paginate(config('app.pages'));
+        $schoolYear = SchoolYear::orderBy('created_at', 'desc')
+            ->paginate(config('app.pages'));
         return view('settings.schoolyear.index',compact('schoolYear'));
     }
 
