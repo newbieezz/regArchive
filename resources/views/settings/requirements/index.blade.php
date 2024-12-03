@@ -1,3 +1,4 @@
+<link rel="icon" type="image/x-icon" href="{{asset('assets/img/logo.png')}}" />
 @extends('layouts.layout')
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -14,15 +15,11 @@
             <h5 class="card-title">List of Categories/Requirements for Enrollment</h5>
             <label class="fw-medium" >Students Required Reference</label>
             <ul>
-              <li>A: ALL</li>
-              <li>B: FIRST YEAR STUDENTS</li>
-              <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
-              <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
-              <li>E: CROSS ENROLLES</li>
-              <li>F: INTERNATIONAL STUDENTS</li>
-              <li>G: TRANSFEREES</li>
-              <li>H: MARRIED</li>
+              @foreach ($studentTypes as $studentType)
+                <li> {{ $studentType['letter_tag'] }} :	{{ $studentType['name'] }} </li>
+              @endforeach
             </ul>
+            <div class="form-text m-0">You can have combination: "DG"</div>  
           </div>
           <div class="col-6 d-flex justify-content-end">
             <a href="{{url('settings/requirement/create')}}" style="color: white">
@@ -34,8 +31,8 @@
           <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Req. Student</th>
+                    {{-- <th>ID</th> --}}
+                    <th>Letter Tag</th>
                     <th>Name</th>
                     <th>Desc.</th>
                     <th>Is Restricted</th>
@@ -46,7 +43,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($categories as $category)
                 <tr>
-                    <td><span class="fw-medium">{{ $category['id'] }}</span> </td>
+                    {{-- <td><span class="fw-medium">{{ $category['id'] }}</span> </td> --}}
                     <td>{{ $category['required_student'] }}</td>
                     <td>{{ $category['type'] }}</td>
                     <td>{{ $category['description'] }}</td>

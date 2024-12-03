@@ -8,7 +8,7 @@ use App\Services\SectionService;
 use App\Services\CourseService;
 use App\Services\MajorService;
 use App\Services\DocumentCategoryService;
-
+use App\Services\StudentTypeService;
 use Illuminate\Support\Facades\Auth;
 /*
  * get logged in user
@@ -35,7 +35,13 @@ if (!function_exists('formatEnrollmentData')) {
         ); 
     }
 }
-
+if (!function_exists('getStudentType')){
+    function getStudentType()
+    {
+        $studentTypeService = app(StudentTypeService::class);
+        return $studentTypeService->listAll();
+    }
+}
 
 /*
  * get logged in user

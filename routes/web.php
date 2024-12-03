@@ -52,8 +52,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/store', 'EnrollmentRecordsController@store');
             Route::get('/update/{id}', 'EnrollmentRecordsController@edit');
             Route::post('/update/{id}', 'EnrollmentRecordsController@update');
+            // Route::get('/show/{studentId}', 'EnrollmentRecordsController@showByStudent')->name('enrollment.show.student');
             Route::get('/show/{id}', 'EnrollmentRecordsController@show');
-            Route::get('/import', 'EnrollmentRecordsController@import');
             Route::get('/import', 'EnrollmentRecordsController@import');
             Route::get('/export', 'EnrollmentRecordsController@export_data');
             Route::post('/upload', 'EnrollmentRecordsController@upload');
@@ -122,6 +122,14 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/update/{id}', 'CourseMajorController@edit');
                 Route::post('/update/{id}', 'CourseMajorController@update');
                 Route::get('/delete/{id}', 'CourseMajorController@destroy');
+            });
+            //Student Type Reference routes
+            Route::prefix('studentType')->group(function () {
+                Route::get('/', 'StudentTypeController@index');
+                Route::post('/store', 'StudentTypeController@store');
+                Route::get('/update/{id}', 'StudentTypeController@edit');
+                Route::post('/update/{id}', 'StudentTypeController@update');
+                Route::get('/delete/{id}', 'StudentTypeController@destroy');
             });
             //Requirements category routes
             Route::prefix('requirement')->group(function () {

@@ -41,7 +41,7 @@
           <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>CODE</th>
                     <th>Role</th>
                     <th>Date Created</th>
@@ -51,7 +51,7 @@
             <tbody class="table-border-bottom-0">
               @foreach($roles as $role)
               <tr>
-                <td><span class="fw-medium">{{ $role['id'] }}</span> </td>
+                {{-- <td><span class="fw-medium">{{ $role['id'] }}</span> </td> --}}
                 <td><span class="fw-medium">{{ $role['code'] }}</span> </td>
                 <td><span class="fw-medium">{{ $role['value'] }}</span> </td>
                 <td><span class="fw-medium">{{ $role['created_at'] }}</span> </td>

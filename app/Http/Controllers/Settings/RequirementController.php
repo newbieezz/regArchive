@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use App\Services\DocumentCategoryService;
 use App\Http\Requests\Settings\DocumentCategory\DocumentCategoryRequest;
 use Exception;
+use App\Models\StudentType;
 class RequirementController extends Controller
 {
 
@@ -31,6 +32,7 @@ class RequirementController extends Controller
      */
     public function index()
     {
+
         $categories = DocumentCategory::orderBy('created_at', 'desc')
             ->paginate(config('app.pages'));
         return view('settings.requirements.index',compact('categories'));
@@ -41,7 +43,8 @@ class RequirementController extends Controller
      */
     public function create()
     {
-        return view('settings.requirements.create');
+        $studentTypes = StudentType::get();
+        return view('settings.requirements.create',compact('studentTypes'));
 
     }
 
@@ -70,8 +73,9 @@ class RequirementController extends Controller
     public function edit(string $id)
     {
         try {
+            $studentTypes = StudentType::get();
             $category = $this->requirementService->findById($id);
-            return view('settings.requirements.edit')->with(compact('category'));
+            return view('settings.requirements.edit')->with(compact('category','studentTypes'));
         } catch (Exception $e) {
             return redirect('/settings/requirement');
         }

@@ -4,7 +4,7 @@
 <div class="content-wrapper">
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Update Account  / 2<a href="{{url('settings/user/')}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Update Account  / <a href="{{url('settings/user/')}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">

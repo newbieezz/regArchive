@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="{{ url('login/images/icons/favicon.ico') }}"/>
+        {{-- <link rel="icon" type="image/png" href="{{ url('login/images/icons/favicon.ico') }}"/> --}}
+    <link rel="icon" type="image/x-icon" href="{{asset('assets/img/logo.png')}}" />
     <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{{ url('login/vendor/bootstrap/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->
@@ -27,49 +28,51 @@
         <link rel="stylesheet" type="text/css" href="{{ url('login/css/main.css') }}">
     <!--===============================================================================================-->
 </head>
-<body>
+<body style="background-image: asset('/login/images/admin.png')">
 	
 <div class="limiter">
-		<div class="container-login100" style="background-image: url('login/images/admin.png');">
+    <div class="container-login100" >
 			<div class="wrap-login100 p-t-30 p-b-50">
                 
 				<span class="login100-form-title p-b-41">	
 					Reset Password   
 				</span>
+                @if (Session::has('message'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
                       <form  class="login100-form validate-form p-b-33 p-t-30" action="{{ route('reset.password.post') }}" method="POST">
                           @csrf
                           <input type="hidden" name="token" value="{{ $token }}">
   
-                          <div class="form-group row">
-                              <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                              <div class="col-md-6">
-                                  <input type="text" id="email_address" placeholder="Email" class="form-control" name="email" required autofocus>
+                          <div class="wrap-input100 validate-input">
+                              {{-- <label for="email_address" class="input100">E-Mail Address</label> --}}
+                                  <input type="text" id="email_address" class="input100" placeholder="Email" class="form-control" name="email" required autofocus>
+						          <span class="focus-input100" data-placeholder="&#xe82a;"></span>
                                   @if ($errors->has('email'))
                                       <span class="text-danger">{{ $errors->first('email') }}</span>
                                   @endif
-                              </div>
                           </div>
   
-                          <div class="form-group row">
-                              <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                              <div class="col-md-6">
-                                  <input type="password" id="password" placeholder="Password" class="form-control" name="password" required autofocus>
+                          <div class="wrap-input100 validate-input">
+                              {{-- <label for="password" class="input100">Password</label> --}}
+                                  <input type="password" id="password" class="input100" placeholder="Password" class="form-control" name="password" required autofocus>
+						          <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                   @if ($errors->has('password'))
                                       <span class="text-danger">{{ $errors->first('password') }}</span>
                                   @endif
-                              </div>
                           </div>
   
-                          <div class="form-group row">
-                              <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
-                              <div class="col-md-6">
-                                  <input type="password" id="password-confirm" placeholder="Confrim Password" class="form-control" name="password_confirmation" required autofocus>
+                          <div class="wrap-input100 validate-input">
+                              {{-- <label for="password-confirm" class="input100">Confirm Password</label> --}}
+                                  <input type="password" id="password-confirm" class="input100" placeholder="Confrim Password" class="form-control" name="password_confirmation" required autofocus>
+						          <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                   @if ($errors->has('password_confirmation'))
                                       <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
                                   @endif
-                              </div>
                           </div>
-  
+                          <br>
                           <div  class="container-login100-form-btn ">
                               <button type="submit" class="btn btn-primary">
                                   Reset Password

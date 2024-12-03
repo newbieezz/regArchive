@@ -24,13 +24,13 @@
             <div class="card-body">
               <p id="register-success"></p>
                 <div class="row"> 
-                    <h4>Enrollment Information</h4>
+                    <h4>Student Information</h4>
                 </div>
                 <div class="row">
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">School Year</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="school_year_id" name="school_year_id" @readonly(true)>
+                      <select class="form-select" aria-label="school_year_id" name="school_year_id" disabled>
                         @foreach(getSchoolYear() as $sy)
                         <option value="{{ $sy->id }}" {{ (old('school_year_id', $enrollment->school_year_id) == $sy->id) ? 'selected' : '' }} @readonly(true)>{{ $sy->year }}</option>
                         @endforeach
@@ -43,9 +43,9 @@
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Semester</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="semester" name="semester">
-                        @foreach(config('student.semester'); as $key => $sem)
-                        <option value="{{ $key}}" {{ (old('semester', $enrollment->semester) == $key) ? 'selected' : '' }}>{{ $sem}}</option>
+                      <select class="form-select" aria-label="semester" name="semester" disabled>
+                        @foreach(config('student.semester') as $key => $sem)
+                        <option value="{{ $key}}" {{ (old('semester', $enrollment->semester) == $key) ? 'selected' : '' }} @readonly(true)>{{ $sem}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -56,7 +56,7 @@
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Department</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="semester" name="department_id" id="department_id">
+                      <select class="form-select" aria-label="semester" name="department_id" id="department_id" disabled>
                         @foreach(getDepartments() as $dept)
                         <option value="{{ $dept->id }}" {{ (old('department_id', $enrollment->department_id) == $dept->id) ? 'selected' : '' }}>{{ $dept->name }}</option>
                         @endforeach
@@ -91,8 +91,8 @@
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Year Level</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="year_level" name="year_level">
-                        @foreach(config('student.year_level'); as $key => $level)
+                      <select class="form-select" aria-label="year_level" name="year_level" disabled>
+                        @foreach(config('student.year_level') as $key => $level)
                         <option value="{{ $key}}"{{ (old('year_level', $enrollment->year_level) == $key) ? 'selected' : '' }}>{{ $level}}</option>
                         @endforeach
                       </select>
@@ -106,8 +106,8 @@
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Student Status</label>
                     <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="student_status" name="student_status">
-                        @foreach(config('student.student_status'); as $key => $status)
+                      <select class="form-select" aria-label="student_status" name="student_status" disabled>
+                        @foreach(config('student.student_status') as $key => $status)
                         <option value="{{ $key}}" {{ (old('student_status', $enrollment->student_status) == $key) ? 'selected' : '' }}>{{ $status}}</option>
                         @endforeach
                       </select>
@@ -118,12 +118,12 @@
                   </div>
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Block Section</label>
-                    <input type="text" class="form-control" id="section" name="section" placeholder="Enter Block Section" value="{{ old('section', $enrollment->section) }}"/>
+                    <input type="text" class="form-control" id="section" name="section"  readonly placeholder="Enter Block Section" value="{{ old('section', $enrollment->section) }}"/>
                     @error('section')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
-                  <div class="col-sm-6 mb-2">
+                  <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Program/Sched</label>
                     <div>
                         <div class="form-check form-check-inline">
@@ -137,10 +137,6 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="row mt-4"> 
-                    <h4>Student Information</h4>
-                </div>
                 <div class="row">
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">ID Number</label>
@@ -153,21 +149,21 @@
                 <div class="row">
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" value="{{ old('last_name', $enrollment->student->last_name) }}"/>
+                    <input type="text" class="form-control" id="last_name" name="last_name" readonly placeholder="Enter Last Name" value="{{ old('last_name', $enrollment->student->last_name) }}"/>
                     @error('last_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">First Name</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" value="{{ old('first_name', $enrollment->student->first_name) }}"/>
+                    <input type="text" class="form-control" id="first_name" name="first_name" readonly placeholder="Enter First Name" value="{{ old('first_name', $enrollment->student->first_name) }}"/>
                     @error('first_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Middle Name</label>
-                    <input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Enter Middle Name" value="{{ old('first_name', $enrollment->student->middle_name) }}"/>
+                    <input type="text" class="form-control" id="middle_name" name="middle_name" readonly placeholder="Enter Middle Name" value="{{ old('first_name', $enrollment->student->middle_name) }}"/>
                     @error('first_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
@@ -176,14 +172,14 @@
                 <div class="row">
                   <div class="col-sm-6 mb-2">
                     <label class="form-label" for="basic-default-fullname">Home Address</label>
-                    <input type="text" class="form-control" id="home_address" name="home_address" placeholder="Enter Home Address" value="{{ old('home_address', $enrollment->student->home_address) }}"/>
+                    <input type="text" class="form-control" id="home_address" name="home_address" readonly placeholder="Enter Home Address" value="{{ old('home_address', $enrollment->student->home_address) }}"/>
                     @error('home_address')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-2">
                     <label class="form-label" for="basic-default-fullname">City Address</label>
-                    <input type="text" class="form-control" id="city_address" name="city_address" placeholder="Enter City Address" value="{{ old('city_address', $enrollment->student->city_address) }}"/>
+                    <input type="text" class="form-control" id="city_address" name="city_address" readonly placeholder="Enter City Address" value="{{ old('city_address', $enrollment->student->city_address) }}"/>
                     @error('city_address')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
@@ -192,14 +188,14 @@
                 <div class="row">
                   <div class="col-sm-3 mb-2">
                     <label class="form-label" for="basic-default-fullname">Contact No.</label>
-                    <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="Enter Contact Number" value="{{ old('contact_no', $enrollment->student->contact_no) }}"/>
+                    <input type="text" class="form-control" id="contact_no" name="contact_no" readonly placeholder="Enter Contact Number" value="{{ old('contact_no', $enrollment->student->contact_no) }}"/>
                     @error('contact_no')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-3 mb-2">
                     <label class="form-label" for="basic-default-fullname">Email Address</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email Address" value="{{ old('email', $enrollment->student->email) }}"/>
+                    <input type="text" class="form-control" id="email" name="email" readonly placeholder="Enter Email Address" value="{{ old('email', $enrollment->student->email) }}"/>
                     @error('email')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
@@ -218,20 +214,180 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-3 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Birthday</label>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" readonly placeholder="Enter Birthday" value="{{ old('birthdate',$enrollment->student->birthdate) }}"/>
+                    @error('birthdate')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Birth Address</label>
+                    <input type="text" class="form-control" id="city_address" name="birth_address" readonly value="{{ old('birth_address',$enrollment->student->birth_address) }}"/>
+                    @error('birth_address')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Citizenship</label>
+                    <input type="text" class="form-control" id="citizenship" name="citizenship" readonly placeholder="Enter Citizenship" value="{{ old('citizenship',$enrollment->student->citizenship) }}"/>
+                    @error('citizenship')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Father's Name</label>
+                    <input type="text" class="form-control" id="fathers_name" name="fathers_name" readonly placeholder="Enter Father's Name" value="{{ old('fathers_name',$enrollment->student->fathers_name) }}"/>
+                    @error('fathers_name')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  <div class="col-sm-4 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Occupation</label>
+                    <input type="text" class="form-control" id="fathers_occupation" name="fathers_occupation" readonly placeholder="Enter Occupation" value="{{ old('fathers_occupation',$enrollment->student->fathers_occupation) }}"/>
+                    @error('fathers_occupation')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Mother's Name</label>
+                        <input type="text" class="form-control" id="mothers_name" name="mothers_name" readonly placeholder="Enter Mother's Name" value="{{ old('mothers_name',$enrollment->student->mothers_name) }}"/>
+                        @error('mothers_name')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Occupation</label>
+                        <input type="text" class="form-control" id="mothers_occupation" name="mothers_occupation" readonly placeholder="Enter Occupation" value="{{ old('mothers_occupation',$enrollment->student->mothers_occupation) }}"/>
+                        @error('mothers_occupation')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Guardian's Name</label>
+                        <input type="text" class="form-control" id="guardians_name" name="guardians_name" readonly placeholder="Enter Guardian's Name" value="{{ old('guardians_name',$enrollment->student->guardians_name) }}"/>
+                        @error('guardians_name')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Contact Number</label>
+                        <input type="text" class="form-control" id="guardian_contact" name="guardian_contact" readonly placeholder="Enter Contact Number" value="{{ old('guardian_contact',$enrollment->student->guardian_contact) }}"/>
+                        @error('guardian_contact')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row mt-4"> 
+                    <h4>Educational Background</h4>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Primary School</label>
+                        <input type="text" class="form-control" id="primary" name="primary" readonly placeholder="School Attended" value="{{ old('primary',$enrollment->student->primary) }}"/>
+                        @error('primary')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-3 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Academic Year</label>
+                        <input type="text" class="form-control" id="primary_sy" name="primary_sy" readonly placeholder="Enter Academic Year" value="{{ old('primary_sy',$enrollment->student->primary_sy) }}"/>
+                        @error('primary_sy')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-3 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Honors Received</label>
+                        <input type="text" class="form-control" id="primary_awards" name="primary_awards" readonly value="{{ old('primary_awards',$enrollment->student->primary_awards) }}"/>
+                        @error('primary_awards')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Secondary School/JHS</label>
+                        <input type="text" class="form-control" id="secondary" name="secondary" readonly placeholder="School Attended" value="{{ old('secondary',$enrollment->student->secondary) }}"/>
+                        @error('secondary')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-3 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Academic Year</label>
+                        <input type="text" class="form-control" id="secondary_sy" name="secondary_sy" readonly placeholder="Enter Academic Year" value="{{ old('secondary_sy',$enrollment->student->secondary_sy) }}"/>
+                        @error('secondary_sy')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-3 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Honors Received</label>
+                        <input type="text" class="form-control" id="secondary_awards" name="secondary_awards" readonly value="{{ old('secondary_awards',$enrollment->student->secondary_awards) }}"/>
+                        @error('secondary_awards')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Senior High School</label>
+                        <input type="text" class="form-control" id="senior_high" name="senior_high" readonly placeholder="School Attended" value="{{ old('senior_high',$enrollment->student->senior_high) }}"/>
+                        @error('senior_high')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-3 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Academic Year</label>
+                        <input type="text" class="form-control" id="senior_high_sy" name="senior_high_sy" readonly placeholder="Enter Academic Year" value="{{ old('senior_high_sy',$enrollment->student->seniior_high_sy) }}"/>
+                        @error('senior_high_sy')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="col-sm-3 mb-2">
+                        <label class="form-label" for="basic-default-fullname">Honors Received</label>
+                        <input type="text" class="form-control" id="senior_high_awards" name="senior_high_awards" readonly value="{{ old('senior_high_awards',$enrollment->student->senior_high_awards) }}"/>
+                        @error('senior_high_awards')
+                            <p class="text-danger m-0">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
                 <div class="row mt-4"> 
                     <h4>Documents </h4>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 mb-2">
-                        <label class="form-label" for="basic-default-fullname">Document Uploaded</label>
-                        <img>
+                        <label class="form-label" for="basic-default-fullname">Document Uploaded</label> <br>
+                        @php $documentStatus = $enrollment->student->document_status; @endphp
+                            {{-- {{ $documentStatus['status'] }} --}}
+                                  @foreach ($documentStatus['completed']['documents'] as $doc)
+                                    <a class="dropdown-item"><i class="fas fa-file"></i> {{$doc}}</a>
+                                  @endforeach
+                                  <div class="">
+                                    <a class="" href="{{url('documents/upload/'.$enrollment->student->id)}}" > <br>
+                                      <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> View Documents</button>
+                                    </a>
+                                  </div>
                         @error('primary')
                             <p class="text-danger m-0">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="col-sm-3 mb-2">
                         <label class="form-label" for="basic-default-fullname">Lacking/Needs to be Scanned</label>
-                        <img>
+                        @foreach ($documentStatus['lacking']['documents'] as $doc)
+                          <a class="dropdown-item"><i class="fas fa-file"></i> No {{$doc}}</a>
+                        @endforeach
+                        <div class="">
+                          <a class="" href="{{url('documents/upload/'.$enrollment->student->id)}}" > </br>
+                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> Scan Documents</button>
+                          </a>
+                        </div>
                         @error('primary_sy')
                             <p class="text-danger m-0">{{ $message }}</p>
                         @enderror

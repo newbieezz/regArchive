@@ -3,16 +3,24 @@
 namespace App\Exports;
 
 use App\Models\Student;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class StudentExport implements FromCollection
+class StudentExport implements FromCollection, WithHeadings
 {
+    use Exportable;
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Student::all();
+        return Student::select('student_id', 'first_name', 'last_name','middle_name','home_address','city_address','contact_no',
+                'email','gender','birthdate','birth_address','citizenship','religion','civil_status','fathers_name','fathers_occupation','mothers_name',
+                'mothers_occupation','guardians_name','guardian_contact','primary','primary_sy','primary_awards','secondary','secondary_sy',
+                'secondary_awards','senior_high','senior_high_sy','senior_high_awards','created_at','required_document'
+               )->get();;
+        // return Student::all();
     }
 
     public function headings(): array{
@@ -47,7 +55,7 @@ class StudentExport implements FromCollection
             'Senior High SY',
             'Senior High Awards',
             'Created_at',
-            'Updated_at'
+            'Required Document'
         ];
     }
 }

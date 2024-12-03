@@ -43,7 +43,7 @@
           <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>Department</th>
                     <th>Code</th>
                     <th>Name</th>
@@ -54,7 +54,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($courses as $course)
                 <tr>
-                    <td><span class="fw-medium">{{ $course['id'] }} </span> </td>
+                    {{-- <td><span class="fw-medium">{{ $course['id'] }} </span> </td> --}}
                     <td>{{ $course->department->name }}</td>
                     <td>{{ $course['code'] }}</td>
                     <td>{{ $course['name'] }}</td>

@@ -45,7 +45,7 @@
                     <label class="form-label" for="basic-default-fullname">Semester</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="semester" name="semester">
-                        @foreach(config('student.semester'); as $key => $sem)
+                        @foreach(config('student.semester') as $key => $sem)
                         <option value="{{ $key}}" {{ (old('semester', $enrollment->semester) == $key) ? 'selected' : '' }}>{{ $sem}}</option>
                         @endforeach
                       </select>
@@ -96,7 +96,7 @@
                     <label class="form-label" for="basic-default-fullname">Year Level</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="year_level" name="year_level">
-                        @foreach(config('student.year_level'); as $key => $level)
+                        @foreach(config('student.year_level') as $key => $level)
                         <option value="{{ $key}}"{{ (old('year_level', $enrollment->year_level) == $key) ? 'selected' : '' }}>{{ $level}}</option>
                         @endforeach
                       </select>
@@ -112,7 +112,7 @@
                     <label class="form-label" for="basic-default-fullname">Student Status</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="student_status" name="student_status">
-                        @foreach(config('student.student_status'); as $key => $status)
+                        @foreach(config('student.student_status') as $key => $status)
                         <option value="{{ $key}}" {{ (old('student_status', $enrollment->student_status) == $key) ? 'selected' : '' }}>{{ $status}}</option>
                         @endforeach
                       </select>
@@ -399,13 +399,9 @@
               <div class="col-sm-6 mb-2">
                 <label class="form-label" for="required_document">Student Required Documents Category</label>
                 <ul>
-                  <li>B: FIRST YEAR STUDENTS</li>
-                  <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
-                  <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
-                  <li>E: CROSS ENROLLES</li>
-                  <li>F: INTERNATIONAL STUDENTS</li>
-                  <li>G: TRANSFEREES</li>
-                  <li>H: MARRIED</li>
+                  @foreach ($studentTypes as $studentType)
+                    <li> {{ $studentType['letter_tag'] }} :	{{ $studentType['name'] }} </li>
+                  @endforeach
                 </ul>
                 <input type="text" class="form-control" id="required_document" name="required_document" placeholder="Student Required Documents Category" value="{{ old('required_document', $enrollment->student->required_document) }}"/>
                 <div class="form-text m-0">You can have combination: "BEF"</div>  

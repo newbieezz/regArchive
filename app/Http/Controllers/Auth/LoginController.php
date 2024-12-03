@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use Exception;
 class LoginController extends Controller
 {
     /*
@@ -57,9 +57,13 @@ class LoginController extends Controller
                         return redirect('dashboard');
                     }
                 }else{
+                    Auth::logout();
+                Session::flush();
                     return redirect()->back()->with('error_message','Account Deactivated');
                 }
             }else{
+                // dd('incative staff');
+                
                 return redirect()->back()->with('error_message','Invalid Email or Password');
             }
         } catch (Exception $e) {

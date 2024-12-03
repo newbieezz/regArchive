@@ -5,7 +5,7 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('enrollment/')}}">Back</a></h4>
+      <h4 class="py-3 mb-4">Document Uploads / <a href="{{url('enrollment')}}">Back</a></h4>
 
       <!-- Basic Layout -->
       <div class="row">
@@ -65,15 +65,15 @@
                             <input type="date" name="expiration" id="expiration" class="form-control" value="{{ old('expiration', $theDocument->expiration ?? '') }}">
                             <div class="form-text m-0">You can leave this null for PERMANENT documents</div>      
                         </div>
-                            <div class="col-sm-12 file-preview d-flex flex-wrap align-content-start gap-2 mt-4" id="previewContainer{{$category->id}}" data-asset-path="{{ asset('storage/') }}">
+                            {{-- <div class="col-sm-12 file-preview d-flex flex-wrap align-content-start gap-2 mt-4" id="previewContainer{{$category->id}}" data-asset-path="{{ asset('storage/') }}">
                                 <!-- Preview Images will appear here -->
-                            </div>
+                            </div>  --}}
                         </div>
                     </div>
                     @endforeach
                 </div>
                 <div class="col-12 d-flex justify-content-end">
-                  <a class="mx-2" href="{{url('settings/department/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+                  <a class="mx-2" href="{{url('enrollment')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
                   <button type="submit" class="btn btn-primary">Save</button>
                 </div>
               </form>
