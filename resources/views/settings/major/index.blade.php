@@ -25,7 +25,7 @@
           <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>Name</th>
                     <th>Program/Course</th>
                     <th>Date Created</th>
@@ -35,7 +35,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($majors as $major)
                 <tr>
-                    <td><span class="fw-medium">{{ $major['id'] }} </span> </td>
+                    {{-- <td><span class="fw-medium">{{ $major['id'] }} </span> </td> --}}
                     <td>{{ $major['name'] }}</td>
                     <td>{{ $major->course->code }}</td>
                     <td>{{ $major['created_at'] }}</td>

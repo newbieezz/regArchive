@@ -33,7 +33,7 @@
           <table class="table" id="schoolyear">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>Year</th>
                     <th>Date Created</th>
                     <th>Actions</th>
@@ -42,7 +42,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($schoolYear as $year)
                 <tr>
-                    <td><span class="fw-medium">{{ $year['id'] }}</span> </td>
+                    {{-- <td><span class="fw-medium">{{ $year['id'] }}</span> </td> --}}
                     <td>{{ $year['year'] }}</td>
                     <td>{{ $year['created_at'] }}</td>
                     <td>

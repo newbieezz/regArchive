@@ -23,7 +23,7 @@
           <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>Code</th>
                     <th>Name</th>
                     <th>Date Created</th>
@@ -33,7 +33,7 @@
             <tbody class="table-border-bottom-0">
             @foreach($departments as $department)
                 <tr>
-                    <td><span class="fw-medium">{{ $department['id'] }} </span> </td>
+                    {{-- <td><span class="fw-medium">{{ $department['id'] }} </span> </td> --}}
                     <td>{{ $department['code'] }}</td>
                     <td>{{ $department['name'] }}</td>
                     <td>{{ $department['created_at'] }}</td>

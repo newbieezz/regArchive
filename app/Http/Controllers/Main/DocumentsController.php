@@ -8,17 +8,18 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Services\DocumentService;
 use Illuminate\Support\Facades\Storage;
-use ZipArchive;
 
+use ZipArchive;
+use Exception;
 class DocumentsController extends Controller
 {
-    /** @var App\Services\DocumentService */
+    
     protected $documentService;
 
     /**
      * DocumentsController constructor.
      *
-     * @param App\Services\DocumentService $enrollmentService
+     * @param
      */
     public function __construct(DocumentService $documentService)
     {
@@ -42,6 +43,7 @@ class DocumentsController extends Controller
     {
         $this->documentService->cleanRecords();
         $transactions = $this->documentService->list($request->all());
+        // dd($transactions);
         return view('main.documents.transactions', compact('transactions', 'request'));
     }
 
@@ -152,7 +154,7 @@ class DocumentsController extends Controller
         }
 
         // Create a zip file
-        $zip = new ZipArchive;
+        $zip = new ZipArchive;  
         $zipFilePath = storage_path($zipFileName);
 
         // Open the zip file

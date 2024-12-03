@@ -22,18 +22,12 @@ use Illuminate\Http\UploadedFile;
 
 class DocumentService
 {
-    /**
-     * @var App\Models\Documents
-     */
+    
     protected $documents;
 
     protected $studentService;
 
-    /**
-     * DocumentsService constructor.
-     *
-     * @param App\Models\Documents $user
-     */
+
     public function __construct(Documents $documents)
     {
         $this->documents = $documents;
@@ -56,26 +50,31 @@ class DocumentService
             throw $e;
         }
 
-        return $enrollment;
+        // return $enrollment;
     }
 
 
     /**
      * List all Documents by students with filters
-     *
+     * THIS IS FOR DOCUMENTS VIEW/INDEX ON STAFF SIDE
      * @param array $params
      */
     public function listByStudent(array $request, $status = null)
     {
         try {
-            $students = Student::query()->status($status);
+            $authUser = getLoggedInUser();
+            if($authUser->role === config('user.roles.staff') && $authUser->scope === 2){
+                $students = Student::query()->byDepartment($authUser->department_id)->status($status);
+            } else{
+                $students = Student::query()->status($status);
+            }
             $filteredStudents = $this->studentService->searchFilterList($request, $students);
             return $filteredStudents->paginate(config('app.pages'));
         } catch (Exception $e) {
             throw $e;
         }
 
-        return $enrollment;
+        // return $enrollment;
     }
 
     /**
@@ -283,7 +282,7 @@ class DocumentService
             throw $e;
         }
 
-        return;
+        // return;
     }
 
    

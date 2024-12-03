@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="row row-bordered g-0">
                             <div class="col-md">
-                                <h5 class="card-header m-0 me-2 pb-3">Student Details  / <a href="{{url('student/records')}}">Back</a></h5>
+                                <h5 class="card-header m-0 me-2 pb-3">Student Details  / <a href="{{url('enrollment')}}">Back</a></h5>
                             </div>
                             <div class="card body">
                               <div class="card-header m-0 me-2 pb-3">  
@@ -118,7 +118,8 @@
             </div>
         </div>
 </div> 
-      
+
+
         <!-- / Content -->
   <div class="layout-overlay layout-menu-toggle"></div>
 @endsection

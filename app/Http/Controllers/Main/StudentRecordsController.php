@@ -7,6 +7,7 @@ use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Services\StudentService;
+use App\Services\EnrollmentService;
 use Exception;
 use Illuminate\Support\Facades\View;
 class StudentRecordsController extends Controller
@@ -14,6 +15,7 @@ class StudentRecordsController extends Controller
         
     /** @var App\Services\StudentService */
     protected $studentService;
+    protected $enrollmentService;
 
     /**
      * UserController constructor.
@@ -24,13 +26,13 @@ class StudentRecordsController extends Controller
     {
         $this->studentService = $studentService;
     }
-
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request, $status = null)
     {
         $students = $this->studentService->list($request->all(), $status);
+
         return view('main.students.index', compact('students', 'request'));
     }
 
@@ -53,9 +55,20 @@ class StudentRecordsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show(string $id)
     {
+        // try {
+        //     // $student = Student::findOrFail($id);
+        //     $enrollment = Enrollment::where('student_id', $id)
+        //                           ->latest()
+        //                           ->firstOrFail();
+        //     return view('main.students.show', compact( 'enrollment'));
+        // } catch (Exception $e) {
+        //     return redirect()->back()->with('error', 'Student or enrollment record not found');
+        // }
+
         $student = Student::find($id);
+        // $enrollment = Enrollment::where('student_id', $id);
         // dd($student);
         return view('main.students.show', compact('student'));
     }

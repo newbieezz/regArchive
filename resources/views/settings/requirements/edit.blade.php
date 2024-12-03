@@ -26,14 +26,9 @@
               <p id="register-success"></p>
               <label class="fw-medium" >Students Required Reference</label>
             <ul>
-              <li>A: ALL</li>
-              <li>B: FIRST YEAR STUDENTS</li>
-              <li>C: REGULAR SECOND YEAR & SUBSEQUENT YEARS STUDENT</li>
-              <li>D: IRREGULAR / READMITTED / SHIFTEE STUDENTS</li>
-              <li>E: CROSS ENROLLES</li>
-              <li>F: INTERNATIONAL STUDENTS</li>
-              <li>G: TRANSFEREES</li>
-              <li>H: MARRIED</li>
+              @foreach ($studentTypes as $studentType)
+                <li> {{ $studentType['letter_tag'] }} :	{{ $studentType['name'] }} </li>
+              @endforeach
             </ul>
               <form action="{{url('settings/requirement/update/'.$category->id)}}" method="post"> @csrf
                 <div class="row">

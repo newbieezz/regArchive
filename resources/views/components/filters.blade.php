@@ -16,7 +16,7 @@
         <div class="col-sm-6 col-md-2 mb-3 mb-md-0 px-1">
           <select class="form-select form-control" name="semester">
             <option selected value="">Semester</option>
-            @foreach(config('student.semester'); as $key => $sem)
+            @foreach(config('student.semester') as $key => $sem)
               <option value="{{ $key}}" {{ $request->input('semester') == $key ? 'selected' : '' }}>{{ $sem}}</option>
             @endforeach
           </select>
@@ -52,7 +52,7 @@
         <div class="col-sm-6 col-md-2 mb-1 mb-md-0  px-1">
           <select class="form-select form-control" name="year_level">
             <option selected value="">Year Level</option>
-            @foreach(config('student.year_level'); as $key => $level)
+            @foreach(config('student.year_level') as $key => $level)
               <option value="{{ $key}}" {{ $request->input('year_level') == $key ? 'selected' : '' }}>{{ $level}}</option>
             @endforeach
           </select>

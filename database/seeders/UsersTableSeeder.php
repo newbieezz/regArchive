@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
         User::create([
             'first_name' => 'Registrar',
             'last_name' => 'Administrator',
-            'email' => 'admin@admin.com',
+            'email' => 'adminz@admin.com',
             'password' => Hash::make('password'),
             'user_status_id' => $status->id,
             'role' => config('user.roles.admin'),
@@ -48,7 +48,7 @@ class UsersTableSeeder extends Seeder
         User::create([
             'first_name' => 'Registrar',
             'last_name' => 'Staff',
-            'email' => 'staff@staff.com',
+            'email' => 'staff5@staff.com',
             'password' => Hash::make('password'),
             'user_status_id' => $status->id,
             'role' => config('user.roles.staff'),

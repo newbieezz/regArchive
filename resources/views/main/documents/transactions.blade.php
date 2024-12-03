@@ -18,9 +18,9 @@
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Type</th>
-            <th>File</th>
+            {{-- <th>ID</th> --}}
+            <th>Document Type</th>
+            <th>File Name</th>
             <th>Student ID</th>
             <th>EXPIRATION</th>
             <th>Uploaded At</th>
@@ -32,12 +32,14 @@
         <tbody class="table-border-bottom-0">
         @foreach ($transactions as $document)
           <tr>
-            <td>{{ $document->id }}</td>
+            {{-- <td>{{ $document->id }}</td> --}}
             <td>{{ $document->category->type }}</td>
+
             <td><a href="{{ isset($document->url_path) && $document->url_path ? $document->url_path : asset('storage/' . $document->file_path) }}" 
               target="_blank">
                {{ $document->file_name }}
            </a></td>
+
             <td><a href="{{url('student/records?student_query='.$document->student_id)}}" >{{ $document->student_id }}</a></td>
             <td>{{ $document->expiration ? $document->expiration  : 'PERMANENT' }}</td>
             <td>{{ $document->created_at }}</td>

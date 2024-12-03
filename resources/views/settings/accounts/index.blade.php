@@ -23,10 +23,10 @@
           <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Employee ID</th>
                     <th>Name</th>
                     <th>Role</th>
-                    <th>Department</th>
+                    <th>Department Code</th>
                     <th>Email</th>
                     <th>Scope Access</th>
                     <th>Status</th>
@@ -42,7 +42,7 @@
                     <td><span class="fw-medium">{{ $user['role'] === 1 ? 'Admin' : 'Staff' }}</span> </td>
                     <td> @foreach($departments as $department)
                           @if($user['department_id'] === $department['id'])
-                            {{ $department['name'] }}
+                            {{ $department['code'] }}
                           @endif
                          @endforeach  
                     </td>

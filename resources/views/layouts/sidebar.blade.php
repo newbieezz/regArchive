@@ -19,32 +19,14 @@
     <div class="menu-inner-shadow"></div>
     <li class="menu-header medium text-uppercase">
       <i class="menu-icon tf-icons bx bx-home-circle"></i>
-      <span class="menu-header-text">Registrar Files</span>
+      <span class="menu-header-text">Records/Files</span>
     </li>
     <ul class="menu-inner py-1">
-       <!-- <li class="menu-item ">
           <li class="menu-item">
-            <a href="{{ url('student/records') }}"class="menu-link">
-              <div data-i18n="CRM">Students Records</div>
+            <a href="{{ url('enrollment/') }}"class="menu-link">
+              <div data-i18n="CRM">Student Records</div>
             </a>
           </li>
-        -->
-          <li class="menu-item">
-            <a href="{{ url('/enrollment') }}"class="menu-link">
-              <div data-i18n="CRM">Students Records</div>
-            </a>
-          </li>
-          <!-- <li class="menu-item ">
-            <a href="{{url('graduating/applicants')}}" class="menu-link ">
-              <div data-i18n="Analytics">Graduating Applicants</div>
-            </a>
-          </li> -->
-    </ul>
-    <li class="menu-header medium text-uppercase">
-      <i class="menu-icon tf-icons bx bx-home-circle"></i>
-      <span class="menu-header-text">Document/Files</span>
-    </li>
-    <ul class="menu-inner py-1">
           <li class="menu-item">
             <a href="{{ url('documents/records') }}"class="menu-link">
               <div data-i18n="CRM">Document Records</div>
@@ -87,7 +69,12 @@
             </li>
             <li class="menu-item ">
               <a href="{{ url('settings/requirement') }}" class="menu-link">
-                <div data-i18n="Analytics">Categories/Requirements</div>
+                <div data-i18n="Analytics">Document Categories</div>
+              </a>
+            </li>
+            <li class="menu-item ">
+              <a href="{{ url('settings/studentType') }}" class="menu-link">
+                <div data-i18n="Analytics">Student Type Reference</div>
               </a>
             </li>
             <li class="menu-item ">

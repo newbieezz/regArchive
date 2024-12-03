@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\DocumentCategory;
+use App\Models\Document;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Documents extends Model
 {
@@ -20,32 +24,18 @@ class Documents extends Model
         'url_path',
     ];
 
-    /**
-     * Retrieves the document category 
-     *
-     * @return App\Models\DocumentCategory
-     */
-    public function category()
+
+    public function category() : BelongsTo
     {
         return $this->belongsTo(DocumentCategory::class, 'type')->withTrashed();
     }
 
-    /**
-     * Retrieves the document deleted by 
-     *
-     * @return App\Models\User
-     */
-    public function deletedByUser()
+    public function deletedByUser() : BelongsTo
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
-     /**
-     * Retrieves the document added by 
-     *
-     * @return App\Models\User
-     */
-    public function addedByUser()
+    public function addedByUser() : BelongsTo
     {
         return $this->belongsTo(User::class, 'added_by');
     }
