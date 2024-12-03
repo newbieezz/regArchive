@@ -77,7 +77,8 @@ class BackupController extends Controller
             }
 
             // Convert the data to JSON format
-            $fileName = "backup_database_" . now()->format('Ymd_His') . '.json';
+            $filenameBase = "backup_database_" . now()->format('Ymd_His');
+            $fileName = $filenameBase . '.json';
             $data = json_encode($backupData, JSON_PRETTY_PRINT);
             // Save locally
             Storage::disk('public')->put("backups/{$fileName}", $data);
@@ -92,14 +93,76 @@ class BackupController extends Controller
                 ['name' => "backups/{$fileName}"]
             );
 
-            $object = $bucket->object("backups/{$fileName}");
-            $file_url = $object->signedUrl(new \DateTime('+1 year'));
-            //dd($file_url);
+            $this->uploadFolderToFB($filenameBase);
 
             return redirect('/settings/backup')->with('success_message', 'Backup created successfully!');
         } catch (\Exception $e) {
-            Log::error("Firebase backup error: " . $e->getMessage());
-            return redirect('/settings/backup')->with('error_message', value: 'Backup creation failed!');
+            return redirect('/settings/backup')->with('error_message', value: 'Backup creation failed: ' . $e->getMessage());
+        }
+    }
+
+    public function uploadFolderToFB(string $backupName): ?string
+    {
+        try {
+            // Initialize Firebase Storage
+            $firebase = (new Factory)->withServiceAccount((base_path() . '/app/reg-archive-firebase-adminsdk-140mx-e5a5981a75.json'))->withDefaultStorageBucket('reg-archive.firebasestorage.app');
+            $storage = $firebase->createStorage();
+            $bucket = $storage->getBucket();
+
+
+            // Define the source directory
+            $sourceDir = storage_path(path: '/app/public/documents');
+
+            if (!is_dir($sourceDir)) {
+                throw new \Exception("Source directory does not exist: $sourceDir");
+            }
+
+            $zipFilePath = storage_path("app/public/{$backupName}.zip");
+
+            // Create a zip archive of the folder
+            $zip = new \ZipArchive();
+            if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+                $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($sourceDir));
+                foreach ($files as $file) {
+                    if (!$file->isDir()) {
+                        $relativePath = substr($file->getPathname(), strlen($sourceDir) + 1);
+                        $zip->addFile($file->getPathname(), $relativePath);
+                    }
+                }
+                $zip->close();
+            } else {
+                throw new \Exception("Could not create zip file at: $zipFilePath");
+            }
+
+            // Set the Firebase destination path
+            $firebaseFilePath = "backupDocuments/{$backupName}.zip";
+
+            // Check if the file exists in Firebase Storage
+            $object = $bucket->object($firebaseFilePath);
+            if ($object->exists()) {
+                // Delete the existing file
+                $object->delete();
+            }
+
+            // Upload the zip file to Firebase Storage
+            $bucket->upload(
+                fopen($zipFilePath, 'r'),
+                [
+                    'name' => $firebaseFilePath,
+                ]
+            );
+
+            // Clean up by deleting the local zip file
+            unlink($zipFilePath);
+
+            // Generate and return the file's public URL
+            $object = $bucket->object($firebaseFilePath);
+            return $object->signedUrl(new \DateTime('+1 year'));
+        } catch (\Exception $e) {
+            // Log error for debugging
+            Log::error("Firebase folder upload error: " . $e->getMessage());
+            dd($e->getMessage());
+            return null;
         }
     }
 
@@ -118,6 +181,58 @@ class BackupController extends Controller
             $storage = $firebase->createStorage();
             $bucket = $storage->getBucket();
             $object = $bucket->object($firebasePath);
+
+            $path = $object->name();
+            $filenameWithExtension = basename($path);
+            $documentFilename = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
+            $documentBackupPath = 'backupDocuments/' . $documentFilename . '.zip';
+
+            $documentObject = $bucket->object($documentBackupPath);
+            $documentBackupStatus = '';
+            if ($documentObject->exists()) {
+                try {
+                    // Define paths
+                    $tempZipPath = storage_path('app/public/temp_documents_backup.zip'); // Temporary zip file
+                    $extractPath = storage_path('app/public/temp_documents');           // Temporary extraction folder
+                    $sourceDir = storage_path('app/public/documents');           // Target folder to replace
+
+                    // Download the zip file from Firebase
+                    file_put_contents($tempZipPath, $documentObject->downloadAsStream());
+
+                    // Unzip the downloaded file
+                    $zip = new \ZipArchive();
+                    if ($zip->open($tempZipPath) === true) {
+                        // Ensure the extraction path exists
+                        if (!file_exists($extractPath)) {
+                            mkdir($extractPath, 0755, true);
+                        }
+                        $zip->extractTo($extractPath);
+                        $zip->close();
+                    } else {
+                        throw new \Exception('Failed to unzip the downloaded file.');
+                    }
+
+                    // Replace the folder at $sourceDir
+                    if (file_exists($sourceDir)) {
+                        // Delete the existing folder
+                        \File::deleteDirectory($sourceDir);
+                    }
+                    // Move the extracted folder to the target location
+                    \File::moveDirectory($extractPath, $sourceDir);
+
+                    // Clean up temporary files
+                    unlink($tempZipPath);
+                    \File::deleteDirectory($extractPath);
+
+                    $documentBackupStatus = "Documents are restored.";
+                } catch (\Exception $e) {
+                    $documentBackupStatus = "Document are found but error in restoration: " . $e->getMessage();
+                }
+
+            } else {
+                $documentBackupStatus = "Documents for the backup reference not found in Firebase.";
+            }
+
 
             if (!$object->exists()) {
                 return redirect('/settings/backup')->with('error_message', 'Backup file not found in Firebase');
@@ -151,7 +266,7 @@ class BackupController extends Controller
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
 
-            return redirect('/settings/backup')->with('success_message', 'Backup restored successfully!');
+            return redirect('/settings/backup')->with('success_message', 'Backup restored successfully! ' . $documentBackupStatus);
         } catch (\Exception $e) {
             return redirect('/settings/backup')->with('error_message', 'Backup restored failed: ' . $e->getMessage());
 

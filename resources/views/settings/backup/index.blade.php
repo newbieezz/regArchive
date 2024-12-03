@@ -9,7 +9,7 @@
 @endif
 @if(Session::has('error_message'))
   <div id="errorsMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
-      <strong>Success: </strong> {{ Session::get('error_message')}}
+      <strong>Error: </strong> {{ Session::get('error_message')}}
       <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('errorsMessage').style.display = 'none';"></button>
   </div>
 @endif

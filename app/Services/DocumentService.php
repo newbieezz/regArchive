@@ -83,32 +83,7 @@ class DocumentService
      * @param string $filePath The file path in Firebase Storage.
      * @return bool True if deleted successfully, False otherwise.
      */
-    function deleteFromFirebase(string $filePath): bool
-    {
-        try {
-            // Initialize Firebase Storage
-            $firebase = (new Factory)->withServiceAccount((base_path() . '/app/reg-archive-firebase-adminsdk-140mx-e5a5981a75.json'))->withDefaultStorageBucket('reg-archive.firebasestorage.app');
-            $storage = $firebase->createStorage();
-            $bucket = $storage->getBucket();
-
-            // Get the file object
-            $object = $bucket->object($filePath);
-
-            // Check if the file exists
-            if (!$object->exists()) {
-                Log::info("File not found in Firebase Storage: " . $filePath);
-                return false;
-            }
-
-            // Delete the file
-            $object->delete();
-            Log::info("File deleted successfully: " . $filePath);
-            return true;
-        } catch (\Exception $e) {
-            Log::error("Firebase delete error: " . $e->getMessage());
-            return false;
-        }
-    }
+    
 
     function formatFilePaths(string $input): string
     {
@@ -137,7 +112,7 @@ class DocumentService
             if ($expiredDocuments->isNotEmpty()) {
                 foreach ($expiredDocuments as $expiredDocument) {
                     $expiredDocument->delete();
-                    $this->deleteFromFirebase($this->formatFilePaths($expiredDocument->file_name));
+                    
                 }
             }
         } catch (Exception $e) {
@@ -179,50 +154,6 @@ class DocumentService
         }
     }
 
-    /**
-     * Upload a file to Firebase Storage.
-     *
-     * @param UploadedFile $file The uploaded file instance.
-     * @param string $studentId The Student ID for renaming the file.
-     * @return string|null The file URL if uploaded, or null on failure.
-     */
-    public function uploadDocToFB(UploadedFile $file, string $studentId, string $category): ?string
-    {
-        try {
-            // Initialize Firebase Storage
-            $firebase = (new Factory)->withServiceAccount((base_path() . '/app/reg-archive-firebase-adminsdk-140mx-e5a5981a75.json'))->withDefaultStorageBucket('reg-archive.firebasestorage.app');
-            $storage = $firebase->createStorage();
-            $bucket = $storage->getBucket();
-
-            // Format the filename
-            $originalFilename = $file->getClientOriginalName();
-            $filename = "documents/{$studentId}/{$studentId}_{$category}_{$originalFilename}";
-
-            // Check if the file exists in Firebase Storage
-            $object = $bucket->object($filename);
-            if ($object->exists()) {
-                // Delete the existing file
-                $object->delete();
-            }
-
-            // Upload the new file
-            $bucket->upload(
-                fopen($file->getRealPath(), 'r'),
-                [
-                    'name' => $filename,
-                ]
-            );
-
-            // Generate and return the file's public URL
-            $object = $bucket->object($filename);
-            return $object->signedUrl(new \DateTime('+1 year')); // Set an appropriate expiry date
-        } catch (\Exception $e) {
-            // Log error for debugging
-            Log::error("Firebase upload error: " . $e->getMessage());
-            dd($e->getMessage());
-            return null;
-        }
-    }
 
     /**
      * Upload documents
@@ -254,8 +185,6 @@ class DocumentService
 
                         Storage::disk('public')->put($fullPath, file_get_contents($file));
 
-                        $the_url_path = $this->uploadDocToFB($file, $student->student_id, $category->type);
-
                         $this->documents->create([
                             'student_id' => $student->student_id,
                             'type' => $category->id,
@@ -263,7 +192,6 @@ class DocumentService
                             'file_path' => $fullPath,
                             'added_by' => getLoggedInUser()->id,
                             'expiration' => $request->expiration,
-                            'url_path' => $the_url_path
                         ]);
                     }
                 }

@@ -34,8 +34,8 @@
           <tr>
             {{-- <td>{{ $document->id }}</td> --}}
             <td>{{ $document->category->type }}</td>
+            <td><a href="{{ asset('storage/' . $document->file_path) }}" 
 
-            <td><a href="{{ isset($document->url_path) && $document->url_path ? $document->url_path : asset('storage/' . $document->file_path) }}" 
               target="_blank">
                {{ $document->file_name }}
            </a></td>
