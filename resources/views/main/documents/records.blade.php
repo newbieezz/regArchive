@@ -54,7 +54,7 @@
               <td>
                 @if(count($record->documents->where('type', $category->id)) > 0)
                   @foreach ($record->documents->where('type', $category->id) as $document)
-                  <a href="{{ $document->url_path ?? asset('storage/' . $document->file_path) }}" target="_blank">
+                  <a href="{{asset('storage/' . $document->file_path) }}" target="_blank">
                     {{ $document->file_name }}
                 </a><br/>
                   @endforeach
