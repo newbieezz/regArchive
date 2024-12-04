@@ -13,7 +13,8 @@ class RoleController extends Controller
     //
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::orderBy('created_at', 'desc')
+            ->paginate(config('app.pages'));
         return view("settings.role.index", ["roles" => $roles]);
     }
 

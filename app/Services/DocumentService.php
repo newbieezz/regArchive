@@ -13,7 +13,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\ModelNotFoundException;  
 use Illuminate\Support\Facades\Storage;
+use Log;
 use Symfony\Component\Process\Process;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Storage as FBStorage;
+use Illuminate\Http\UploadedFile;
 
 
 class DocumentService
@@ -40,6 +44,7 @@ class DocumentService
         try {
             $documents = $this->documents->withTrashed();
             $filteredDocuments = $this->searchFilterList($request, $documents);
+            $documents = $documents->orderBy('updated_at', 'desc');
             return $documents->paginate(config('app.pages'));
         } catch (Exception $e) {
             throw $e;
@@ -72,6 +77,34 @@ class DocumentService
         // return $enrollment;
     }
 
+    /**
+     * Delete a file from Firebase Storage.
+     *
+     * @param string $filePath The file path in Firebase Storage.
+     * @return bool True if deleted successfully, False otherwise.
+     */
+    
+
+    function formatFilePaths(string $input): string
+    {
+        // Split the string by " and "
+        $files = explode(' and ', $input);
+
+        if (count($files) < 2) {
+            throw new Exception("Invalid input format. Expected 'file1 and file2'.");
+        }
+
+        // Extract student ID from the first file
+        $firstFile = $files[0];
+        $studentId = strstr($firstFile, '_', true); // Get everything before the first underscore
+
+        // Prepend the student ID as a folder to the first file
+        $files[0] = "{$studentId}/{$firstFile}";
+
+        // Join the files back with " and "
+        return implode(' and ', $files);
+    }
+
     public function cleanRecords()
     {
         try {
@@ -79,6 +112,7 @@ class DocumentService
             if ($expiredDocuments->isNotEmpty()) {
                 foreach ($expiredDocuments as $expiredDocument) {
                     $expiredDocument->delete();
+                    
                 }
             }
         } catch (Exception $e) {
@@ -120,6 +154,7 @@ class DocumentService
         }
     }
 
+
     /**
      * Upload documents
      *
@@ -149,14 +184,14 @@ class DocumentService
                         $fullPath = $basePath . $customFilename;
 
                         Storage::disk('public')->put($fullPath, file_get_contents($file));
-                        
+
                         $this->documents->create([
                             'student_id' => $student->student_id,
                             'type' => $category->id,
                             'file_name' => $customFilename,
                             'file_path' => $fullPath,
                             'added_by' => getLoggedInUser()->id,
-                            'expiration' => $request->expiration
+                            'expiration' => $request->expiration,
                         ]);
                     }
                 }
@@ -177,6 +212,8 @@ class DocumentService
 
         // return;
     }
+
+   
 
     public function scan(Request $request, $studentID, $categoryID){
         try {

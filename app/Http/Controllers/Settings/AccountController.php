@@ -34,7 +34,8 @@ class AccountController extends Controller
      */
     public function index()
     {
-            $users = User::paginate(config('app.pages'));
+        $users = User::orderBy('created_at', 'desc') // Or another column you wish to sort by
+            ->paginate(config('app.pages'));
         
         $departments = Department::all();
         // dd($users);
