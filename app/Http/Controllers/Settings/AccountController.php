@@ -95,21 +95,26 @@ class AccountController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(UpdateUserRequest $request, string $id)
+    // {
+    //     try {
+    //         $request->merge(['id' => $id]);
+    //         if(empty($request->input('password'))){
+    //             $request->except(['password', 'password_confirmation']);
+    //         }
+    //         $request->validated();
+    //         // dd($id);
+    //         $this->userService->updateStaff($request->all(), $id);
+    //         return redirect('/settings/user')->with('success_message', 'Account updated successfully.');
+    //     } catch (ValidationException $e) {
+    //         return redirect()->back()->withErrors($e->validator->errors())->withInput();
+    //     } catch (Exception $e) {
+    //         return redirect()->back()->with('error_message', $e->getMessage());
+    //     }
+    // }
+
     public function update(Request $request, string $id)
     {
-        // try {
-        //     $request->merge(['id' => $id]);
-        //     if(empty($request->input('password'))){
-        //         $request->except(['password', 'password_confirmation']);
-        //     }
-        //     $request->validated();
-        //     $this->userService->updateStaff($request->all(), $id);
-        //     return redirect('/settings/user')->with('success_message', 'Account updated successfully.');
-        // } catch (ValidationException $e) {
-        //     return redirect()->back()->withErrors($e->validator->errors())->withInput();
-        // } catch (Exception $e) {
-        //     return redirect()->back()->with('error_message', $e->getMessage());
-        // }
         try {
             $request->merge(['id' => $id]);
             if(empty($request->input('password'))){
@@ -125,7 +130,6 @@ class AccountController extends Controller
             return redirect()->back()->with('error_message', $e->getMessage());
         }
     }
-
     /**
      * Activate user account
      */

@@ -65,9 +65,9 @@
                             <input type="date" name="expiration" id="expiration" class="form-control" value="{{ old('expiration', $theDocument->expiration ?? '') }}">
                             <div class="form-text m-0">You can leave this null for PERMANENT documents</div>      
                         </div>
-                            {{-- <div class="col-sm-12 file-preview d-flex flex-wrap align-content-start gap-2 mt-4" id="previewContainer{{$category->id}}" data-asset-path="{{ asset('storage/') }}">
+                            <div class="col-sm-12 file-preview d-flex flex-wrap align-content-start gap-2 mt-4" id="previewContainer{{$category->id}}" data-asset-path="{{ asset('storage/') }}">
                                 <!-- Preview Images will appear here -->
-                            </div>  --}}
+                            </div> 
                         </div>
                     </div>
                     @endforeach
@@ -125,17 +125,19 @@
     // Listen for changes in file input fields
     let oldDocuments = {!! json_encode($studentData->documents) !!};
     @foreach(getDocumentCategories() as $index => $category)
-        let oldFiles{{$category->id}} = oldDocuments.filter(docs => docs.type === {!! $category->id !!});
-        let fileInput{{$category->id}} = document.getElementById('fileInput{{$category->id}}');
-        let previewContainer{{$category->id}} = document.getElementById('previewContainer{{$category->id}}');
-        
-        if (oldFiles{{$category->id}}.length > 0) {
-            displayOldFilePreviews(oldFiles{{$category->id}}, previewContainer{{$category->id}});
-        }
-        document.getElementById('fileInput{{$category->id}}').addEventListener('change', function() {
-            handleFileSelect(this, document.getElementById('previewContainer{{$category->id}}'));
-            scannedFiles['{{$category->id}}'] = null
-        });
+        @if(count($studentData->documents->where('type', $category->id)) > 0)
+            let oldFiles{{$category->id}} = oldDocuments.filter(docs => docs.type === {!! $category->id !!});
+            let fileInput{{$category->id}} = document.getElementById('fileInput{{$category->id}}');
+            let previewContainer{{$category->id}} = document.getElementById('previewContainer{{$category->id}}');
+            
+            if (oldFiles{{$category->id}}.length > 0) {
+                displayOldFilePreviews(oldFiles{{$category->id}}, previewContainer{{$category->id}});
+            }
+            document.getElementById('fileInput{{$category->id}}').addEventListener('change', function() {
+                handleFileSelect(this, document.getElementById('previewContainer{{$category->id}}'));
+                scannedFiles['{{$category->id}}'] = null
+            });
+        @endif
     @endforeach
 
     function displayOldFilePreviews(oldFiles, previewContainer, clearOld = false) {

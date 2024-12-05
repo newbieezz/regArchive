@@ -39,7 +39,7 @@
         <tr>
           <th>Student ID</th>
           <th>Student Name</th>
-          <th>Shcool Year</th>
+          <th>Shcool Year Enrolled</th>
           <th>Department</th>
           <th>Section</th>
           <th>Course</th>

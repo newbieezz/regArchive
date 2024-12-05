@@ -230,7 +230,9 @@ class DocumentService
             $storagePath = str_replace('/', '\\', $storagePath);
             // Run NAPS2 command to scan directly to the storage disk
             $process = new Process([
-                'C:\Program Files\NAPS2\naps2.console.exe', // Path to NAPS2 executable
+                config('printer.middleware'), // Path to NAPS2 executable
+                '--driver', config('printer.driver'),
+                '--device', config('printer.device'),
                 '--output', str_replace('/','\\',Storage::disk('public')->path($storagePath)), // Output directory for scanned documents
             ]);
             $process->run();

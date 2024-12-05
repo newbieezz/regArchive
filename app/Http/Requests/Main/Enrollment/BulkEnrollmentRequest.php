@@ -15,10 +15,10 @@ class BulkEnrollmentRequest extends FormRequest
     {
         return [
             'school_year_id' => 'required',
-            'semester' => 'required',
+            // 'semester' => 'required',
             'department_id' => 'required',
             'course_id' => 'required',
-            'year_level' => 'required',
+            // 'year_level' => 'required',
             'student_status' => 'required',
             'section_id' => 'required',
             'file' => 'required|file|mimes:xlsx,xls,csv',

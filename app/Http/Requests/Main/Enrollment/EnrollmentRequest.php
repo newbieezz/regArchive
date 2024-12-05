@@ -16,10 +16,10 @@ class EnrollmentRequest extends FormRequest
     {
         return [
             'school_year_id' => 'required',
-            'semester' => 'required',
+            // 'semester' => 'required',
             'department_id' => 'required',
             'course_id' => 'required',
-            'year_level' => 'required',
+            // 'year_level' => 'required',
             'student_status' => 'required',
             'section_id' => 'required',
             'student_id' => [
@@ -49,7 +49,7 @@ class EnrollmentRequest extends FormRequest
             'civil_status' => 'required',
             'guardians_name' => 'required|max:255',
             'guardian_contact' => 'required|numeric',
-            'required_document' => 'required|string|max:255',
+            // 'required_document' => 'required|string|max:255',
         ];
     }
 

@@ -33,9 +33,10 @@ class RequirementController extends Controller
     public function index()
     {
 
+        $studentTypes = StudentType::get();
         $categories = DocumentCategory::orderBy('created_at', 'desc')
             ->paginate(config('app.pages'));
-        return view('settings.requirements.index',compact('categories'));
+        return view('settings.requirements.index',compact('categories','studentTypes'));
     }
 
     /**

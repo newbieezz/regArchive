@@ -186,8 +186,8 @@ class EnrollmentService
                 $enrollment = $this->enrollment->updateOrCreate([
                     'student_id' =>  $enrollmentData['student_id'],
                     'school_year_id' =>  $enrollmentData['school_year_id'],
-                    'year_level' =>  $enrollmentData['year_level'],
-                    'semester' =>  $enrollmentData['semester'],
+                    // 'year_level' =>  $enrollmentData['year_level'],
+                    // 'semester' =>  $enrollmentData['semester'],
                     'department_id' =>  $enrollmentData['department_id'],
                     'course_id' =>  $enrollmentData['course_id']
                 ], $enrollmentData);

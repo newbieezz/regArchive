@@ -55,7 +55,7 @@
             @foreach($courses as $course)
                 <tr>
                     {{-- <td><span class="fw-medium">{{ $course['id'] }} </span> </td> --}}
-                    <td>{{ $course->department->name }}</td>
+                    <td>{{ $course->department->code }}</td>
                     <td>{{ $course['code'] }}</td>
                     <td>{{ $course['name'] }}</td>
                     <td>{{ $course['created_at'] }}</td>

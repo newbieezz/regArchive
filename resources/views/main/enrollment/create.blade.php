@@ -41,7 +41,7 @@
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
-                  <div class="col-sm-4 mb-2">
+                  <!-- <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Semester</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="semester" name="semester">
@@ -53,7 +53,7 @@
                     @error('semester')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
-                  </div>
+                  </div> -->
                   <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Department</label>
                     <div class="input-group input-group-merge">
@@ -90,7 +90,7 @@
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
-                  <div class="col-sm-4 mb-2">
+                  <!-- <div class="col-sm-4 mb-2">
                     <label class="form-label" for="basic-default-fullname">Year Level</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="year_level" name="year_level">
@@ -103,7 +103,7 @@
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                   <div class="col-sm-4 mb-2">

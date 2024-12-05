@@ -39,7 +39,7 @@ class UserService
             $status = UserStatus::where('name', config('user.statuses.active'))->firstOrFail();
             $params['department_id'] = $params['department_id'];
             $params['user_status_id'] = $status->id;
-            $params['password_default'] = true;
+            $params['password_default'] = 1;
             $user = $this->user->create($params);
 
         } catch (Exception $e) {

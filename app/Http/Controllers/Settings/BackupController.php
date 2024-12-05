@@ -93,9 +93,10 @@ class BackupController extends Controller
                 ['name' => "backups/{$fileName}"]
             );
 
+
             $this->uploadFolderToFB($filenameBase);
 
-            return redirect('/settings/backup')->with('success_message', 'Backup created successfully!');
+            return redirect('/settings/backup')->with('success_message', 'Backup created successfully! '. $documentBackupStatus);
         } catch (\Exception $e) {
             return redirect('/settings/backup')->with('error_message', value: 'Backup creation failed: ' . $e->getMessage());
         }
@@ -114,7 +115,7 @@ class BackupController extends Controller
             $sourceDir = storage_path(path: '/app/public/documents');
 
             if (!is_dir($sourceDir)) {
-                throw new \Exception("Source directory does not exist: $sourceDir");
+               return false;
             }
 
             $zipFilePath = storage_path("app/public/{$backupName}.zip");

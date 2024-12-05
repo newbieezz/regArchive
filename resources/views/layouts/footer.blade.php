@@ -121,13 +121,13 @@ function isLogWithinLastHour(activityLog) {
       logLink.textContent = log.content;
       miniWindowContent.appendChild(logLink);
       const miniWindow = document.getElementById('miniWindow');
-        if (miniWindow.style.height === '40px'){
+        /* if (miniWindow.style.height === '40px'){
           if (activity_logs.length < 4 ){
           miniWindow.style.height = '200px';
         }else {
           //miniWindow.style.height = '500px';
         }
-        }
+        } */
     });
     const badgeSpan = document.getElementById('badge-span')
     
@@ -164,7 +164,7 @@ function isLogWithinLastHour(activityLog) {
                           displayContent(data.current_user_records);
                         }
                         else if (data.latestEntry.id){
-                          alert(data.latestEntry.content);
+                          //alert(data.latestEntry.content);
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

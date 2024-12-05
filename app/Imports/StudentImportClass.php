@@ -47,7 +47,7 @@ class StudentImportClass implements ToCollection
                     'senior_high' => $row[26],
                     'senior_high_sy' => $row[26],
                     'senior_high_awards' => $row[28],
-                    'required_document' => $row[29],
+                    // 'required_document' => $row[29],
                     // Add more columns as needed
                 ];
             }
