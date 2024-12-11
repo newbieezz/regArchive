@@ -32,7 +32,9 @@ class DocumentsController extends Controller
     public function index(Request $request, $status = null)
     {
         
-        $documentRecords = $this->documentService->listByStudent($request->all(), $status);
+        $documentRecords = $this->documentService
+        ->listByStudent($request->all(), $status);
+        //dd($documentRecords);
         return view('main.documents.records', compact('documentRecords', 'request'));
     }
 
@@ -80,9 +82,8 @@ class DocumentsController extends Controller
             ];
         }
 
-        $studentData = Student::findOrFail($studentId);
-        return view('main.documents.upload', compact('studentId', 'studentData'));
-        //return response()->json($res, $res['code']);
+        
+        return response()->json($res, $res['code']);
     }
 
     /**

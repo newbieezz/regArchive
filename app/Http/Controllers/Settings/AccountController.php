@@ -113,14 +113,14 @@ class AccountController extends Controller
     //     }
     // }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
         try {
             $request->merge(['id' => $id]);
             if(empty($request->input('password'))){
                 $request->except(['password', 'password_confirmation']);
             }
-            // $request->validated();
+             $request->validated();
             // dd($id);
             $this->userService->updateStaff($request->all(), $id);
             return redirect('/settings/user')->with('success_message', 'Account updated successfully.');

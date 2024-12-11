@@ -69,6 +69,7 @@ class DocumentService
                 $students = Student::query()->status($status);
             }
             $filteredStudents = $this->studentService->searchFilterList($request, $students);
+            $filteredStudents = $filteredStudents->orderBy('updated_at', 'desc');
             return $filteredStudents->paginate(config('app.pages'));
         } catch (Exception $e) {
             throw $e;

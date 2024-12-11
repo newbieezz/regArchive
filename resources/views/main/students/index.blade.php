@@ -7,16 +7,9 @@
         <div class="row mb-2">
           <div class="col-6">
             <h5 class="card-title">
-              <a class="text-black" href="{{ url('student/records?' . request()->getQueryString()) }}">Student Records</a> / 
-              <a href="{{ url('student/records/incomplete?' . request()->getQueryString()) }}">Incomplete</a> / 
-              <a href="{{ url('student/records/complete?' . request()->getQueryString()) }}">Complete</a>
+              <a class="text-black" href="{{ url('student/records?' . request()->getQueryString()) }}">Student Records</a>
             </h5>
           </div>
-          {{-- <div class="col-6 d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-secondary btn-sm btn-sm mx-2" ><i class="fas fa-download mx-2"></i> Export List</button>
-            <button type="button" class="btn btn-outline-secondary btn-sm mx-2"><i class="fas fa-plus mx-2"></i> Add New</button>
-            <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-upload mx-2"></i> Bulk Upload</button>
-          </div> --}}
         </div>
         <div class="table-responsive text-nowrap border">
           <table class="table">
@@ -30,7 +23,7 @@
                 <th>Course</th>
                 <th>School Year</th>
                 <th>Documents</th>
-                <th>Actions</th>
+                <!-- <th>Actions</th> -->
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -72,7 +65,7 @@
                   </div>
                   @endif
                 </td>
-                <td>
+                <!-- <td>
                   <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                         <i class="bx bx-dots-vertical-rounded"></i>
@@ -82,7 +75,7 @@
                         {{-- <a class="dropdown-item" href="javascript:void(0);" ><i class="fas fa-edit"></i> Update </a> --}}
                     </div>
                   </div>
-                </td>
+                </td> -->
               </tr>
             @endforeach
             </tbody>

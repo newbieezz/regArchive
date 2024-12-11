@@ -32,7 +32,7 @@ class StudentRecordsController extends Controller
     public function index(Request $request, $status = null)
     {
         $students = $this->studentService->list($request->all(), $status);
-
+        // dd($students);
         return view('main.students.index', compact('students', 'request'));
     }
 
@@ -57,20 +57,20 @@ class StudentRecordsController extends Controller
      */
     public function show(string $id)
     {
-        // try {
-        //     // $student = Student::findOrFail($id);
-        //     $enrollment = Enrollment::where('student_id', $id)
-        //                           ->latest()
-        //                           ->firstOrFail();
-        //     return view('main.students.show', compact( 'enrollment'));
-        // } catch (Exception $e) {
-        //     return redirect()->back()->with('error', 'Student or enrollment record not found');
-        // }
+        try {
+            $student = Student::findOrFail($id);
+            $enrollment = Enrollment::where('student_id', $student->student_id)
+                                  ->latest()
+                                  ->firstOrFail()->get();
+            return view('main.students.show', compact( 'enrollment','student'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Student or enrollment record not found');
+        }
 
-        $student = Student::find($id);
-        // $enrollment = Enrollment::where('student_id', $id);
-        // dd($student);
-        return view('main.students.show', compact('student'));
+        // $student = Student::find($id);
+        // $enrollment = Enrollment::where('student_id', $student->student_id)->get();
+        // dd($student->enrollment->school_year_id);
+        // return view('main.students.show', compact('student','enrollment'));
     }
 
     /**

@@ -34,10 +34,10 @@
             <th>Student ID</th>
             <th>Student Name</th>
             <th>Dept. & Course</th>
+            <th>Action</th>
             @foreach(getDocumentCategories() as $category)
             <th>{{$category->type}}</th>
             @endforeach
-            <th>Action</th>
           </tr>
         </thead>
         <tbody class="table-border-bottom-0">
@@ -49,6 +49,11 @@
               <span>{{ $record->enrollments->last()->department->code }}</span> <br/>
               <span>{{ $record->enrollments->last()->course->code }}&nbsp;
                 {{ $record->enrollments->last()->section ? $record->enrollments->last()->section->name . ' (' .  $record->enrollments->last()->section->sched . ')' : ''}}</span>
+            </td>
+            <td>
+              <a href="{{url('documents/upload/'.$record->id)}}" >
+                <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> Manage</button>
+              </a>
             </td>
             @foreach(getDocumentCategories() as $category)
               <td>
@@ -63,11 +68,7 @@
                 @endif
               </td>
             @endforeach
-            <td>
-              <a href="{{url('documents/upload/'.$record->id)}}" >
-                <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-print me-2"></i> Manage</button>
-              </a>
-            </td>
+            
           </tr>
         @endforeach
         </tbody>
