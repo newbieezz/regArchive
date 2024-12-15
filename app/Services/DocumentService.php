@@ -192,7 +192,9 @@ class DocumentService
                             'file_name' => $customFilename,
                             'file_path' => $fullPath,
                             'added_by' => getLoggedInUser()->id,
-                            'expiration' => $request->expiration,
+                            'expiration' => $category->expire_at == 0
+                                ? null
+                                : Carbon::now()->addYears($category->expire_at)
                         ]);
                     }
                 }

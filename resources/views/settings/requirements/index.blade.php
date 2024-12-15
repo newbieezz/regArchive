@@ -36,6 +36,7 @@
                     <th>Name</th>
                     <th>Desc.</th>
                     <th>Is Restricted</th>
+                    <th>Expire Year</th>
                     <th>Created at</th>
                     <th>Actions</th>
                 </tr>
@@ -48,6 +49,7 @@
                     <td>{{ $category['type'] }}</td>
                     <td>{{ $category['description'] }}</td>
                     <td>{{ $category['restricted'] ? 'RESTRICTED' : '-' }}</td>
+                    <td>{{ $category['expire_at'] > 0 ? $category['expire_at'] : "PERMANENT"}}</td>
                     <td>{{ $category['created_at'] }}</td>
                     <td>
                     <div class="dropdown">

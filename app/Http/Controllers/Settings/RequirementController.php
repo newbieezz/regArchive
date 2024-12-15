@@ -54,6 +54,9 @@ class RequirementController extends Controller
      */
     public function store(DocumentCategoryRequest $request)
     {
+        $request->merge([
+            'expire_at' => max(0, $request->input('expire_at'))
+        ]);
         $request->validated();
 
         $category =  $this->requirementService->create($request->all());
@@ -90,6 +93,9 @@ class RequirementController extends Controller
 
         try {
             $request->merge(['id' => $id]);
+            $request->merge([
+                'expire_at' => max(0, $request->input('expire_at'))
+            ]);
             $request->validated();
             $this->requirementService->update($request->all());
             return redirect('/settings/requirement')->with('success_message', 'Document Category updated successfully.');

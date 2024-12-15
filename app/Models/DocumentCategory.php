@@ -14,5 +14,6 @@ class DocumentCategory extends Model
         'description',
         'required_student',
         'restricted',
+        'expire_at'
     ];
 }

@@ -63,6 +63,13 @@
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
+                  <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="basic-default-fullname">Expire after this years</label>
+                    <input type="number" class="form-control" id="expire_at" name="expire_at" placeholder="0"  value="{{ old('expire_at') }}"/>
+                    @error('expire_at')
+                        <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                   <a class="mx-2" href="{{url('settings/requirement/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
