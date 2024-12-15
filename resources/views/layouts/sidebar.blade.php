@@ -23,8 +23,8 @@
     </li>
     <ul class="menu-inner py-1">
           <li class="menu-item">
-            <a href="{{ url('enrollment/') }}"class="menu-link">
-              <div data-i18n="CRM">Student Records</div>
+            <a href="{{ url('enrollment/records') }}"class="menu-link">
+              <div data-i18n="CRM">Students Records</div>
             </a>
           </li>
           <li class="menu-item">

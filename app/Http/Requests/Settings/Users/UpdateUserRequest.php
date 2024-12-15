@@ -15,22 +15,29 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'department' => 'required',
-            'scope' => 'required',
-            'email' => 'required|string|email|max:255',
+            // 'first_name' => 'required|string|max:255',
+            // 'last_name' => 'required|string|max:255',
+            // 'department' => 'required',
+            // 'scope' => 'required',
+            // 'email' => 'required|string|email|max:255',
+            // 'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
         ];
 
         if(isset($this->password)){
-            $rules['password'] = 'required|string|min:8|confirmed';
+            $rules['password'] = [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+            ];
         }
 
         $user = User::find($this->id);
 
-        if($user && $this->email != $user->email){
-            $rules['email'] = 'required|string|email|max:255|unique:users';
-        }
+        // if($user && $this->email != $user->email){
+        //     $rules['email'] = 'required|string|email|max:255|unique:users';
+        // }
 
         return $rules;
     }
@@ -51,6 +58,7 @@ class UpdateUserRequest extends FormRequest
             'email.max' => 'Email Address must less than 255 characters!',
             'email.unique' => 'Email Address already exist!',
             'email.string' => 'Email Address must be a string!',
+            'password.regex' => 'Password must contain at least one letter, one number, and one special character.',
             'password.required' => 'Password is required!',
             'password.string' => 'Password must be a string!',
             'password.min' => 'Password must be 8 characters long!',

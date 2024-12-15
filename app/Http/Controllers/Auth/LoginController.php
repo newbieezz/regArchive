@@ -58,12 +58,11 @@ class LoginController extends Controller
                     }
                 }else{
                     Auth::logout();
-                Session::flush();
+                    Session::flush();
                     return redirect()->back()->with('error_message','Account Deactivated');
                 }
-            }else{
-                // dd('incative staff');
-                
+            }
+            else {
                 return redirect()->back()->with('error_message','Invalid Email or Password');
             }
         } catch (Exception $e) {
@@ -71,7 +70,6 @@ class LoginController extends Controller
 
         } 
     }
-
     /**
      * Logout users.
      */

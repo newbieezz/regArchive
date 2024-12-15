@@ -108,12 +108,12 @@
                     <label class="form-label" for="basic-default-fullname">Select Scope Access</label>
                     <div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="scope" id="scope" value="1" {{ (old('scope') ?? $user->scope) == '1' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="scope" id="scope1" value="1" {{ (old('scope') ?? $user->scope) == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="inlineRadio1">All Department</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="scope" id="scope" value="2" {{ (old('scope') ?? $user->scope) == '2' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="inlineRadio2">Assigned Departmengt</label>
+                            <input class="form-check-input" type="radio" name="scope" id="scope2" value="2" {{ (old('scope') ?? $user->scope) == '2' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="inlineRadio2">Assigned Department</label>
                         </div>
                     </div>
                   </div>

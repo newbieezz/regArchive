@@ -18,7 +18,7 @@ class CreateUserRequest extends FormRequest
             'last_name' => 'required|string|max:255',
             'department_id' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed', // confirmed rule for matching passwords
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', // confirmed rule for matching passwords
             'employee_id' => 'required|string|max:50',
         ];
     }
@@ -41,6 +41,7 @@ class CreateUserRequest extends FormRequest
             'email.max' => 'Email Address must less than 255 characters!',
             'email.unique' => 'Email Address already exist!',
             'email.string' => 'Email Address must be a string!',
+            'password.regex' => 'Password must contain at least one letter, one number, and one special character.',
             'password.required' => 'Password is required!',
             'password.string' => 'Password must be a string!',
             'password.min' => 'Password must be 8 characters long!',
