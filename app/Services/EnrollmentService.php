@@ -94,6 +94,7 @@ class EnrollmentService
 
         //perform update to related student
         $enrollment->student->update($params);
+        $enrollment->student->updateDocumentStatus();
 
         return $enrollment;
     }
