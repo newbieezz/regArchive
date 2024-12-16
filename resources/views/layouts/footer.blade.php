@@ -199,7 +199,7 @@ function isLogWithinLastHour(activityLog) {
                           displayContent(data.current_user_records);
                         }
                         else if (data.latestEntry.id){
-                          alert(data.latestEntry.content);
+                          //alert(data.latestEntry.content);
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
