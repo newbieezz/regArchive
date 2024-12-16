@@ -62,8 +62,9 @@ class RequirementController extends Controller
             'expire_at' => max(0, $request->input('expire_at'))
         ]);
         $request->validated();
-        $this->enrollmentService->refreshEnrollmentStatus();
+        
         $category =  $this->requirementService->create($request->all());
+        $this->enrollmentService->refreshEnrollmentStatus();
         return redirect('/settings/requirement')->with('success','Document Category has been created successfully.');
     }
 
@@ -101,8 +102,9 @@ class RequirementController extends Controller
                 'expire_at' => max(0, $request->input('expire_at'))
             ]);
             $request->validated();
-            $this->enrollmentService->refreshEnrollmentStatus();
+
             $this->requirementService->update($request->all());
+            $this->enrollmentService->refreshEnrollmentStatus();
             return redirect('/settings/requirement')->with('success_message', 'Document Category updated successfully.');
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->errors())->withInput();
