@@ -84,6 +84,7 @@ class RequirementController extends Controller
         try {
             $studentTypes = StudentType::get();
             $category = $this->requirementService->findById($id);
+            $this->enrollmentService->refreshEnrollmentStatus();
             return view('settings.requirements.edit')->with(compact('category','studentTypes'));
         } catch (Exception $e) {
             return redirect('/settings/requirement');
@@ -120,6 +121,7 @@ class RequirementController extends Controller
     {
         try {
             $this->requirementService->delete($id);
+            $this->enrollmentService->refreshEnrollmentStatus();
             return redirect()->back()->with('success_message','Document Category has been deleted successfully');
         }catch (Exception $e) {
             return redirect()->back()->with('error_message', $e->getMessage());
