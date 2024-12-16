@@ -47,32 +47,34 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-              @forelse ($backupFiles as $file)
-              <tr>
-                  <td>{{ $file['name'] }}</td>
-                  <td>{{ $file['size'] }}</td>
-                  <td>{{ $file['updated'] }}</td>
-                  <td>
-                    <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="{{ $file['download_url'] }}" ><i ></i> Download</a>
-                          <form action="{{url('settings/backup/restore')}}" method="POST" style="display: inline-block;">
-                            @csrf
-                            <input type="hidden" name="firebase_path" value="{{ $file['name'] }}">
-                            <button type="submit" class="btn btn-warning btn-sm mx-3">Restore</button>
-                        </form>
-                        </div>
-                    </div>
-                  </td>
-              </tr>
-          @empty
-              <tr>
-                  <td colspan="4">No backups found.</td>
-              </tr>
-          @endforelse
+              @if (!empty($backupFiles) && count($backupFiles) > 0)
+    @foreach ($backupFiles as $file)
+    <tr>
+        <td>{{ $file['name'] }}</td>
+        <td>{{ $file['size'] }}</td>
+        <td>{{ $file['updated'] }}</td>
+        <td>
+            <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ $file['download_url'] }}"><i></i> Download</a>
+                    <form action="{{ url('settings/backup/restore') }}" method="POST" style="display: inline-block;">
+                        @csrf
+                        <input type="hidden" name="firebase_path" value="{{ $file['name'] }}">
+                        <button type="submit" class="btn btn-warning btn-sm mx-3">Restore</button>
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+    @endforeach
+@else
+    <tr>
+        <td colspan="4">No backups found.</td>
+    </tr>
+@endif
             </tbody>
           </table>
         </div>
