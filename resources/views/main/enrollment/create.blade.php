@@ -142,7 +142,7 @@
                   <div class="col-sm-6 mb-2">
                     <label class="form-label" for="basic-default-fullname">ID Number</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Leave blank if none yet" value="{{ old('student_id') }}"/>
+                        <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Required" value="{{ old('student_id') }}"/>
                         <button class="btn btn-outline-secondary" type="button" id="search-student-btn">Search Student Data</button>
                     </div>
                     @error('student_id')

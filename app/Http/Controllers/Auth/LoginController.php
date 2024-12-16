@@ -59,7 +59,7 @@ class LoginController extends Controller
                 }else{
                     Auth::logout();
                     Session::flush();
-                    return redirect()->back()->with('error_message','Account Deactivated');
+                    return redirect()->back()->with('error_message','Account is Deactivated, contact Admin for further instructions.');
                 }
             }
             else {
