@@ -203,4 +203,13 @@ class EnrollmentService
         return true;
     }
 
+    public function refreshEnrollmentStatus(): void
+    {
+        $allEnrollments = $this->enrollment->with('student')->get();
+
+        foreach ($allEnrollments as $studentEnrollment) {
+            $studentEnrollment->student->updateDocumentStatus();
+        }
+    }
+
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\DocumentCategory;
+use App\Models\Enrollment;
+use App\Services\EnrollmentService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Services\DocumentCategoryService;
@@ -15,15 +17,17 @@ class RequirementController extends Controller
 
     /** @var App\Services\DocumentCategoryService */
     protected $requirementService;
+    protected $enrollmentService;
 
     /**
      * UserController constructor.
      *
      * @param App\Services\DocumentCategoryService $departmentService
      */
-    public function __construct(DocumentCategoryService $requirementService)
+    public function __construct(DocumentCategoryService $requirementService, EnrollmentService $enrollmentService)
     {
         $this->requirementService = $requirementService;
+        $this->enrollmentService = $enrollmentService;
     }
     
 
@@ -58,7 +62,7 @@ class RequirementController extends Controller
             'expire_at' => max(0, $request->input('expire_at'))
         ]);
         $request->validated();
-
+        $this->enrollmentService->refreshEnrollmentStatus();
         $category =  $this->requirementService->create($request->all());
         return redirect('/settings/requirement')->with('success','Document Category has been created successfully.');
     }
@@ -97,6 +101,7 @@ class RequirementController extends Controller
                 'expire_at' => max(0, $request->input('expire_at'))
             ]);
             $request->validated();
+            $this->enrollmentService->refreshEnrollmentStatus();
             $this->requirementService->update($request->all());
             return redirect('/settings/requirement')->with('success_message', 'Document Category updated successfully.');
         } catch (ValidationException $e) {
