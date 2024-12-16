@@ -57,7 +57,7 @@ class BackupController extends Controller
         // Return the list of backups to the view
         return view('settings.backup.index', compact('backupFiles'));
         } catch (\Exception $e) {
-            return view('settings.backup.index')->with('error_message', value: 'Backup fetch failed: ' . $e->getMessage());
+            return view('settings.backup.index')->with('error_message', value: 'Please connect internet.');
         }
 
     }
@@ -101,7 +101,7 @@ class BackupController extends Controller
 
             $this->uploadFolderToFB($filenameBase);
 
-            return redirect('/settings/backup')->with('success_message', 'Backup created successfully! '. $documentBackupStatus);
+            return redirect('/settings/backup')->with('success_message', 'Backup created successfully! ');
         } catch (\Exception $e) {
             return redirect('/settings/backup')->with('error_message', value: 'Backup creation failed: ' . $e->getMessage());
         }
