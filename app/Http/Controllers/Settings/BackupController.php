@@ -24,7 +24,8 @@ class BackupController extends Controller
     //
     public function index()
     {
-        // Initialize Firebase Storage
+        try {
+            // Initialize Firebase Storage
         $firebase = (new Factory)->withServiceAccount((base_path() . '/app/reg-archive-firebase-adminsdk-140mx-e5a5981a75.json'))->withDefaultStorageBucket('reg-archive.firebasestorage.app');
         $storage = $firebase->createStorage();
         $bucket = $storage->getBucket();
@@ -55,6 +56,10 @@ class BackupController extends Controller
 
         // Return the list of backups to the view
         return view('settings.backup.index', compact('backupFiles'));
+        } catch (\Exception $e) {
+            return view('settings.backup.index')->with('error_message', value: 'Backup fetch failed: ' . $e->getMessage());
+        }
+
     }
 
     public function generateBackup(Request $request)
