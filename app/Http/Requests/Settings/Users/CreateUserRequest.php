@@ -21,6 +21,15 @@ class CreateUserRequest extends FormRequest
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', // confirmed rule for matching passwords
             'employee_id' => 'required|string|max:50',
         ];
+        if(isset($this->password)){
+            $rules['password'] = [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+            ];
+        }
     }
 
     public function messages()

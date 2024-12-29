@@ -181,7 +181,8 @@ class DocumentService
                     // Process each file
                     foreach ($files as $file) {
                         $key = Str::random(10);
-                        $customFilename = $student->student_id.'_'. $category->type.'_' .$key.'.'.$file->getClientOriginalExtension();
+                        // $customFilename = $student->student_id.'_'. $category->type.'_' .$key.'.'.$file->getClientOriginalExtension();
+                        $customFilename = $student->student_id.'_'. $category->type.'_' .$student->first_name.'' .$student->last_name.'.'.$file->getClientOriginalExtension();
                         $fullPath = $basePath . $customFilename;
 
                         Storage::disk('public')->put($fullPath, file_get_contents($file));

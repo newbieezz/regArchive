@@ -30,9 +30,10 @@ class UsersTableSeeder extends Seeder
 
         // create the system admin
         User::create([
+            'id' => '0',
             'first_name' => 'Registrar',
             'last_name' => 'Administrator',
-            'email' => 'adminz@admin.com',
+            'email' => 'admin@admin.com',
             'password' => Hash::make('password'),
             'user_status_id' => $status->id,
             'role' => config('user.roles.admin'),

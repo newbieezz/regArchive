@@ -249,7 +249,7 @@ class StudentService
             $allCourse = $courses->get();
 
             $complete = $allCourse->map(function ($course) {
-                // Count students who have completed the course
+                // Count students who have completed in the course
                 $course->total = Student::where('is_complete', true)->whereHas('enrollments', function ($innerQuery) use ($course) {
                     $innerQuery->where('course_id', $course->id)
                        ->where('department_id', $course->department_id);
@@ -259,7 +259,7 @@ class StudentService
             });
 
             $incomplete = $allCourse->map(function ($course) {
-                // Count students who have not completed the course
+                // Count students who have not completed in the course
                 $course->total = Student::where('is_complete', false)->whereHas('enrollments', function ($innerQuery) use ($course) {
                     $innerQuery->where('course_id', $course->id)
                        ->where('department_id', $course->department_id);
@@ -277,4 +277,44 @@ class StudentService
             throw $e;
         }
     }
+
+    // public function documentReport(Request $request){
+    //     try {
+    //         $department = $request->input('department', null);
+    //         $courses = Course::query();
+    //         if($department){
+    //             $courses->where('department_id', $department);
+    //         }
+    
+    //         $allCourse = $courses->get();
+    
+    //         $complete = $allCourse->map(function ($course) {
+    //             // Count students who have completed in the course
+    //             $course->completed_count = Student::where('is_complete', true)->whereHas('enrollments', function ($innerQuery) use ($course) {
+    //                 $innerQuery->where('course_id', $course->id)
+    //                    ->where('department_id', $course->department_id);
+    //             })->count();
+                
+    //             return $course;
+    //         });
+    
+    //         $incomplete = $allCourse->map(function ($course) {
+    //             // Count students who have not completed in the course
+    //             $course->incomplete_count = Student::where('is_complete', false)->whereHas('enrollments', function ($innerQuery) use ($course) {
+    //                 $innerQuery->where('course_id', $course->id)
+    //                    ->where('department_id', $course->department_id);
+    //             })->count();
+            
+    //             return $course;
+    //         });
+    
+    //         return $reports = [
+    //             'complete' => $complete,
+    //             'incomplete' => $incomplete,
+    //         ];
+            
+    //     } catch (Exception $e) {
+    //         throw $e;
+    //     }
+    // }
 }

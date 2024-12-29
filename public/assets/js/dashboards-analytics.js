@@ -12,7 +12,7 @@
   axisColor = config.colors.axisColor;
   borderColor = config.colors.borderColor;
 
-  // Total Revenue Report Chart - Bar Chart
+  // Document Report - Bar Chart
 
   async function getDocumentReports(department = null){
     let reports = {
@@ -38,10 +38,12 @@
             {
               name: "Complete",
               data:  data.data['complete'] && data.data['complete'].length>0 ? data.data['complete'].map(item => item.total) : [0]
+              // data:  data.data['complete'] && data.data['complete'].length>0 ? data.data['complete'].map(item => item.completed_count) : [0]
             },
             {
               name: "incomplete",
               data:   data.data['complete'] && data.data['incomplete'].length>0 ? data.data['incomplete'].map(item => -item.total) : [0]
+              // data:   data.data['complete'] && data.data['incomplete'].length>0 ? data.data['incomplete'].map(item => -item.incomplete_count) : [0]
             },
           ]
         }
@@ -68,7 +70,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '33%',
+          columnWidth:'20%',
           borderRadius: 12,
           startingShape: 'rounded',
           endingShape: 'rounded'
@@ -76,7 +78,7 @@
       },
       colors: [config.colors.primary, config.colors.danger],
       dataLabels: {
-        enabled: false
+        enabled: true
       },
       stroke: {
         curve: 'smooth',
@@ -104,14 +106,17 @@
       grid: {
         borderColor: borderColor,
         padding: {
-          top: 0,
-          bottom: -8,
-          left: 20,
+          top: 10,
+          bottom: -2,
+          left: 10,
           right: 20
         }
       },
       xaxis: {
         categories: docLabels,
+        title: {
+          text: 'Department Course'
+          },
         labels: {
           style: {
             fontSize: '13px',
@@ -126,6 +131,8 @@
         }
       },
       yaxis: {
+        title: {
+          text: 'Number of Students'},
         labels: {
           style: {
             fontSize: '13px',
@@ -302,28 +309,75 @@
         }
       }
     };
-  if (typeof totalRevenueChartEl !== undefined && totalRevenueChartEl !== null) {
+  // if (typeof totalRevenueChartEl !== undefined && totalRevenueChartEl !== null) {
+  //   const totalRevenueChart = new ApexCharts(totalRevenueChartEl, totalRevenueChartOptions);
+  //   totalRevenueChart.render();
+
+    
+  //   var elements = document.getElementsByClassName('department-input');
+
+  //   // Loop through the elements and attach the event listener to each one
+  //   for (var i = 0; i < elements.length; i++) {
+  //       elements[i].addEventListener('click', async function(event) {
+  //           // Your event handling code here
+  //           const dept = event.target.dataset.id
+  //           const {categories: docLabels,  series: docSeries,} = await getDocumentReports(dept)
+  //           console.log('data',docLabels , docSeries)
+  //           totalRevenueChart.updateSeries(docSeries);
+  //           let value = event.target.dataset.value
+  //           let btnDeptDropdown = document.getElementById('deptDropdownId')
+  //           btnDeptDropdown.textContent  = value;
+  //       });
+  //   }
+  // }
+
+  // UPDATED DOCUMENT REPORTS CHART
+  if (typeof totalRevenueChartEl !== 'undefined' && totalRevenueChartEl !== null) {
     const totalRevenueChart = new ApexCharts(totalRevenueChartEl, totalRevenueChartOptions);
     totalRevenueChart.render();
 
-    
     var elements = document.getElementsByClassName('department-input');
 
     // Loop through the elements and attach the event listener to each one
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', async function(event) {
-            // Your event handling code here
-            const dept = event.target.dataset.id
-            const {categories: docLabels,  series: docSeries,} = await getDocumentReports(dept)
-            console.log('data',docLabels , docSeries)
-            totalRevenueChart.updateSeries(docSeries);
-            let value = event.target.dataset.value
-            let btnDeptDropdown = document.getElementById('deptDropdownId')
-            btnDeptDropdown.textContent  = value;
+            const dept = event.target.dataset.id;
+            const { categories: docLabels, series: docSeries } = await getDocumentReports(dept);
+            console.log('data', docLabels, docSeries);
+
+            // Ensure that docSeries is structured correctly
+            if (Array.isArray(docSeries) && docSeries.length > 0) {
+                totalRevenueChart.updateSeries(docSeries);
+            } else {
+                console.error('Invalid series data:', docSeries);
+            }
+
+            // Update the dropdown button text
+            let value = event.target.dataset.value;
+            let btnDeptDropdown = document.getElementById('deptDropdownId');
+            btnDeptDropdown.textContent = value;
+
+            // Update tooltip to reflect the correct course names
+            totalRevenueChart.updateOptions({
+                tooltip: {
+                    shared: true,
+                    intersect: false,
+                    formatter: function(seriesName, value, { seriesIndex, dataPointIndex }) {
+                        // Ensure that dataPointIndex is within bounds
+                        if (dataPointIndex < docLabels.length) {
+                            const courseName = docLabels[dataPointIndex]; // Get the course name based on the index
+                            return `${courseName}: ${value}`; // Display course name with value
+                        }
+                        return `${seriesName}: ${value}`; // Fallback if index is out of bounds
+                    }
+                },
+                xaxis: {
+                    categories: docLabels // Ensure x-axis categories are updated
+                }
+            });
         });
     }
   }
-
 
   // Growth Chart - Radial Bar Chart
   // --------------------------------------------------------------------
@@ -469,11 +523,13 @@
     profileReportChart.render();
   }
 
+  // student report chart
   async function getStudentDeptReports(){
     let reports = {
       labels: [],
       series: [],
       total: 0,
+      colors:[],
     }
     // Send form data via AJAX
     await fetch('/api/student/department-report', {
@@ -491,6 +547,7 @@
           reports['labels'] = data.data['departments'].map(item => item.code);
           reports['series'] = data.data['departments'].map(item => item.student_percentage);
           reports['total'] = data.data['total'];
+          reports['colors'] = data.data['departments'].map(item => item.color); // Extract colors
         }
     })
     .catch(error => {
@@ -498,10 +555,9 @@
         // Handle error, e.g., show error message
     });
 
-    return reports
+    return reports;
   }
-  
-  // Order Statistics Chart
+  // STUDENTS REPORT CHART
   // --------------------------------------------------------------------
   
   const {labels, series, total} = await getStudentDeptReports()
@@ -580,10 +636,184 @@
     statisticsChart.render();
   }
 
-  // Income Chart - Area chart
+  //updtd STUDENT REPORT DONUT CHART
+  // async function getStudentDeptReports() {
+  //   let reports = {
+  //       labels: [],
+  //       series: [],
+  //       total: 0,
+  //       colors: [],
+  //   };
+
+  //   // Predefined set of default colors
+  //   const defaultColors = ['#00E396', '#008FFB', '#FF4560', '#775DD0', '#FEB019', '#CCCCCC']; // Add more colors as needed
+
+  //   // Send form data via AJAX
+  //   await fetch('/api/student/department-report', {
+  //       method: 'GET',
+  //   })
+  //   .then(response => {
+  //       if (!response.ok) {
+  //           throw new Error('Network response was not ok');
+  //       }
+  //       return response.json(); // Convert response to JSON
+  //   })
+  //   .then(data => {
+  //       console.log('Fetched data:', data); // Log the fetched data for debugging
+  //       if (data.code === 200) {
+  //           const departments = data.data.departments;
+
+  //           // Check if departments is an array
+  //           if (Array.isArray(departments)) {
+  //               reports.labels = departments.map(item => item.code);
+  //               reports.series = departments.map(item => item.student_percentage);
+  //               reports.total = data.data.total;
+
+  //               // Extract colors and handle undefined values
+  //               reports.colors = departments.map((item, index) => {
+  //                   if (item.color) {
+  //                       return item.color; // Return color if defined
+  //                   } else {
+  //                       console.warn('Color is undefined for department:', item);
+  //                       return defaultColors[index % defaultColors.length]; // Use a default color from the array
+  //                   }
+  //               });
+  //           } else {
+  //               console.error('Departments is not an array:', departments);
+  //           }
+  //       } else {
+  //           console.error('Unexpected response code:', data.code);
+  //       }
+  //   })
+  //   .catch(error => {
+  //       console.error('There was a problem with the fetch operation:', error);
+  //       // Handle error, e.g., show error message
+  //   });
+
+  //   return reports;
+  // }
+
+  // async function renderDonutChart() {
+  //   const { labels, series, total, colors } = await getStudentDeptReports();
+  //   console.log({ labels, series, total, colors }); // Debugging output
+
+  //   // Check for empty arrays
+  //   if (labels.length === 0 || series.length === 0) {
+  //       console.error('One or more required arrays are empty:', { labels, series });
+  //       return; // Exit the function if any array is empty
+  //   }
+
+  //   // Check for undefined values in series and labels
+  //   series.forEach((value, index) => {
+  //       if (value === undefined) {
+  //           console.error(`Series value at index ${index} is undefined`);
+  //       }
+  //   });
+
+  //   labels.forEach((label, index) => {
+  //       if (label === undefined) {
+  //           console.error(`Label at index ${index} is undefined`);
+  //       }
+  //   });
+
+  //   // No need to check for undefined colors since we handle it in getStudentDeptReports
+  //   colors.forEach((color, index) => {
+  //       if (color === undefined) {
+  //           console.error(`Color at index ${index} is undefined`);
+  //       }
+  //   });
+
+  //   const chartOrderStatistics = document.querySelector('#orderStatisticsChart'),
+  //       orderChartConfig = {
+  //           chart: {
+  //               height: 250,
+  //               width: 300,
+  //               type: 'donut'
+  //           },
+  //           labels: labels,
+  //           series: series,
+  //           stroke: {
+  //               width: 2,
+  //               colors: ['#fff'] // Color for the stroke around the donut
+  //           },
+  //           colors: colors, // Use the extracted colors for the donut segments
+  //           dataLabels: {
+  //               enabled: false,
+  //               formatter: function (val, opt) {
+  //                   return parseInt(val) + '%';
+  //               }
+  //           },
+  //           legend: {
+  //               show: true,
+  //               position: 'bottom',
+  //               horizontalAlign: '',
+  //               floating: false,
+  //               labels: {
+  //                   colors: undefined,
+  //                   useSeriesColors: true
+  //               }
+  //           },
+  //           grid: {
+  //               padding: {
+  //                   top: 0,
+  //                   bottom: 0,
+  //                   right: 15
+  //               }
+  //           },
+  //           states: {
+  //               hover: {
+  //                   filter: { type: 'none' }
+  //               },
+  //               active: {
+  //                   filter: { type: 'none' }
+  //               }
+  //           },
+  //           plotOptions: {
+  //               pie: {
+  //                   donut: {
+  //                       size: '75%',
+  //                       labels: {
+  //                           show: true,
+  //                           value: {
+  //                               fontSize: '1.5rem',
+  //                               // fontFamily: 'Public Sans',
+  //                               color: '#697a8d',
+  //                               offsetY: -15,
+  //                               formatter: function (val) {
+  //                                   return parseInt(val) + '%';
+  //                               }
+  //                           },
+  //                           name: {
+  //                               offsetY: 20,
+  //                               // fontFamily: 'Public Sans'
+  //                           },
+  //                           total: {
+  //                               show: true,
+  //                               fontSize: '0.9375rem',
+  //                               color: '#697a8d',
+  //                               label: 'Total Students',
+  //                               formatter: function (w) {
+  //                                   return total; // Display total number of students
+  //                               }
+  //                           }
+  //                       }
+  //                   }
+  //               }
+  //           }
+  //       };
+
+  //   if (chartOrderStatistics !== undefined && chartOrderStatistics !== null) {
+  //       const statisticsChart = new ApexCharts(chartOrderStatistics, orderChartConfig);
+  //       statisticsChart.render();
+  //   }
+  // }
+
+// Call the renderDonutChart function to execute 
+renderDonutChart();
+
+  //  ENROLLMENT REPORT   AREA CHART
   // --------------------------------------------------------------------
 
-  
   async function getEnrollmentReports(schoolYear = null){
     var semester_inputs = document.getElementsByClassName('semester-input');
     for (var i = 0; i < semester_inputs.length; i++) {
@@ -613,6 +843,7 @@
             name: "Enrollee",
             data: [0, ...data.data['departmentEnrolles'].map(item => item.enrollments_count), 0]
            };
+
           reports['categories'] = data.data['departmentEnrolles'].map(item => item.code);
           reports['total'] = data.data['totalEnrollees'];
           reports['totalSemesterEnrollees'] = data.data['totalSemesterEnrollees']
@@ -626,6 +857,7 @@
     return reports
   }
 
+
   const {series : erolleeSeries, categories, total: totalEnrollee, totalSemesterEnrollees} = await getEnrollmentReports()
 
     let total_enrollee = document.getElementById('total_enrollee');
@@ -634,6 +866,7 @@
       const semElement =   document.getElementById(`sem_input_${semEnrollee.semester}`)
       semElement.innerHTML = semEnrollee.total
     });
+    // ENROLLMENT REPORTS
     const incomeChartEl = document.querySelector('#incomeChart'),
     incomeChartConfig = {
       series: [erolleeSeries],
@@ -692,18 +925,27 @@
         strokeDashArray: 3,
         padding: {
           top: -20,
-          bottom: -8,
+          bottom: -5,
           left: -10,
           right: 8
         }
       },
       xaxis: {
+        title: {
+          text: 'College Departments',
+          style: {
+              fontSize: '14px',
+              fontWeight: 'regular',
+              color: '#000'
+          },
+        },
         categories: ['', ...categories, ''],
+        
         axisBorder: {
-          show: false
+          show: true
         },
         axisTicks: {
-          show: false
+          show: true
         },
         labels: {
           show: true,
@@ -714,8 +956,16 @@
         }
       },
       yaxis: {
+        title: {
+          text: 'Number of Enrollees',
+          style: {
+              fontSize: '14px',
+              fontWeight: 'regular',
+              color: '#000'
+          },
+        },
         labels: {
-          show: false
+          show: true
         },
       }
     };

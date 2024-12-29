@@ -38,12 +38,13 @@
       <thead>
         <tr>
           <th>Student ID</th>
-          <th>Student Name</th>
+          <th>First Name</th>
+          <th>Last Name</th>
           <th>Shcool Year Enrolled</th>
           <th>Department</th>
           <th>Section</th>
           <th>Course</th>
-          <th>Major</th>
+          {{-- <th>Major</th>  --}}
           <th>Student Type</th>
           <th>Documents</th>
           <th>Action</th>
@@ -54,12 +55,13 @@
         <tr>
           {{-- <td><a href="{{url('student/records?student_query='.$enrollment->student->student_id)}}" >{{ $enrollment->student->student_id }}</a></td> --}}
           <td>{{ $enrollment->student->student_id }}</td>
-          <td>{{ $enrollment->student->first_name }} {{ $enrollment->student->last_name }}</td>
-          <td>{{ $enrollment->schoolYear->year }}  </td>
-          <td>{{ $enrollment->department->code }}  </td>
+          <td>{{ $enrollment->student->first_name }}</td>
+          <td>{{ $enrollment->student->last_name }}</td>
+          <td>{{ $enrollment->schoolYear->year }}</td>
+          <td>{{ $enrollment->department->code }}</td>
           <td>{{ $enrollment->section ? $enrollment->section->name . ' (' .  $enrollment->section->sched . ')' : ''}}</td>
           <td>{{ $enrollment->course->code }}  </td>
-          <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td>
+          {{-- <td> {{ $enrollment->major ? $enrollment->major->name : 'N/A' }}  </td> --}}
           <td>{{ $enrollment->student->required_document ? : 'N/A' }}</td>
           <td> 
             @php $documentStatus = $enrollment->student->document_status; @endphp

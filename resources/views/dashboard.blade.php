@@ -13,7 +13,8 @@
                 <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('successMessage').style.display = 'none';"></button>
               </div>
               @endif
-                <div class="row">
+              {{-- Reports js are all under/inside public/assets/js/dashboards-analytics --}}
+                <div class="row"> 
                     <!-- Student Reports -->
                     <div class="col-md-12 col-lg-6 col-xl-6 order-0 mb-4">
                       <div class="card h-100">
@@ -24,7 +25,7 @@
                         </div>
                         <div class="card-body">
                           <div class="d-flex justify-content-center align-items-center mb-3">
-                            <div id="orderStatisticsChart"></div>
+                            <div id="orderStatisticsChart"  ></div>
                           </div>
                           <ul class="p-0 m-0">
                             @foreach($reports['studentReport']['departments'] as $department)
@@ -84,13 +85,13 @@
                                     <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-user"></i></span>
                                 </div>
                                 <div>
-                                  <small class="text-muted d-block">Enrollees</small>
+                                  <small class="text-muted d-block">Total Enrollees</small>
                                   <div class="d-flex align-items-center">
                                     <h6 class="mb-0 me-1" id="total_enrollee">0</h6>
                                   </div>
                                 </div>
                               </div>
-                              <div id="incomeChart"></div>
+                              <div id="incomeChart"><br></div> <br>
                               <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
                                   @foreach(config('student.semester') as $key => $sem)
                                   <div class="d-flex">
@@ -144,7 +145,7 @@
                                 </div>
                             </div>
                            
-                            <div id="totalRevenueChart" class="px-2"></div>
+                            <div id="totalRevenueChart" class="px-2"><br></div>
                           </div>
                         </div>
                       </div>

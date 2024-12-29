@@ -24,12 +24,13 @@
             <div class="card-body">
               <p id="register-success"></p>
               <form action="{{url('enrollment/store')}}" method="post" id="enrollemnt-form"> @csrf
+                <p class="text-danger">Note: All fields with ( * ) is required !</p>
                 <div class="row"> 
                     <h4>Student Information</h4>
                 </div>
                 <div class="row">
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">School Year</label>
+                    <label class="form-label" for="basic-default-fullname">School Year  &nbsp;<span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="school_year_id" name="school_year_id">
                         @foreach(getSchoolYear() as $sy)
@@ -55,7 +56,7 @@
                     @enderror
                   </div> -->
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Department</label>
+                    <label class="form-label" for="basic-default-fullname">Department  &nbsp;<span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="department" name="department_id" id="department_id">
                         @foreach(getDepartments() as $dept)
@@ -71,7 +72,7 @@
 
                 <div class="row">
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Course</label>
+                    <label class="form-label" for="basic-default-fullname">Course  &nbsp;<span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="course_id" name="course_id" id="course_id" disabled>
                       </select>
@@ -107,7 +108,7 @@
 
                 <div class="row">
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Student Status</label>
+                    <label class="form-label" for="basic-default-fullname">Student Status  &nbsp;<span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="student_status" name="student_status">
                         @foreach(config('student.student_status') as $key => $status)
@@ -120,7 +121,7 @@
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Block Section and schedule</label>
+                    <label class="form-label" for="basic-default-fullname">Block Section and schedule  &nbsp;<span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="section_id" name="section_id">
                         @foreach(getSections() as $section)
@@ -140,7 +141,7 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-6 mb-2">
-                    <label class="form-label" for="basic-default-fullname">ID Number</label>
+                    <label class="form-label" for="basic-default-fullname">ID Number  &nbsp;<span class="text-danger">*</span></label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Required" value="{{ old('student_id') }}"/>
                         <button class="btn btn-outline-secondary" type="button" id="search-student-btn">Search Student Data</button>
@@ -152,22 +153,22 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Last Name</label>
+                    <label class="form-label" for="basic-default-fullname">Last Name  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" value="{{ old('last_name') }}"/>
                     @error('last_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">First Name</label>
+                    <label class="form-label" for="basic-default-fullname">First Name  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" value="{{ old('first_name') }}"/>
                     @error('first_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-4 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Middle Name</label>
-                    <input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Enter Middle Name" value="{{ old('first_name') }}"/>
+                    <label class="form-label" for="basic-default-fullname">Middle Name  &nbsp;<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Put N/A if none" value="{{ old('first_name') }}"/>
                     @error('first_name')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
@@ -175,14 +176,14 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-6 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Home Address</label>
+                    <label class="form-label" for="basic-default-fullname">Home Address  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="home_address" name="home_address" placeholder="Enter Home Address" value="{{ old('home_address') }}"/>
                     @error('home_address')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-2">
-                    <label class="form-label" for="basic-default-fullname">City Address</label>
+                    <label class="form-label" for="basic-default-fullname">City Address  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="city_address" name="city_address" placeholder="Enter City Address" value="{{ old('city_address') }}"/>
                     @error('city_address')
                         <p class="text-danger m-0">{{ $message }}</p>
@@ -191,21 +192,21 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-3 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Contact No.</label>
+                    <label class="form-label" for="basic-default-fullname">Contact No.  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="Enter Contact Number" value="{{ old('contact_no') }}"/>
                     @error('contact_no')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-3 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Email Address</label>
+                    <label class="form-label" for="basic-default-fullname">Email Address  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email Address" value="{{ old('email') }}"/>
                     @error('email')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-2 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Gender</label>
+                    <label class="form-label" for="basic-default-fullname">Gender  &nbsp;<span class="text-danger">*</span></label>
                     <div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="gender" id="genderRadio1" value="Male" checked {{ old('gender') == 'Male' ? 'checked' : '' }}>
@@ -220,21 +221,21 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-3 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Birthday</label>
+                    <label class="form-label" for="basic-default-fullname">Birthday  &nbsp;<span class="text-danger">*</span></label>
                     <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Enter Birthday" value="{{ old('birthdate') }}"/>
                     @error('birthdate')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Birth Address</label>
+                    <label class="form-label" for="basic-default-fullname">Birth Address  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="city_address" name="birth_address" value="{{ old('birth_address') }}"/>
                     @error('birth_address')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-3 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Citizenship</label>
+                    <label class="form-label" for="basic-default-fullname">Citizenship  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="Enter Citizenship" value="{{ old('citizenship') }}"/>
                     @error('citizenship')
                         <p class="text-danger m-0">{{ $message }}</p>
@@ -243,14 +244,14 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-3 mb-2">
-                    <label class="form-label" for="basic-default-fullname">Religion</label>
+                    <label class="form-label" for="basic-default-fullname">Religion  &nbsp;<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="religion" name="religion" placeholder="Enter Religion" value="{{ old('religion') }}"/>
                     @error('religion')
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-2">
-                      <label class="form-label" for="basic-default-fullname">Civil Status</label>
+                      <label class="form-label" for="basic-default-fullname">Civil Status  &nbsp;<span class="text-danger">*</span></label>
                       <div>
                           <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="civil_status" id="civil_statusRadio1" value="Single" checked {{ old('civil_status') == 'Single' ? 'checked' : '' }}>
@@ -305,14 +306,14 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 mb-2">
-                        <label class="form-label" for="basic-default-fullname">Guardian's Name</label>
+                        <label class="form-label" for="basic-default-fullname">Guardian's Name  &nbsp;<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="guardians_name" name="guardians_name" placeholder="Enter Guardian's Name" value="{{ old('guardians_name') }}"/>
                         @error('guardians_name')
                             <p class="text-danger m-0">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="col-sm-4 mb-2">
-                        <label class="form-label" for="basic-default-fullname">Contact Number</label>
+                        <label class="form-label" for="basic-default-fullname">Contact Number  &nbsp;<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="guardian_contact" name="guardian_contact" placeholder="Enter Contact Number" value="{{ old('guardian_contact') }}"/>
                         @error('guardian_contact')
                             <p class="text-danger m-0">{{ $message }}</p>
@@ -546,4 +547,10 @@
       
     });
 </script>
+<style>
+  .text-danger {
+    color: red; /* Change the color to red */
+    font-weight: bold; /* Make it bold */
+}
+</style>
 @endsection

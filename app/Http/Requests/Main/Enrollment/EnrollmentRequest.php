@@ -30,6 +30,16 @@ class EnrollmentRequest extends FormRequest
             //             ->where('school_year_id', request('school_year_id'))
             //             ->where('course_id', request('course_id'));
             //     }),
+            // 'student_id' => [
+            //     'required',
+            //     'integer',
+            //     Rule::unique('enrollments')->where(function ($query) {
+            //         return $query->where('student_id', request('student_id'))
+            //             ->where('school_year_id', request('school_year_id'))
+            //             ->where('semester', request('semester'))
+            //             ->where('year_level', request('year_level'))
+            //             ->where('course_id', request('course_id'));
+            //     }),
             'student_id' => [
             'required',
             'integer',

@@ -59,7 +59,7 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{url('settings/studentType/update/'.$studentType['id'])}}"><i class="bx bx-edit-alt me-1"></i> Update</a>
-                            <a class="dropdown-item" href="{{url('settings/studentType/delete/'.$studentType['id'])}}"><i class="fas fa-ban"></i> Delete</a>
+                            {{-- <a class="dropdown-item" href="{{url('settings/studentType/delete/'.$studentType['id'])}}"><i class="fas fa-ban"></i> Delete</a> --}}
                         </div>
                     </div>
                     </td>
