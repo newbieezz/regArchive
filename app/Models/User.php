@@ -73,14 +73,16 @@ class User extends Authenticatable
      *
      * @return App\Models\Department
      */
-    public function department()
+    public function departments()
     {
-        return $this->belongsTo(Department::class, 'department_id')->withTrashed();
+        $departmentIds = json_decode($this->department_id, true) ?? [];  // Decode the JSON field into an array of department IDs
+
+        return Department::whereIn('id', $departmentIds)->withTrashed()->get();  // Fetch all departments with matching IDs
     }
 
     public function scopeByDepartment($query, int $dept)
     {
-        return $query->where('department_id', $dept)->withTrashed();
+        return $query->whereRaw('JSON_CONTAINS(department_id, ?)', [json_encode([$dept])])->withTrashed();
     }
 
 }

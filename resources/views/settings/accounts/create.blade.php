@@ -59,16 +59,29 @@
                   </div>
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="department_id">Select Department</label>
-                    <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="department" name="department_id" id="department_id">
-                        @foreach($departments as $dept)
-                        <option value="{{ $dept->id }}" {{ old('department_id') == $dept->id ? 'selected' : '' }}>{{ $dept->name }}</option>
-                        @endforeach
-                      </select>
+                    <select class="form-select " id="department_select">
+                      <option value="">Choose Department</option>
+                      @foreach($departments as $dept)
+                        <option value="{{ $dept->id }}" data-name="{{ $dept->name }}">{{ $dept->name }}</option>
+                      @endforeach
+                    </select>
+                    <div class="input-group input-group-merge mt-2">
+                      <input 
+                        class="form-control" 
+                        type="text" 
+                        id="department_input" 
+                        placeholder="Select or type department" 
+                        value="{{ old('department_id') }}" 
+                        readonly
+                      />
+                      <button type="button" class="btn btn-primary" id="addDepartment">Add</button>
                     </div>
-                    <div class="form-text">You can use letters, numbers & periods</div>  
+                    <div id="department_tags" class="mt-2"></div>
+                   
+                    <input type="hidden" name="department_id" id="department_hidden" value="{{ old('department_id') }}">
+                    <div class="form-text">You can select multiple departments. Values will be joined with `;`.</div>
                     @error('department_id')
-                        <p class="text-danger m-0">{{ $message }}</p>
+                      <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
@@ -93,7 +106,7 @@
                     <label class="form-label" for="password">Password</label>
                     <div class="input-group input-group-merge">
                       <input class="form-control" type="password" id="password" name="password" value="{{ old('password') }}" />
-                      <button type="button" class="btn btn-info" id="generatePassword">Auto Generate</button>
+                      <button type="button" class="btn btn-primary" id="generatePassword">Auto Generate</button>
                       <button type="button" class="btn btn-secondary toggle-password" data-target="password">
                         👁️
                       </button>
@@ -132,6 +145,65 @@
     <!-- / Content -->
     <div class="content-backdrop fade"></div>
     <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const departmentSelect = document.getElementById('department_select');
+  const departmentInput = document.getElementById('department_input');
+  const departmentHidden = document.getElementById('department_hidden');
+  const departmentTags = document.getElementById('department_tags');
+  const addDepartmentBtn = document.getElementById('addDepartment');
+
+  // Parse existing value if updating
+  const initialDepartments = departmentHidden.value ? departmentHidden.value.split(';') : [];
+  let selectedDepartments = new Map();
+
+  // Populate initial tags from old data
+  initialDepartments.forEach(deptId => {
+    const option = Array.from(departmentSelect.options).find(opt => opt.value === deptId);
+    if (option) {
+      selectedDepartments.set(deptId, option.getAttribute('data-name'));
+    }
+  });
+
+  // Render initial tags
+  function renderTags() {
+    departmentTags.innerHTML = '';
+    selectedDepartments.forEach((name, id) => {
+      const tag = document.createElement('span');
+      tag.className = 'badge bg-primary me-1';
+      tag.textContent = name;
+      tag.innerHTML += ' <button type="button" class="btn-close btn-sm ms-1" aria-label="Remove"></button>';
+      tag.querySelector('.btn-close').addEventListener('click', () => {
+        selectedDepartments.delete(id);
+        updateInput();
+        renderTags();
+      });
+      departmentTags.appendChild(tag);
+    });
+    updateInput();
+  }
+
+  // Update hidden and display input
+  function updateInput() {
+    const joinedDepartments = Array.from(selectedDepartments.keys()).join(';');
+    departmentHidden.value = joinedDepartments;
+    departmentInput.value = joinedDepartments;
+  }
+
+  // Add department from dropdown
+  addDepartmentBtn.addEventListener('click', () => {
+    const selectedOption = departmentSelect.selectedOptions[0];
+    const selectedValue = selectedOption.value;
+    const selectedName = selectedOption.getAttribute('data-name');
+
+    if (selectedValue && !selectedDepartments.has(selectedValue)) {
+      selectedDepartments.set(selectedValue, selectedName);
+      renderTags();
+    }
+  });
+
+  // Initialize existing tags on page load
+  renderTags();
+});
       // Generate Random Password Matching the Regex
 function generatePassword() {
   const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
