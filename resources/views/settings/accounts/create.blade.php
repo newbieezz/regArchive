@@ -84,6 +84,7 @@
                       <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
+                  
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="email">Email</label>
                     <div class="input-group input-group-merge">
@@ -131,6 +132,19 @@
                       <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
+                  <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="basic-default-fullname">Select Scope Access</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="scope1" value="1" {{ 'checked' }}>
+                            <label class="form-check-label" for="inlineRadio1">All Department</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="scope2" value="2" {{  '' }}>
+                            <label class="form-check-label" for="inlineRadio2">Assigned Department</label>
+                        </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                   <a class="mx-2" href="{{url('settings/user/')}}"><button type="button" class="btn btn-secondary">Cancel</button></a>
@@ -144,7 +158,7 @@
     </div>
     <!-- / Content -->
     <div class="content-backdrop fade"></div>
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const departmentSelect = document.getElementById('department_select');
   const departmentInput = document.getElementById('department_input');
@@ -262,7 +276,7 @@ document.querySelectorAll('.toggle-password').forEach(button => {
     }
   });
 });
-    </script>
+</script>
 </div>
   <!-- Content wrapper -->
 @endsection
