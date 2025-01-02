@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Department;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use Exception;
@@ -35,9 +36,13 @@ class UserService
     public function createStaff(array $params): User
     {
         try {
+            // Convert `B9891;B9892` to an array
+            $departmentIds = explode(';', $params['department_id']);
+            // Ensure they exist in the departments table
+            $validDepartments = Department::whereIn('id', $departmentIds)->pluck('id')->toArray();
+            $params['department_id'] = json_encode($validDepartments);
             $params['password'] = Hash::make($params['password']);
             $status = UserStatus::where('name', config('user.statuses.active'))->firstOrFail();
-            $params['department_id'] = $params['department_id'];
             $params['user_status_id'] = $status->id;
             $params['password_default'] = 1;
             $user = $this->user->create($params);

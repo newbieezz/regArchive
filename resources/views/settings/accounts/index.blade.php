@@ -40,12 +40,18 @@
                   <td><span class="fw-medium">{{ $user['employee_id'] }}</span> </td>
                     <td><span class="fw-medium">{{ $user['first_name'] }} {{ $user['last_name'] }}</span> </td>
                     <td><span class="fw-medium">{{ $user['role'] === 1 ? 'Admin' : 'Staff' }}</span> </td>
-                    <td> @foreach($departments as $department)
-                          @if($user['department_id'] === $department['id'])
-                            {{ $department['code'] }}
+                    <td>
+                      @php
+                          // Decode the department_id JSON string to an array of department IDs
+                          $departmentIds = json_decode($user->department_id, true) ?? [];  // Default to an empty array if decoding fails
+                      @endphp
+                  
+                      @foreach($departments as $department)
+                          @if(is_array($departmentIds) && in_array($department['id'], $departmentIds)) <!-- Check if department ID exists in the decoded array -->
+                              {{ $department['code'] }}@if(!$loop->last), @endif
                           @endif
-                         @endforeach  
-                    </td>
+                      @endforeach
+                  </td>
                     <td>{{ $user['email'] }}</td>
                     <td>{{  $user['scope'] === 1 ? 'All Department' : 'Assigned Department' }}</td>
                     <td><span class="badge {{ $user->status->id == 1 ? 'bg-label-success' : 'bg-label-danger' }} me-1">{{ $user->status->id == 1 ? 'Active' : 'Deactivated'}}</span></td>
