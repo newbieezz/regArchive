@@ -36,6 +36,7 @@ class UserService
     public function createStaff(array $params): User
     {
         try {
+            //dd($params);
             // Convert `B9891;B9892` to an array
             $departmentIds = explode(';', $params['department_id']);
             // Ensure they exist in the departments table
@@ -70,7 +71,15 @@ class UserService
                 $user->password;
         }
 
-        
+        // Convert `B9891;B9892` to an array
+        $departmentIds = explode(';', $params['department_id']);
+        // Ensure they exist in the departments table
+        $validDepartments = Department::whereIn('id', $departmentIds)->pluck('id')->toArray();
+        $params['department_id'] = json_encode($validDepartments);
+
+        //dd($params);
+
+
         // perform update
         $user->update($params);
 

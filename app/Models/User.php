@@ -82,7 +82,8 @@ class User extends Authenticatable
 
     public function scopeByDepartment($query, int $dept)
     {
-        return $query->whereRaw('JSON_CONTAINS(department_id, ?)', [json_encode([$dept])])->withTrashed();
+        $return_query = $query->whereRaw('JSON_CONTAINS(department_id, ?)', [json_encode([$dept])])->withTrashed();
+        return $return_query;
     }
 
 }

@@ -39,8 +39,21 @@ class EnrollmentService
     {
         try {
             $authUser = getLoggedInUser();
-            if($authUser->role === config('user.roles.staff') && $authUser->scope === 2){
-                $enrollments = Enrollment::query()->byDepartment($authUser->department_id)->status($status);
+            if ($authUser->scope === 2) {
+                //$enrollments = Enrollment::query()->byDepartment($authUser->department_id)->status($status);
+                // Decode the department_id if it's a JSON string
+                $departmentIds = json_decode($authUser->department_id, true);
+
+                // Ensure $departmentIds is always an array
+                if (!is_array($departmentIds)) {
+                    $departmentIds = [$authUser->department_id];
+                }
+
+                // Query enrollments based on the decoded department IDs
+                $enrollments = Enrollment::query()
+                    ->byDepartment($departmentIds)
+                    ->status($status);
+
             } else{
                 $enrollments = Enrollment::query()->status($status);
             }
@@ -70,6 +83,8 @@ class EnrollmentService
             // Create the enrollment
             $params['date_enrolled'] = Carbon::now();
             $params['student_id'] = $student->student_id;
+            $params['year_level'] = $params['year_level'] ?? 0;
+            $params['semester'] = $params['semester'] ?? 0;
             $enrollment = $this->enrollment->create($params);
             
             DB::commit();

@@ -40,30 +40,44 @@
                     @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
+                    <label class="form-label" for="department_id">Select Department</label>
+                    <select class="form-select " id="department_select">
+                      <option value="">Choose Department</option>
+                      @foreach($departments as $dept)
+                        <option value="{{ $dept->id }}" data-name="{{ $dept->name }}">{{ $dept->name }}</option>
+                      @endforeach
+                    </select>
+                    <div class="input-group input-group-merge mt-2">
+                      <input 
+                        class="form-control" 
+                        type="text" 
+                        id="department_input" 
+                        placeholder="Select or type department" 
+                        value="{{ old('department_id', is_array(json_decode($user->department_id)) ? implode(';', json_decode($user->department_id)) : $user->department_id) }}"
+                        readonly
+                      />
+                      <button type="button" class="btn btn-primary" id="addDepartment">Add</button>
+                    </div>
+                    <div id="department_tags" class="mt-2"></div>
+                   
+                    <input type="hidden"  name="department_id" id="department_hidden"  value="{{ old('department_id',  $user->department_id) }}" />
+                    <div class="form-text">You can select multiple departments. Values will be joined with `;`.</div>
+                    @error('department_id')
+                      <p class="text-danger m-0">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  <div class="col-sm-6 mb-4">
                     <label class="form-label" for="role">Role</label>
                     <div class="input-group input-group-merge">
                       <select class="form-select" aria-label="role" name="role" id="role">
-                        @foreach($roles as $rl)
-                        <option value="{{ $rl->code }}" {{ old('code', $user->role == $rl->code) ? 'selected' : '' }}>{{ $rl->value }}</option>
-                        @endforeach
+                          @foreach($roles as $rl)
+                              <option value="{{ $rl->code }}" 
+                                  {{ old('role', $user->role) == $rl->code ? 'selected' : '' }}>
+                                  {{ $rl->value }}
+                              </option>
+                          @endforeach
                       </select>
-                    </div>
                   </div>
-                  <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="basic-default-email">Select Department</label>
-                    <div class="input-group input-group-merge">
-                      <select class="form-select" aria-label="department" name="department_id" id="department_id">
-                        @foreach($departments as $dept)
-                        <option value="{{ $dept->id }}" 
-                            {{ (old('department_id', optional($user->department_id)->id) == $dept->id) ? 'selected' : '' }}>
-                            {{ $dept->name }}
-                        </option>
-                        @endforeach
-                      </select>
-                    </div>
-                    @error('department_id')
-                        <p class="text-danger m-0">{{ $message }}</p>
-                    @enderror
                   </div>
                   <div class="col-sm-6 mb-4">
                     <label class="form-label" for="basic-default-email">Email</label>
@@ -129,6 +143,127 @@
     </div>
     <!-- / Content -->
     <div class="content-backdrop fade"></div>
+
+    <script>
+     
+      document.addEventListener('DOMContentLoaded', () => {
+        const departmentSelect = document.getElementById('department_select');
+        const departmentInput = document.getElementById('department_input');
+        const departmentHidden = document.getElementById('department_hidden');
+        const departmentTags = document.getElementById('department_tags');
+        const addDepartmentBtn = document.getElementById('addDepartment');
+      
+        // Parse existing value if updating
+        const initialDepartments = departmentInput.value ? departmentInput.value.split(';') : [];
+        let selectedDepartments = new Map();
+      
+        // Populate initial tags from old data
+        initialDepartments.forEach(deptId => {
+          const option = Array.from(departmentSelect.options).find(opt => opt.value === deptId);
+          if (option) {
+            selectedDepartments.set(deptId, option.getAttribute('data-name'));
+          }
+        });
+      
+        // Render initial tags
+        function renderTags() {
+          departmentTags.innerHTML = '';
+          selectedDepartments.forEach((name, id) => {
+            const tag = document.createElement('span');
+            tag.className = 'badge bg-primary me-1';
+            tag.textContent = name;
+            tag.innerHTML += ' <button type="button" class="btn-close btn-sm ms-1" aria-label="Remove"></button>';
+            tag.querySelector('.btn-close').addEventListener('click', () => {
+              selectedDepartments.delete(id);
+              updateInput();
+              renderTags();
+            });
+            departmentTags.appendChild(tag);
+          });
+          updateInput();
+        }
+      
+        // Update hidden and display input
+        function updateInput() {
+          const joinedDepartments = Array.from(selectedDepartments.keys()).join(';');
+          departmentHidden.value = joinedDepartments;
+          departmentInput.value = joinedDepartments;
+        }
+      
+        // Add department from dropdown
+        addDepartmentBtn.addEventListener('click', () => {
+          const selectedOption = departmentSelect.selectedOptions[0];
+          const selectedValue = selectedOption.value;
+          const selectedName = selectedOption.getAttribute('data-name');
+      
+          if (selectedValue && !selectedDepartments.has(selectedValue)) {
+            selectedDepartments.set(selectedValue, selectedName);
+            renderTags();
+          }
+        });
+      
+        // Initialize existing tags on page load
+        renderTags();
+      });
+            // Generate Random Password Matching the Regex
+      function generatePassword() {
+        const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const digits = "0123456789";
+        const specialChars = "@$!%*?&";
+        const allChars = letters + digits + specialChars;
+      
+        let password = "";
+        // Ensure at least one letter, one digit, and one special character
+        password += letters[Math.floor(Math.random() * letters.length)];
+        password += digits[Math.floor(Math.random() * digits.length)];
+        password += specialChars[Math.floor(Math.random() * specialChars.length)];
+      
+        // Fill the rest of the password with random characters
+        for (let i = 3; i < 8; i++) {
+          password += allChars[Math.floor(Math.random() * allChars.length)];
+        }
+      
+        // Shuffle the password to avoid predictable patterns
+        password = password.split('').sort(() => Math.random() - 0.5).join('');
+        return password;
+      }
+      
+      // Populate Generated Password
+      document.getElementById('generatePassword').addEventListener('click', () => {
+        const password = generatePassword();
+        document.getElementById('password').value = password;
+        document.getElementById('password_confirmation').value = password;
+      });
+      
+      // Copy Password to Clipboard
+      document.getElementById('copyPassword').addEventListener('click', () => {
+        const password = document.getElementById('password').value;
+        if (password) {
+          navigator.clipboard.writeText(password).then(() => {
+            alert('Password copied to clipboard!');
+          }).catch(err => {
+            console.error('Failed to copy password:', err);
+          });
+        } else {
+          alert('No password to copy. Generate one first!');
+        }
+      });
+      
+      // Toggle Password Visibility
+      document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', () => {
+          const targetId = button.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          if (input.type === 'password') {
+            input.type = 'text';
+            button.innerText = '🔒';
+          } else {
+            input.type = 'password';
+            button.innerText = '👁️';
+          }
+        });
+      });
+      </script>
 </div>
   <!-- Content wrapper -->
 @endsection

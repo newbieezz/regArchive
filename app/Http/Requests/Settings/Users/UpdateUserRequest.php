@@ -14,13 +14,10 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            // 'first_name' => 'required|string|max:255',
-            // 'last_name' => 'required|string|max:255',
-            // 'department' => 'required',
-            // 'scope' => 'required',
-            // 'email' => 'required|string|email|max:255',
-            // 'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+        return [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'department_id' => 'required',
         ];
 
         if(isset($this->password)){
