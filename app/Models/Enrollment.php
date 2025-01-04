@@ -107,6 +107,11 @@ class Enrollment extends Model
             return $query->whereHas('student', function ($query) use ($department_id) {
                 $query->where('department_id', $department_id );
             });
-        
+
+    }
+
+    public function scopeByDepartments($query, array $deptIds)
+    {
+        return $query->whereIn('department_id', $deptIds);
     }
 }

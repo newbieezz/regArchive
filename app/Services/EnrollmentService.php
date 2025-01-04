@@ -40,7 +40,6 @@ class EnrollmentService
         try {
             $authUser = getLoggedInUser();
             if ($authUser->scope === 2) {
-                //$enrollments = Enrollment::query()->byDepartment($authUser->department_id)->status($status);
                 // Decode the department_id if it's a JSON string
                 $departmentIds = json_decode($authUser->department_id, true);
 
@@ -48,11 +47,10 @@ class EnrollmentService
                 if (!is_array($departmentIds)) {
                     $departmentIds = [$authUser->department_id];
                 }
+                
 
                 // Query enrollments based on the decoded department IDs
-                $enrollments = Enrollment::query()
-                    ->byDepartment($departmentIds)
-                    ->status($status);
+                $enrollments = Enrollment::query()->byDepartments($departmentIds)->status($status);
 
             } else{
                 $enrollments = Enrollment::query()->status($status);
@@ -64,7 +62,6 @@ class EnrollmentService
             throw $e;
         }
 
-        return $enrollment;
     }
 
     /**
