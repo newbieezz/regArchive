@@ -134,6 +134,17 @@
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
+                  <div class="col-sm-4 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Graduate Studies</label>
+                    <div class="input-group input-group-merge">
+                        <select class="form-select" aria-label="graduate_studies" name="graduate_studies">
+                            <option value="Undergrad" {{ $enrollment->graduate_studies == 'Undergrad' ? 'selected' : '' }}>Undergrad</option>
+                            <option value="Bachelors" {{ $enrollment->graduate_studies == 'Bachelors' ? 'selected' : '' }}>Bachelors</option>
+                            <option value="Master's" {{ $enrollment->graduate_studies == "Master's" ? 'selected' : '' }}>Master's</option>
+                            <option value="Doctoral" {{ $enrollment->graduate_studies == 'Doctoral' ? 'selected' : '' }}>Doctoral</option>
+                        </select>
+                    </div>
+                </div>
                 </div>
 
                 <div class="row mt-4"> 

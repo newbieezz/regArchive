@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Enrollment;
+use App\Models\EnrollmentLog;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Models\SchoolYear;
@@ -97,10 +98,27 @@ class EnrollmentRecordsController extends Controller
      */
     public function show(string $id)
     {
-        try { 
+        try {
+           
             $enrollment = Enrollment::findOrFail($id);
-            return view('main.enrollment.show')->with(compact('enrollment'));
+            $student = $enrollment->student()->first();
+            // Fetch the enrollment logs for this student and load related models
+            $enrollmentLogs = EnrollmentLog::where('student_id', $student->student_id)
+                ->with([
+                    'schoolYear',
+                    'department',
+                    'addedBy',
+                    'course',
+                    'major',
+                ])
+                ->withTrashed()
+                ->orderBy('created_at', 'desc')
+                ->get();
+            //dd($enrollmentLogs);
+
+            return view('main.enrollment.show')->with(compact('enrollment', 'enrollmentLogs'));
         } catch (Exception $e) {
+            dd($e);
             return redirect('/enrollment');
         }
     }
