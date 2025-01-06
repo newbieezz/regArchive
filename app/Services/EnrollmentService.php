@@ -153,14 +153,14 @@ class EnrollmentService
             EnrollmentLog::create([
                 'added_by' => auth()->id(), // Current logged-in user
                 'student_id' => $enrollment->student_id,
-                'school_year_id' => $params['school_year_id'] ?? $enrollment->school_year_id,
-                'department_id' => $params['department_id'] ?? $enrollment->department_id,
-                'course_id' => $params['course_id'] ?? $enrollment->course_id,
-                'major_id' => $params['major_id'] ?? $enrollment->major_id,
-                'section_id' => $params['section_id'] ?? $enrollment->section_id,
-                'student_status' => $params['student_status'] ?? $enrollment->student_status,
-                'graduate_studies' => $params['graduate_studies'] ?? $enrollment->graduate_studies,
-                'required_document' => $params['required_document'] ?? $student_data->required_document,
+                'school_year_id' => $enrollment->school_year_id,
+                'department_id' => $enrollment->department_id,
+                'course_id' => $enrollment->course_id,
+                'major_id' => $enrollment->major_id,
+                'section_id' => $enrollment->section_id,
+                'student_status' => $enrollment->student_status,
+                'graduate_studies' => $enrollment->graduate_studies,
+                'required_document' => $student_data->required_document,
             ]);
         }
 
