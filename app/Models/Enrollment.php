@@ -26,6 +26,7 @@ class Enrollment extends Model
         'section_id',
         'student_status',
         'date_enrolled',
+        'graduate_studies',
     ];
 
     /**
