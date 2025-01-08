@@ -112,136 +112,291 @@
     </div>
   <!-- Content wrapper -->
 @endsection
-
+</style>
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js"></script>
+<script type="module" src="pdf.worker.entry.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <script>
-    let scannedFiles = []
-    const userId = {!! getLoggedInUser()->id !!};
-    // Listen for changes in file input fields
-    let oldDocuments = {!! json_encode($studentData->documents) !!};
-    @foreach(getDocumentCategories() as $index => $category)
-        @if(count($studentData->documents->where('type', $category->id)) > 0)
-            let oldFiles{{$category->id}} = oldDocuments.filter(docs => docs.type === {!! $category->id !!});
-            let fileInput{{$category->id}} = document.getElementById('fileInput{{$category->id}}');
-            let previewContainer{{$category->id}} = document.getElementById('previewContainer{{$category->id}}');
+    // let scannedFiles = []
+    // const userId = {!! getLoggedInUser()->id !!};
+    // // Listen for changes in file input fields
+    // let oldDocuments = {!! json_encode($studentData->documents) !!};
+    // @foreach(getDocumentCategories() as $index => $category)
+    //     @if(count($studentData->documents->where('type', $category->id)) > 0)
+    //         let oldFiles{{$category->id}} = oldDocuments.filter(docs => docs.type === {!! $category->id !!});
+    //         let fileInput{{$category->id}} = document.getElementById('fileInput{{$category->id}}');
+    //         let previewContainer{{$category->id}} = document.getElementById('previewContainer{{$category->id}}');
             
-            if (oldFiles{{$category->id}}.length > 0) {
-                displayOldFilePreviews(oldFiles{{$category->id}}, previewContainer{{$category->id}});
-            }
-            document.getElementById('fileInput{{$category->id}}').addEventListener('change', function() {
-                handleFileSelect(this, document.getElementById('previewContainer{{$category->id}}'));
-                scannedFiles['{{$category->id}}'] = null
-            });
-        @endif
-    @endforeach
+    //         if (oldFiles{{$category->id}}.length > 0) {
+    //             displayOldFilePreviews(oldFiles{{$category->id}}, previewContainer{{$category->id}});
+    //         }
+    //         document.getElementById('fileInput{{$category->id}}').addEventListener('change', function() {
+    //             handleFileSelect(this, document.getElementById('previewContainer{{$category->id}}'));
+    //             scannedFiles['{{$category->id}}'] = null
+    //         });
+    //     @endif
+    // @endforeach
 
-    function displayOldFilePreviews(oldFiles, previewContainer, clearOld = false) {
-        oldFiles.forEach(function(file) {
-            let previewDiv = document.createElement('div');
-            previewDiv.className = 'file-preview-item';
-            let assetPath = previewContainer.dataset.assetPath + '/' + file.file_path;
-            fetch(assetPath)
-                .then(response => response.blob())
-                .then(blob => {
-                    let reader = new FileReader();
-                    reader.onload = function(event) {
-                        let fileData = event.target.result;
-                        if (blob.type.startsWith('image')) {
-                            // If it's an image file, create an img element
-                            let preview = document.createElement('img');
-                            preview.src = fileData;
-                            previewDiv.appendChild(preview);
-                        } else if (blob.type === 'application/pdf') {
-                            // If it's a PDF file, create a canvas element to render the pages
-                            let canvas = document.createElement('canvas');
-                            canvas.className = 'pdf-preview-canvas'; // Add class to canvas
-                            // Set up PDF.js to render the PDF
-                            pdfjsLib.getDocument({data: atob(fileData.split(',')[1])}).promise.then(function(pdf) {
-                                pdf.getPage(1).then(function(page) {
+    // function displayOldFilePreviews(oldFiles, previewContainer, clearOld = false) {
+    //     oldFiles.forEach(function(file) {
+    //         let previewDiv = document.createElement('div');
+    //         previewDiv.className = 'file-preview-item';
+    //         let assetPath = previewContainer.dataset.assetPath + '/' + file.file_path;
+    //         fetch(assetPath)
+    //             .then(response => response.blob())
+    //             .then(blob => {
+    //                 let reader = new FileReader();
+    //                 reader.onload = function(event) {
+    //                     let fileData = event.target.result;
+    //                     if (blob.type.startsWith('image')) {
+    //                         // If it's an image file, create an img element
+    //                         let preview = document.createElement('img');
+    //                         preview.src = fileData;
+    //                         previewDiv.appendChild(preview);
+    //                     } else if (blob.type === 'application/pdf') {
+    //                         // If it's a PDF file, create a canvas element to render the pages
+    //                         let canvas = document.createElement('canvas');
+    //                         canvas.className = 'pdf-preview-canvas'; // Add class to canvas
+    //                         // Set up PDF.js to render the PDF
+    //                         pdfjsLib.getDocument({data: atob(fileData.split(',')[1])}).promise.then(function(pdf) {
+    //                             pdf.getPage(1).then(function(page) {
+    //                                 let viewport = page.getViewport({ scale: 1 });
+    //                                 let context = canvas.getContext('2d');
+    //                                 canvas.height = viewport.height;
+    //                                 canvas.width = viewport.width;
+    //                                 let renderContext = {
+    //                                     canvasContext: context,
+    //                                     viewport: viewport
+    //                                 };
+    //                                 page.render(renderContext).promise.then(function() {
+    //                                     previewDiv.appendChild(canvas);
+    //                                 });
+    //                             });
+    //                         });
+    //                     } else {
+    //                         // For other file types, display a link to download
+    //                         let downloadLink = document.createElement('a');
+    //                         downloadLink.href = file.file_path;
+    //                         downloadLink.textContent = file.file_name;
+    //                         previewDiv.appendChild(downloadLink);
+    //                     }
+    //                     const spanElement = document.createElement('span');
+    //                     spanElement.textContent = file.file_name;
+    //                     previewDiv.appendChild(spanElement);
+    //                     // Append the preview div to the preview container
+    //                     previewContainer.appendChild(previewDiv);
+    //                 };
+
+    //                 // Read the blob content as a data URL
+    //                 reader.readAsDataURL(blob);
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error fetching file:', error);
+    //             });
+    //     });
+    // }
+    // // Function to handle file input change
+    // function handleFileSelect(input, previewContainer) {
+    //     previewContainer.innerHTML = ''; // Clear previous previews
+    //     if (input.files) {
+    //         // Loop through each selected file
+    //         for (let i = 0; i < input.files.length; i++) {
+    //             let reader = new FileReader();
+    //             // Read the file as a data URL
+    //             reader.readAsDataURL(input.files[i]);
+    //             // When the file is loaded, display its preview
+    //             reader.onload = function (e) {
+    //                 // Create a div for each file preview
+    //                 let previewDiv = document.createElement('div');
+    //                 previewDiv.className = 'file-preview-item'; // Add a class to the div
+    //                 if (input.files[i].type.startsWith('image')) {
+    //                     // If it's an image file, create an img element
+    //                     let preview = document.createElement('img');
+    //                     preview.src = e.target.result;
+    //                     previewDiv.appendChild(preview);
+    //                 } else if (input.files[i].type === 'application/pdf') {
+    //                     // If it's a PDF file, create a canvas element to render the pages
+    //                     let canvas = document.createElement('canvas');
+    //                     canvas.className = 'pdf-preview-canvas'; // Add class to canvas
+    //                     // Set up PDF.js to render the PDF
+    //                     pdfjsLib.getDocument(e.target.result).promise.then(function(pdf) {
+    //                         pdf.getPage(1).then(function(page) {
+    //                             let viewport = page.getViewport({ scale: 1 });
+    //                             let context = canvas.getContext('2d');
+    //                             canvas.height = viewport.height;
+    //                             canvas.width = viewport.width;
+    //                             let renderContext = {
+    //                                 canvasContext: context,
+    //                                 viewport: viewport
+    //                             };
+    //                             page.render(renderContext).promise.then(function() {
+    //                                 previewDiv.appendChild(canvas);
+    //                             });
+    //                         });
+    //                     });
+    //                 }
+    //                 const spanElement = document.createElement('span');
+    //                 spanElement.textContent = input.files[i].name;
+    //                 previewDiv.appendChild(spanElement);
+    //                 // Append the preview div to the preview container
+    //                 previewContainer.appendChild(previewDiv);
+    //             };
+    //         }
+    //     }
+    // }
+
+
+    // -----------------------------------------------------------------------------------------------
+
+    let scannedFiles = []
+const userId = {!! getLoggedInUser ()->id !!};
+// Listen for changes in file input fields
+let oldDocuments = {!! json_encode($studentData->documents) !!};
+@foreach(getDocumentCategories() as $index => $category)
+    @if(count($studentData->documents->where('type', $category->id)) > 0)
+        let oldFiles{{$category->id}} = oldDocuments.filter(docs => docs.type === {!! $category->id !!});
+        let fileInput{{$category->id}} = document.getElementById('fileInput{{$category->id}}');
+        let previewContainer{{$category->id}} = document.getElementById('previewContainer{{$category->id}}');
+        
+        if (oldFiles{{$category->id}}.length > 0) {
+            displayOldFilePreviews(oldFiles{{$category->id}}, previewContainer{{$category->id}});
+        }
+        document.getElementById('fileInput{{$category->id}}').addEventListener('change', function() {
+            handleFileSelect(this, document.getElementById('previewContainer{{$category->id}}'));
+            scannedFiles['{{$category->id}}'] = null
+        });
+    @endif
+@endforeach
+
+function displayOldFilePreviews(oldFiles, previewContainer, clearOld = false) {
+    oldFiles.forEach(function(file) {
+        let previewDiv = document.createElement('div');
+        previewDiv.className = 'file-preview-item';
+        let assetPath = previewContainer.dataset.assetPath + '/' + file.file_path;
+        fetch(assetPath)
+            .then(response => response.blob())
+            .then(blob => {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    let fileData = event.target.result;
+                    if (blob.type.startsWith('image')) {
+                        // If it's an image file, create an img element
+                        let preview = document.createElement('img');
+                        preview.src = fileData;
+                        preview.style.display = 'inline-block'; // Add this line to display images side by side
+                        preview.style.marginRight = '10px'; // Add this line to add a margin between images
+                        preview.style.float = 'right'; // Add this line to align images to the right
+                        previewDiv.appendChild(preview);
+                    } else if (blob.type === 'application/pdf') {
+                        // If it's a PDF file, create a container element for each page
+                        pdfjsLib.getDocument({data: atob(fileData.split(',')[1])}).promise.then(function(pdf) {
+                            let numPages = pdf.numPages;
+                            let maxPages = 5; // Render at most 5 pages
+                            let pageContainer = document.createElement('div');
+                            pageContainer.style.display = 'flex';
+                            pageContainer.style.flexWrap = 'wrap';
+                            pageContainer.style.justifyContent = 'flex-start';
+                            for (let i = 1; i <= Math.min(numPages, maxPages); i++) {
+                                pdf.getPage(i).then(function(page) {
                                     let viewport = page.getViewport({ scale: 1 });
-                                    let context = canvas.getContext('2d');
+                                    let canvas = document.createElement('canvas');
                                     canvas.height = viewport.height;
                                     canvas.width = viewport.width;
+                                    let context = canvas.getContext('2d');
                                     let renderContext = {
                                         canvasContext: context,
                                         viewport: viewport
                                     };
                                     page.render(renderContext).promise.then(function() {
-                                        previewDiv.appendChild(canvas);
+                                        canvas.style.marginRight = '10px'; // Add this line to add a margin between canvases
+                                        canvas.style.marginBottom = '10px'; // Add this line to add a margin between rows
+                                        pageContainer.appendChild(canvas);
                                     });
                                 });
-                            });
-                        } else {
-                            // For other file types, display a link to download
-                            let downloadLink = document.createElement('a');
-                            downloadLink.href = file.file_path;
-                            downloadLink.textContent = file.file_name;
-                            previewDiv.appendChild(downloadLink);
-                        }
-                        const spanElement = document.createElement('span');
-                        spanElement.textContent = file.file_name;
-                        previewDiv.appendChild(spanElement);
-                        // Append the preview div to the preview container
-                        previewContainer.appendChild(previewDiv);
-                    };
+                            }
+                            previewDiv.appendChild(pageContainer);
+                        });
+                    } else {
+                        // For other file types, display a link to download
+                        let downloadLink = document.createElement('a');
+                        downloadLink.href = file.file_path;
+                        downloadLink.textContent = file.file_name;
+                        previewDiv.appendChild(downloadLink);
+                    }
+                    const spanElement = document.createElement('span');
+                    spanElement.textContent = file.file_name;
+                    previewDiv.appendChild(spanElement);
+                    // Append the preview div to the preview container
+                    previewContainer.appendChild(previewDiv);
+                };
 
-                    // Read the blob content as a data URL
-                    reader.readAsDataURL(blob);
-                })
-                .catch(error => {
-                    console.error('Error fetching file:', error);
-                });
-        });
-    }
-    // Function to handle file input change
-    function handleFileSelect(input, previewContainer) {
-        previewContainer.innerHTML = ''; // Clear previous previews
-        if (input.files) {
-            // Loop through each selected file
-            for (let i = 0; i < input.files.length; i++) {
-                let reader = new FileReader();
-                // Read the file as a data URL
-                reader.readAsDataURL(input.files[i]);
-                // When the file is loaded, display its preview
-                reader.onload = function (e) {
-                    // Create a div for each file preview
-                    let previewDiv = document.createElement('div');
-                    previewDiv.className = 'file-preview-item'; // Add a class to the div
-                    if (input.files[i].type.startsWith('image')) {
-                        // If it's an image file, create an img element
-                        let preview = document.createElement('img');
-                        preview.src = e.target.result;
-                        previewDiv.appendChild(preview);
-                    } else if (input.files[i].type === 'application/pdf') {
-                        // If it's a PDF file, create a canvas element to render the pages
-                        let canvas = document.createElement('canvas');
-                        canvas.className = 'pdf-preview-canvas'; // Add class to canvas
-                        // Set up PDF.js to render the PDF
-                        pdfjsLib.getDocument(e.target.result).promise.then(function(pdf) {
-                            pdf.getPage(1).then(function(page) {
+                // Read the blob content as a data URL
+                reader.readAsDataURL(blob);
+            })
+            .catch(error => {
+                console.error('Error fetching file:', error);
+            });
+    });
+}
+
+
+
+// Function to handle file input change
+function handleFileSelect(input, previewContainer) {
+    previewContainer.innerHTML = ''; // Clear previous previews
+    if (input.files) {
+        // Loop through each selected file
+        for (let i = 0; i < input.files.length; i++) {
+            let reader = new FileReader();
+            // Read the file as a data URL
+            reader.readAsDataURL(input.files[i]);
+            // When the file is loaded, display its preview
+            reader.onload = function (e) {
+                // Create a div for each file preview
+                let previewDiv = document.createElement('div');
+                previewDiv.className = 'file-preview-item'; // Add a class to the div
+                if (input.files[i].type.startsWith('image')) {
+                    // If it's an image file, create an img element
+                    let preview = document.createElement('img');
+                    preview.src = e.target.result;
+                    previewDiv.appendChild(preview);
+                } else if (input.files[i].type === 'application/pdf') {
+                    // If it's a PDF file, create a canvas element to render the pages
+                    pdfjsLib.getDocument(e.target.result).promise.then(function(pdf) {
+                        let numPages = pdf.numPages;
+                        let maxPages = 5; // Render at most 5 pages
+                        for (let j = 1; j <= Math.min(numPages, maxPages); j++) {
+                            pdf.getPage(j).then(function(page) {
                                 let viewport = page.getViewport({ scale: 1 });
-                                let context = canvas.getContext('2d');
+                                let canvas = document.createElement('canvas');
                                 canvas.height = viewport.height;
-                                canvas.width = viewport.width;
+                                canvas.width
+                                = viewport.width;
+                                let context = canvas.getContext('2d');
                                 let renderContext = {
                                     canvasContext: context,
                                     viewport: viewport
                                 };
                                 page.render(renderContext).promise.then(function() {
-                                    previewDiv.appendChild(canvas);
+                                    previewDiv.appendChild(canvas); // Append the canvas for each page
                                 });
                             });
-                        });
-                    }
-                    const spanElement = document.createElement('span');
-                    spanElement.textContent = input.files[i].name;
-                    previewDiv.appendChild(spanElement);
-                    // Append the preview div to the preview container
-                    previewContainer.appendChild(previewDiv);
-                };
-            }
+                        }
+                    });
+                }
+                const spanElement = document.createElement('span');
+                spanElement.textContent = input.files[i].name;
+                previewDiv.appendChild(spanElement);
+                // Append the preview div to the preview container
+                previewContainer.appendChild(previewDiv);
+            };
         }
     }
+}
+
+    //-----------------------------------------------------------------------------------------------
 
     const loadBtn = $('#scanLoadBtn');
     const confirmBtn = $('#scanConfirmBtn');
