@@ -62,7 +62,7 @@ class UserService
     {
         // retrieve user information
         $user = $this->findById($params['id']);
-        $params['department_id'] = $params['department_id'] ?? $user->department_id;
+        $params['department_id'] = $params['department_id'] ?? json_decode($user->department_id);
 
         if (array_key_exists('password', $params)) {
             $params['password_default'] = false;
@@ -72,9 +72,14 @@ class UserService
                 $user->password;
         }
 
-        // Convert `B9891;B9892` to an array
-        $departmentIds = explode(';', $params['department_id']);
-        // Ensure they exist in the departments table
+        if (is_string($params['department_id'])) {
+            $departmentIds = explode(';', $params['department_id']);
+        } else if (is_array($params['department_id'])) {
+            $departmentIds = $params['department_id'];
+        } else {
+            $departmentIds = [];
+        }
+
         $validDepartments = Department::whereIn('id', $departmentIds)->pluck('id')->toArray();
         $params['department_id'] = json_encode($validDepartments);
 
