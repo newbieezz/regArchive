@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\EnrollmentLog;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use Exception;
@@ -101,6 +102,70 @@ class EnrollmentService
     {
         // retrieve schoolYear information
         $enrollment = $this->findById($params['id']);
+        $student_data = $enrollment->student()->first();
+
+
+        //comparing prev data
+        // Fields to compare for $enrollment
+        $enrollmentFields = [
+            'school_year_id',
+            'year_level',
+            'semester',
+            'department_id',
+            'program',
+            'course_id',
+            'major_id',
+            'section_id',
+            'student_status',
+            'graduate_studies',
+        ];
+
+        // Fields to compare for $student_data
+        $studentFields = [
+            'required_document',
+        ];
+
+        // Compare $params with $enrollment
+        $enrollmentChanges = [];
+        foreach ($enrollmentFields as $field) {
+            if (($params[$field] ?? null) != $enrollment->$field) {
+                $enrollmentChanges[$field] = [
+                    'old' => $enrollment->$field,
+                    'new' => $params[$field] ?? null,
+                ];
+            }
+        }
+
+        // Compare $params with $student_data
+        $studentChanges = [];
+        foreach ($studentFields as $field) {
+            if (($params[$field] ?? null) != $student_data->$field) {
+                $studentChanges[$field] = [
+                    'old' => $student_data->$field,
+                    'new' => $params[$field] ?? null,
+                ];
+            }
+        }
+
+
+        // Check if there are any changes and log the change
+        if (!empty($enrollmentChanges) || !empty($studentChanges)) {
+            EnrollmentLog::create([
+                'added_by' => auth()->id(), // Current logged-in user
+                'student_id' => $enrollment->student_id,
+                'school_year_id' => $enrollment->school_year_id,
+                'department_id' => $enrollment->department_id,
+                'course_id' => $enrollment->course_id,
+                'major_id' => $enrollment->major_id,
+                'section_id' => $enrollment->section_id,
+                'student_status' => $enrollment->student_status,
+                'graduate_studies' => $enrollment->graduate_studies,
+                'required_document' => $student_data->required_document,
+            ]);
+        }
+
+
+
         // perform update
         $enrollment->update($params);
 
@@ -110,6 +175,7 @@ class EnrollmentService
 
         return $enrollment;
     }
+
 
     /**
      * Retrieves a Enrollment by id

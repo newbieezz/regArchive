@@ -397,6 +397,68 @@
           </div>
         </div>
       </div>
+
+      <!-- Basic Layout -->
+      <div class="row">
+        <div class="col-xl">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              @if(Session::has('error_message'))
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                      <strong>Error: </strong> {{ Session::get('error_message')}}
+                      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+              @endif
+            </div>
+            <div class="card-body">
+              <div class="row"> 
+                <h4>Student Enrollment History</h4>
+                
+                <div class="table-responsive text-nowrap border">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>School Year</th>
+                        <th>Department</th>
+                        <th>Course</th>
+                        <th>Status</th>
+                        <th>Graduate Studies</th>
+                        <th>Required Document</th>
+                        <th>Added By (ID | EMAIL)</th>
+                        <th>Created At</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @if ($enrollmentLogs && $enrollmentLogs->isNotEmpty())
+                        @foreach ($enrollmentLogs as $log)
+                        <tr>
+                          <td>{{ $log->schoolYear->year ?? 'N/A' }}</td>
+                          <td>{{ $log->department->name ?? 'N/A' }}</td>
+                          <td>{{ $log->course->code ?? 'N/A' }}</td>
+                          <td>{{ config('student.student_status')[$log->student_status] ?? 'Unknown Status' }}</td>
+                          <td>{{ $log->graduate_studies }}</td>
+                          <td>{{ $log->required_document }}</td>
+                          <td>{{ $log->addedBy->employee_id ?? 'N/A'}} {{$log->addedBy->email }}</td> <!-- Display added_by (employee_id) -->
+                          <td>{{ $log->created_at }}</td>
+                      </tr>
+                        @endforeach
+                  @else
+                      <tr>
+                          <td colspan="8" class="text-center">No enrollment logs available.</td>
+                      </tr>
+                  @endif
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      </div>
     </div>
     <!-- / Content -->
     <div class="content-backdrop fade"></div>

@@ -133,7 +133,17 @@
                         <p class="text-danger m-0">{{ $message }}</p>
                     @enderror
                   </div>
-                  
+                  <div class="col-sm-4 mb-2">
+                    <label class="form-label" for="basic-default-fullname">Graduate Studies</label>
+                    <div class="input-group input-group-merge">
+                      <select class="form-select" aria-label="graduate_studies" name="graduate_studies">
+                        <option value="Undergrad" >Undergrad</option>
+                        <option value="Bachelors" >Bachelors </option>
+                        <option value="Master's" >Master's </option>
+                        <option value="Doctoral" >Doctoral  </option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="row mt-4"> 
